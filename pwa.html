@@ -313,9 +313,9 @@ function renderHome() {
   // Today widget
   var todayDiv = div('');
   todayDiv.id = 'todaybox';
-  var start = new Date('2026-03-11'), today = new Date();
+  var start = new Date(2026,2,11), today = new Date();
   var diff = Math.floor((today - start) / 86400000);
-  if (diff >= 0 && diff <= 83) {
+  if (diff >= 0) {
     var topics = [
       ['Mon','Linux File System','Python Variables'],
       ['Tue','Linux Permissions','Python Control Flow'],
