@@ -1,79 +1,15 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'>
-<meta name='mobile-web-app-capable' content='yes'>
-<meta name='apple-mobile-web-app-capable' content='yes'>
-<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'>
-<meta name='theme-color' content='#1a1a2e'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a1a2e">
 <title>AI Network Engineer</title>
-<link rel='manifest' href='./manifest.json'>
-<style>
-:root{--bg:#f0f2f7;--card:#fff;--hdr:#1a1a2e;--txt:#1a1a2e;--sub:#555;--brd:#e8eaf6;--inp:#f0f2f7;--shadow:rgba(0,0,0,.07)}
-body.dark{--bg:#121212;--card:#1e1e2e;--hdr:#0d0d1a;--txt:#e0e0e0;--sub:#aaa;--brd:#333;--inp:#2a2a3e;--shadow:rgba(0,0,0,.3)}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:72px;max-width:480px;margin:0 auto;transition:background .3s,color .3s}
-.app-header{background:var(--hdr);color:white;padding:12px 16px 10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;justify-content:space-between;align-items:center}
-.app-header h1{font-size:15px;font-weight:bold}.app-header p{font-size:9.5px;color:#aaa;margin-top:1px}
-.dark-btn{background:none;border:1px solid #444;color:white;border-radius:16px;padding:4px 10px;font-size:11px;cursor:pointer}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--hdr);display:flex;justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:200;border-top:1px solid #2d3561;max-width:480px;margin:0 auto}
-.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 0;cursor:pointer;border:none;background:none;color:#7788aa;font-size:20px}
-.nbtn span{font-size:9px;color:inherit}.nbtn.active{color:#e65100}
-.page{display:none;padding:12px 12px 4px}.page.active{display:block}
-.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px var(--shadow)}
-.ct{font-size:14px;font-weight:bold;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--brd);color:var(--txt)}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.sb{background:var(--card);border-radius:10px;padding:12px;text-align:center;box-shadow:0 1px 4px var(--shadow)}
-.sn{font-size:26px;font-weight:bold;color:#e65100}.sl{font-size:10px;color:var(--sub);margin-top:2px}
-.qbox{background:linear-gradient(135deg,#1a1a2e,#2d3561);color:white;border-radius:12px;padding:14px;margin-bottom:12px}
-.qbox p{font-size:13px;line-height:1.6;font-style:italic}.qbox small{font-size:11px;color:#aaa;margin-top:6px;display:block}
-.pbar-wrap{background:#e8eaf6;border-radius:10px;height:8px;margin:8px 0}
-.pbar{background:linear-gradient(90deg,#e65100,#ff9900);height:8px;border-radius:10px;transition:width .4s}
-.today-box{background:linear-gradient(135deg,#306998,#4a90d9);color:white;border-radius:12px;padding:14px;margin-bottom:12px}
-.today-box h3{font-size:13px;font-weight:bold;margin-bottom:8px}
-.today-item{background:rgba(255,255,255,.15);border-radius:8px;padding:8px;margin-bottom:6px;font-size:12px;line-height:1.5}
-/* Pomodoro */
-.pom{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;text-align:center;box-shadow:0 1px 4px var(--shadow)}
-.pom-time{font-size:44px;font-weight:bold;color:#e65100;letter-spacing:2px;margin:6px 0}
-.pom-label{font-size:11px;color:var(--sub);margin-bottom:10px}
-.pom-btns{display:flex;gap:8px;justify-content:center}
-.pbtn{padding:8px 18px;border:none;border-radius:20px;font-size:13px;font-weight:bold;cursor:pointer}
-.pbtn.start{background:#e65100;color:white}.pbtn.pause{background:#306998;color:white}.pbtn.reset{background:#e8eaf6;color:#333}
-/* Schedule */
-.mlabel{background:linear-gradient(90deg,#1a1a2e,#2d3561);color:white;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:bold;margin-bottom:8px}
-.wcard{border-radius:10px;overflow:hidden;margin-bottom:8px;box-shadow:0 1px 4px var(--shadow)}
-.whdr{color:white;padding:10px 14px;font-size:12px;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
-.wbody{background:var(--card);padding:4px 0}
-.day-row{display:flex;align-items:flex-start;padding:6px 10px;border-bottom:1px solid var(--brd);gap:6px}
-.dc{width:16px;height:16px;margin-top:3px;flex-shrink:0;accent-color:#e65100}
-.dlbl{font-size:10px;font-weight:bold;color:var(--sub);min-width:26px;padding-top:2px}
-.di{flex:1}.mi{display:block;font-size:11.5px;line-height:1.5;color:var(--txt)}
-.ei{display:block;font-size:11.5px;line-height:1.5}
-.prow{display:flex;align-items:center;padding:8px 10px;background:#fff8f0;border-left:3px solid #e65100;gap:6px;font-size:11.5px;font-weight:bold;color:#c84b00}
-.ckrow{display:flex;align-items:center;padding:8px 10px;background:#fff3cd;gap:6px;font-size:11.5px;font-weight:bold;color:#856404}
-.caprow{display:flex;align-items:center;padding:8px 10px;background:#d4edda;gap:6px;font-size:11.5px;font-weight:bold;color:#155724}
-.sunrow{display:flex;padding:5px 10px;gap:6px;font-size:11px;color:#bbb;font-style:italic}
-/* Toolkit */
-.tktabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
-.tktab{padding:6px 10px;border-radius:16px;font-size:11px;font-weight:bold;cursor:pointer;border:1px solid var(--brd);background:var(--inp);color:var(--sub)}
-.tktab.active{background:#1a1a2e;color:white;border-color:#1a1a2e}
-.tkc{display:none}.tkc.active{display:block}
-/* Commands */
-.ci{padding:7px 0;border-bottom:1px solid var(--brd)}
-.ccat{display:inline-block;background:#e8eaf6;color:#3949ab;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:8px;margin-bottom:2px}
-.ccode{display:block;background:#1e1e2e;color:#a8d8a8;padding:4px 8px;border-radius:5px;font-size:11px;margin:3px 0;word-break:break-all}
-.cdesc{font-size:11.5px;color:var(--sub)}
-pre{background:#1e1e2e;color:#a8d8a8;padding:10px;border-radius:8px;font-size:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;margin:6px 0;line-height:1.5}
-a{color:#1565c0}
-/* Cloud tabs */
-.ctabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
-.ctab{padding:6px 12px;border-radius:16px;font-size:11px;font-weight:bold;cursor:pointer;border:1px solid var(--brd);background:var(--inp);color:var(--sub)}
-.ctab.active{color:white;border-color:transparent}
-.ctab.aws.active{background:#c7511f}
-.ctab.azure.active{background:#0078d4}
-.cc{display:none}.cc.active{display:block}
-</style>
+<link rel="manifest" href="./manifest.json">
+<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div class='app-header'>
@@ -449,10 +385,10 @@ a{color:#1565c0}
     </div></div>
 <div id='toolkit' class='page'>
 <div class='tktabs'>
-  <button class='tktab active' onclick='showTk("tk-setup")'>🛠️ Setup</button>
-  <button class='tktab' onclick='showTk("tk-vsc")'>🖥️ VS Code</button>
-  <button class='tktab' onclick='showTk("tk-linux")'>⚡ Linux</button>
-  <button class='tktab' onclick='showTk("tk-py")'>🐍 Python</button>
+  <button class='tktab active' onclick=\"showTk('tk-setup',this)\">🛠️ Setup</button>
+  <button class='tktab' onclick=\"showTk('tk-vsc',this)\">🖥️ VS Code</button>
+  <button class='tktab' onclick=\"showTk('tk-linux',this)\">⚡ Linux</button>
+  <button class='tktab' onclick=\"showTk('tk-py',this)\">🐍 Python</button>
 </div>
 <div id='tk-setup' class='tkc active'><div class='card'><div class='ct'>🛠️ Day Zero Setup — 7 Steps</div><div style='border-left:3px solid #306998;background:white;border-radius:6px;padding:10px;margin-bottom:10px'>
   <div style='background:#306998;color:white;font-size:10px;font-weight:bold;padding:2px 8px;border-radius:8px;display:inline-block;margin-bottom:5px'>Step 1</div>
@@ -608,8 +544,8 @@ print(result.content[0].text)</pre>
   </div>
 </div>
 <div class='ctabs'>
-  <button class='ctab aws active' onclick='showCloud("cld-aws",this)'>🟠 AWS</button>
-  <button class='ctab azure' onclick='showCloud("cld-azure",this)'>🔷 Azure</button>
+  <button class='ctab aws active' onclick=\"showCloud('cld-aws',this)\">🟠 AWS</button>
+  <button class='ctab azure' onclick=\"showCloud('cld-azure',this)\">🔷 Azure</button>
 </div>
 <div id='cld-aws' class='cc active'><div style='background:white;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)'>
           <div style='background:linear-gradient(135deg,#c7511f,#c7511fcc);color:white;padding:12px 14px'>
@@ -841,10 +777,10 @@ print(result.content[0].text)</pre>
               </div></div></div></div></div></div>
 <div id='more' class='page'>
 <div class='tktabs' style='flex-wrap:wrap'>
-  <button class='tktab active' onclick='showMore("mk-claude")'>🟠 Claude</button>
-  <button class='tktab' onclick='showMore("mk-certs")'>🏆 Certs</button>
-  <button class='tktab' onclick='showMore("mk-li")'>💼 LinkedIn</button>
-  <button class='tktab' onclick='showMore("mk-comm")'>🤝 Community</button>
+  <button class='tktab active' onclick=\"showMore('mk-claude',this)\">🟠 Claude</button>
+  <button class='tktab' onclick=\"showMore('mk-certs',this)\">🏆 Certs</button>
+  <button class='tktab' onclick=\"showMore('mk-li',this)\">💼 LinkedIn</button>
+  <button class='tktab' onclick=\"showMore('mk-comm',this)\">🤝 Community</button>
 </div>
 <div id='mk-claude' class='mkc active'><div class='card'><div class='ct' style='color:#e65100'>🟠 Claude Track — 8 Friday Sessions</div>
 <div style='font-size:12px;color:#666;margin-bottom:10px'>Every Friday evening. Goal: build a Claude agent that queries your live network devices via MCP.</div><div style='background:white;border-radius:8px;border-left:3px solid #e65100;padding:10px;margin-bottom:8px'>
@@ -1001,126 +937,6 @@ print(result.content[0].text)</pre>
   <button class='nbtn' id='nav-cloud' onclick='showPage("cloud")'>☁️<span>Cloud</span></button>
   <button class='nbtn' id='nav-more' onclick='showPage("more")'>📚<span>More</span></button>
 </nav>
-<script>
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById('nav-'+id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function tw(n){
-  const b=document.getElementById('wb'+n),c=document.getElementById('chv'+n);
-  const o=b.style.display!=='none';
-  b.style.display=o?'none':'block'; c.textContent=o?'▼':'▲';
-  if(!o)loadChks(n);
-}
-function sv(id,v){localStorage.setItem(id,v?'1':''); updateProgress();}
-function loadChks(n){
-  document.querySelectorAll(`#wb${n} .dc`).forEach(c=>{
-    if(localStorage.getItem(c.id)==='1')c.checked=true;
-  });
-}
-function updateProgress(){
-  const all=document.querySelectorAll('.dc').length;
-  let done=0;
-  document.querySelectorAll('.dc').forEach(c=>{if(localStorage.getItem(c.id)==='1')done++;});
-  const pct=all?Math.round(done/all*100):0;
-  const el=document.getElementById('prog-pct');
-  if(el)el.textContent=pct+'%';
-  const bar=document.getElementById('prog-bar');
-  if(bar)bar.style.width=pct+'%';
-  for(let w=1;w<=12;w++){
-    const wcs=document.querySelectorAll(`[id^="c-w${w}-"]`);
-    let wdone=0;
-    wcs.forEach(c=>{if(localStorage.getItem(c.id)==='1')wdone++;});
-    const wp=document.getElementById('wp'+w);
-    if(wp&&wcs.length)wp.textContent=`(${wdone}/${wcs.length})`;
-  }
-}
-function loadAllChks(){
-  for(let w=1;w<=12;w++){loadChks(w);}
-  updateProgress();
-}
-function showTk(id){
-  document.querySelectorAll('.tkc').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tktab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
-}
-function showMore(id){
-  document.querySelectorAll('.mkc').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.mktab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
-}
-function showCloud(id,btn){
-  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.ctab').forEach(c=>c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
-function fc(){
-  const q=document.getElementById('lsrch').value.toLowerCase();
-  document.querySelectorAll('.ci').forEach(el=>{
-    el.style.display=el.dataset.k.includes(q)?'block':'none';
-  });
-}
-function toggleDark(){
-  document.body.classList.toggle('dark');
-  localStorage.setItem('dark',document.body.classList.contains('dark')?'1':'');
-  document.getElementById('dark-btn').textContent=document.body.classList.contains('dark')?'☀️ Light':'🌙 Dark';
-}
-// ── Pomodoro ────────────────────────────────
-let pomSec=25*60,pomRunning=false,pomInterval=null,pomWork=true;
-function pomFmt(s){const m=Math.floor(s/60),sc=s%60;return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;}
-function pomTick(){
-  pomSec--;
-  document.getElementById('pom-disp').textContent=pomFmt(pomSec);
-  if(pomSec<=0){
-    clearInterval(pomInterval); pomRunning=false;
-    pomWork=!pomWork; pomSec=pomWork?25*60:5*60;
-    document.getElementById('pom-lbl').textContent=pomWork?'Focus Session':'Break Time 🍃';
-    document.getElementById('pom-disp').textContent=pomFmt(pomSec);
-    if('vibrate' in navigator)navigator.vibrate([300,100,300]);
-  }
-}
-function pomStart(){if(!pomRunning){pomRunning=true;pomInterval=setInterval(pomTick,1000);}}
-function pomPause(){if(pomRunning){clearInterval(pomInterval);pomRunning=false;}}
-function pomReset(){clearInterval(pomInterval);pomRunning=false;pomWork=true;pomSec=25*60;
-  document.getElementById('pom-disp').textContent=pomFmt(pomSec);
-  document.getElementById('pom-lbl').textContent='Focus Session';}
-// ── Today widget ────────────────────────────
-function getTodayStudy(){
-  const start=new Date('2026-03-11');
-  const today=new Date();
-  const diff=Math.floor((today-start)/(1000*60*60*24));
-  if(diff<0||diff>83)return null;
-  const wd=today.getDay();
-  const topics=[
-    ['Mon','Linux File System','Python Variables'],['Tue','Linux Permissions','Python Control Flow'],
-    ['Wed','Linux User Mgmt','Python Functions'],['Thu','Linux Packages','Python Lists/Dicts'],
-    ['Fri','Linux Processes','Python Modules + CLAUDE track (Fri eve)'],
-    ['Sat','🔨 PROJECT DAY','Build something with what you learned this week'],
-    ['Sun','😴 REST','No study — recharge for Monday'],
-  ];
-  const wk=Math.floor(diff/7)+1;
-  const day=topics[wd===0?6:wd-1];
-  return {wk,day:day[0],morning:day[1],evening:day[2]};
-}
-// ── Init ────────────────────────────────────
-window.addEventListener('load',()=>{
-  if(localStorage.getItem('dark')==='1'){document.body.classList.add('dark');document.getElementById('dark-btn').textContent='☀️ Light';}
-  loadAllChks();
-  const t=getTodayStudy();
-  const tw=document.getElementById('today-widget');
-  if(t&&tw){
-    tw.innerHTML=`<div class='today-box'><h3>📅 Today — Week ${t.wk}, ${t.day}</h3>
-      <div class='today-item'>🌅 Morning (7–8AM): ${t.morning}</div>
-      <div class='today-item'>🌙 Evening (8–9:30PM): ${t.evening}</div>
-    </div>`;
-  }
-  if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
-});
-</script>
-</body></html>
+<script src="./app.js"></script>
+</body>
+</html>
