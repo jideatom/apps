@@ -367,7 +367,7 @@ tracks.innerHTML = '<div class="ct">Your Learning Tracks</div><div style="line-h
       {n:'Azure AZ-700 + AZ-305', bg:'#e3f2fd', col:'#0078d4', page:'cloud'},
       {n:'AI Engineering',bg:'#f3e5f5', col:'#7b1fa2', page:'more'}
     ];
-    var tbDiv = document.getElementById('track-btns');
+    pg.appendChild(tracks); var tbDiv = tracks.querySelector('#track-btns');
     trackList.forEach(function(t) {
       var btn = el('button','');
       btn.textContent = t.n;
