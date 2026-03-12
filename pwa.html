@@ -69,7 +69,7 @@ a{color:#1565c0}
 <main>
   <div id="home"    class="page on"></div>
   <div id="plan"    class="page"></div>
-  <div id="toolkit" class="page"></div>
+  <div id="python"  class="page"></div>
   <div id="cloud"   class="page"></div>
   <div id="more"    class="page"></div>
 </main>
@@ -152,6 +152,39 @@ var CLAUDE_SESSIONS = [
   {t:"Claude + MCP — Build Network Server",d:"Custom MCP server exposing network tools, Claude queries live devices in English",u:"https://docs.anthropic.com/en/docs/agents-and-tools/mcp"}
 ];
 
+
+var PYTHON_MODS = [
+  {phase:"Python Track 1",cert:"Core Python for Network Engineers",time:"Weeks 1-4 evenings",color:"#2e7d32",weeks:[
+    {w:"Wk 1",t:"Variables, Control Flow, Functions",u:"https://docs.python.org/3/tutorial/",d:"Data types, if/elif/else, for/while loops, defining functions, scope, return values"},
+    {w:"Wk 2",t:"Lists, Dicts, Sets, Comprehensions",u:"https://docs.python.org/3/tutorial/datastructures.html",d:"List/dict/set comprehensions, tuple unpacking, nested structures, sorting"},
+    {w:"Wk 3",t:"File I/O, Exceptions, Modules",u:"https://docs.python.org/3/tutorial/inputoutput.html",d:"open/read/write, try/except/finally, importing modules, creating packages"},
+    {w:"Wk 4",t:"OOP: Classes, Inheritance, Magic Methods",u:"https://docs.python.org/3/tutorial/classes.html",d:"__init__, __str__, inheritance, polymorphism, abstract base classes"},
+    {w:"Wk 5",t:"Decorators, Iterators, Async/Await",u:"https://docs.python.org/3/howto/functional.html",d:"@decorator pattern, yield generators, async/await coroutines, context managers"},
+    {w:"Wk 6",t:"Strings, Regex, Recursion",u:"https://docs.python.org/3/library/re.html",d:"f-strings, re.search/findall/sub, recursive functions, pytest basics"},
+    {w:"Wk 7",t:"Venv, Type Hints, Logging, pytest",u:"https://docs.python.org/3/library/venv.html",d:"virtualenv, type annotations, logging module, pytest fixtures and mocks"},
+    {w:"Wk 8",t:"PROJECT: Automated Backup Script",u:"https://ktbyers.github.io/netmiko/",d:"SSH to devices, pull configs, save timestamped backups, log results to file"}
+  ]},
+  {phase:"Python Track 2",cert:"Network Automation: Netmiko, NAPALM, Nornir",time:"Weeks 5-8 evenings",color:"#1565c0",weeks:[
+    {w:"Wk 1",t:"Sockets + Netmiko: SSH Cisco/Juniper",u:"https://ktbyers.github.io/netmiko/",d:"socket basics, ConnectHandler, send_command, send_config_set, multi-vendor"},
+    {w:"Wk 2",t:"NAPALM: Vendor-agnostic getters",u:"https://napalm.readthedocs.io/",d:"get_facts(), get_interfaces(), get_bgp_neighbors(), NAPALM validate, diff configs"},
+    {w:"Wk 3",t:"REST APIs: requests, JSON, RESTCONF",u:"https://docs.python-requests.org/",d:"requests.get/post/put, JSON parsing, RESTCONF on IOS-XE, Meraki API"},
+    {w:"Wk 4",t:"Paramiko: Raw SSH and SCP transfers",u:"https://www.paramiko.org/",d:"SSHClient, exec_command, SCPClient, key-based auth, interactive shell"},
+    {w:"Wk 5",t:"Nornir: Parallel multi-device tasks",u:"https://nornir.readthedocs.io/",d:"InitNornir, inventory, tasks, nornir-netmiko, filter devices by group"},
+    {w:"Wk 6",t:"Ansible-runner + boto3 AWS",u:"https://boto3.amazonaws.com/v1/documentation/api/latest/index.html",d:"Run Ansible from Python, boto3 ec2/vpc/tgw describe/create, pagination"},
+    {w:"Wk 7",t:"Logging, Testing, GitHub Actions CI",u:"https://docs.python.org/3/library/logging.html",d:"logging levels, pytest fixtures, mock SSH, basic GitHub Actions pipeline"},
+    {w:"Wk 8",t:"PROJECT: 5-device stats to CSV",u:"https://nornir.readthedocs.io/",d:"Nornir pulls interface stats from 5 devices, writes CSV, sends REST report"}
+  ]},
+  {phase:"Python Track 3",cert:"AI Engineering: LangChain, RAG, Agents, MCP",time:"Weeks 9-12 evenings",color:"#7b1fa2",weeks:[
+    {w:"Wk 1",t:"LangChain: LLM chains and prompts",u:"https://python.langchain.com/",d:"LLMChain, PromptTemplate, ChatAnthropic, message history, output parsers"},
+    {w:"Wk 2",t:"Vector DBs: ChromaDB and embeddings",u:"https://docs.trychroma.com/",d:"sentence-transformers, embed text, Chroma collections, similarity search"},
+    {w:"Wk 3",t:"RAG: Retrieval Augmented Generation",u:"https://python.langchain.com/docs/use_cases/question_answering/",d:"Chunk docs, embed and store, retrieval chain, answer from your own network docs"},
+    {w:"Wk 4",t:"LangGraph: Stateful AI Agents",u:"https://langchain-ai.github.io/langgraph/",d:"StateGraph, nodes, edges, cyclic reasoning, tool calling, human-in-loop"},
+    {w:"Wk 5",t:"Tool Use: Python functions as AI tools",u:"https://docs.anthropic.com/en/docs/build-with-claude/tool-use",d:"Define tools, Claude picks which to call, SSH tool, config parser, structured output"},
+    {w:"Wk 6",t:"CrewAI: Multi-agent orchestration",u:"https://docs.crewai.com/",d:"Agent roles, tasks, crews, delegation - network audit crew and remediation crew"},
+    {w:"Wk 7",t:"LangSmith + Guardrails: Production AI",u:"https://docs.smith.langchain.com/",d:"Trace LLM calls, evaluate outputs, Guardrails AI for safe responses, latency"},
+    {w:"Wk 8",t:"CAPSTONE: AI Network Agent via MCP",u:"https://docs.anthropic.com/en/docs/build-with-claude/mcp",d:"MCP server with SSH tools, Claude queries live routers in plain English"}
+  ]}
+];
 var LINUX_CMDS = [
   {c:"Nav",k:"pwd",d:"Print working directory"},
   {c:"Nav",k:"ls -lah",d:"List all files with size and hidden"},
@@ -228,7 +261,7 @@ function renderNav() {
   var tabs = [
     {id:'home',    icon:'\uD83C\uDFE0', label:'Home'},
     {id:'plan',    icon:'\uD83D\uDCC5', label:'Plan'},
-    {id:'toolkit', icon:'\uD83D\uDEE0\uFE0F', label:'Toolkit'},
+    {id:'python',  icon:'\uD83D\uDC0D',        label:'Python'},
     {id:'cloud',   icon:'\u2601\uFE0F',  label:'Cloud'},
     {id:'more',    icon:'\uD83D\uDCDA',  label:'More'}
   ];
@@ -362,7 +395,7 @@ tracks.innerHTML = '<div class="ct">Your Learning Tracks</div><div style="line-h
     var trackList = [
       {n:'Linux (RHCSA)', bg:'#e3f0ff', col:'#306998', page:'plan'},
       {n:'Claude Track',  bg:'#fff3e0', col:'#e65100', page:'more', sub:'m-claude'},
-      {n:'Python',        bg:'#e8f5e9', col:'#2e7d32', page:'plan'},
+      {n:'Python',        bg:'#e8f5e9', col:'#2e7d32', page:'python'},
       {n:'AWS SAP + ANS', bg:'#fbe9e7', col:'#c7511f', page:'cloud', sub:'cp-aws'},
       {n:'Azure AZ-700 + AZ-305', bg:'#e3f2fd', col:'#0078d4', page:'cloud', sub:'cp-az'},
       {n:'AI Engineering',bg:'#f3e5f5', col:'#7b1fa2', page:'more', sub:'m-certs'}
@@ -444,93 +477,25 @@ function renderPlan() {
 }
 
 // ── Render TOOLKIT ───────────────────────────────────────────────────
-function renderToolkit() {
-  var pg = document.getElementById('toolkit');
-  var tabs = [{id:'t-setup',lbl:'Setup'},{id:'t-vsc',lbl:'VS Code'},{id:'t-linux',lbl:'Linux Cmds'},{id:'t-py',lbl:'Python'}];
-  var tabBar = div('tabs');
-  tabs.forEach(function(t, i) {
-    var btn = el('button', 'tab' + (i===0?' on':''));
-    btn.textContent = t.lbl;
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('#toolkit .tab').forEach(function(b){ b.classList.remove('on'); });
-      document.querySelectorAll('#toolkit .tpane').forEach(function(p){ p.classList.remove('on'); });
-      btn.classList.add('on');
-      document.getElementById(t.id).classList.add('on');
+
+function renderPython() {
+  var pg = document.getElementById('python');
+  pg.innerHTML = '';
+  pg.appendChild(div('card', '<div style="font-size:13px;font-weight:700;margin-bottom:4px;color:#2e7d32">Python Learning Track</div><div style="font-size:12px;color:var(--sub);line-height:1.7">Evening sessions (8-9:30PM) over 12 weeks. Core Python to Network Automation to AI Engineering.</div>'));
+  PYTHON_MODS.forEach(function(mod) {
+    var card = div('');
+    card.style.cssText = 'background:var(--card);border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px var(--sh)';
+    var hdr = div('');
+    hdr.style.cssText = 'background:' + mod.color + ';color:#fff;padding:12px 14px';
+    hdr.innerHTML = '<div style="font-size:10px;opacity:.85;margin-bottom:2px">' + mod.phase + ' - ' + mod.time + '</div><div style="font-size:14px;font-weight:700">' + mod.cert + '</div>';
+    var body = div(''); body.style.cssText = 'padding:0 14px 4px';
+    mod.weeks.forEach(function(wk) {
+      body.innerHTML += '<div style="padding:9px 0;border-bottom:1px solid var(--brd)"><div style="display:flex;gap:8px"><span style="font-size:10px;font-weight:700;color:' + mod.color + ';min-width:28px;padding-top:2px">' + wk.w + '</span><div><a href="' + wk.u + '" target="_blank" style="font-size:12.5px;font-weight:700;color:var(--txt);text-decoration:none">' + wk.t + '</a><div style="font-size:11px;color:var(--sub);margin-top:2px">' + wk.d + '</div></div></div></div>';
     });
-    tabBar.appendChild(btn);
+    card.appendChild(hdr); card.appendChild(body); pg.appendChild(card);
   });
-  pg.appendChild(tabBar);
-
-  // Setup pane
-  var setup = div('tpane on'); setup.id = 't-setup';
-  var steps = [
-    ['Install VS Code + WSL2','wsl --install\nwsl --install -d Ubuntu-22.04\n# Restart, then open Ubuntu and set username/password'],
-    ['Python Venv','sudo apt update && sudo apt upgrade -y\nsudo apt install python3 python3-pip python3-venv git -y\nmkdir ~/ai-net-eng && cd ~/ai-net-eng\npython3 -m venv venv && source venv/bin/activate'],
-    ['Install All Python Packages','pip install netmiko napalm nornir nornir-netmiko \\\n  paramiko ansible anthropic langchain \\\n  langchain-community chromadb sentence-transformers \\\n  openai pytest black flake8'],
-    ['Git + SSH Key','git config --global user.name "Your Name"\ngit config --global user.email "you@email.com"\nssh-keygen -t ed25519 -C "you@email.com"\ncat ~/.ssh/id_ed25519.pub\n# Copy to github.com -> Settings -> SSH Keys'],
-    ['Claude API Key','echo \'export ANTHROPIC_API_KEY="sk-ant-YOUR-KEY"\' >> ~/.bashrc\nsource ~/.bashrc\npython3 -c "import anthropic; print(\'Claude OK\')"'],
-    ['AWS CLI + Config','pip install awscli boto3\naws configure\n# Enter: Access Key, Secret Key, Region, json\naws sts get-caller-identity'],
-    ['Verify All','python3 --version\ngit --version\npython3 -c "import netmiko; print(\'Netmiko OK\')"\npython3 -c "import anthropic; print(\'Claude OK\')"\naws --version']
-  ];
-  var sc = div('card'); sc.innerHTML = '<div class="ct">Day Zero Setup</div>';
-  steps.forEach(function(s, i) {
-    var d = div(''); d.style.cssText = 'border-left:3px solid #306998;background:var(--card);border-radius:6px;padding:10px;margin-bottom:10px';
-    d.innerHTML = '<div style="background:#306998;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;display:inline-block;margin-bottom:5px">Step '+(i+1)+'</div><div style="font-size:13px;font-weight:700;margin-bottom:4px">'+s[0]+'</div><pre>'+s[1]+'</pre>';
-    sc.appendChild(d);
-  });
-  setup.appendChild(sc); pg.appendChild(setup);
-
-  // VS Code pane
-  var vsc = div('tpane'); vsc.id = 't-vsc';
-  var vc = div('card'); vc.innerHTML = '<div class="ct">VS Code Extensions (26)</div><pre>code --install-extension ms-python.python ms-python.pylance ms-python.debugpy ms-toolsai.jupyter njpwerner.autodocstring GitHub.copilot GitHub.copilot-chat continue.continue saoudrizwan.claude-dev ms-vscode-remote.remote-ssh ms-vscode-remote.remote-wsl timonwong.shellcheck redhat.ansible redhat.vscode-yaml ms-azuretools.vscode-docker humao.rest-client usernamehw.errorlens eamodio.gitlens oderwat.indent-rainbow zhuangtongfa.material-theme PKief.material-icon-theme yzhang.markdown-all-in-one</pre>';
-  [['Python + Pylance','Microsoft','Core IntelliSense, type checking, autocomplete'],
-   ['GitHub Copilot + Chat','GitHub','AI pair programming — autocomplete + sidebar chat'],
-   ['Continue.dev','Continue','FREE — plug Claude API directly, supports MCP'],
-   ['Cline (Claude Dev)','Community','Agentic AI — Claude reads/writes files, runs terminal'],
-   ['Remote SSH + WSL','Microsoft','Edit Linux/VM files directly in VS Code over SSH'],
-   ['ShellCheck','Timon Wong','Lints Bash scripts in real time'],
-   ['Ansible + YAML','Red Hat','Full Ansible + smart YAML schema validation'],
-   ['Error Lens','Alexander','Shows errors inline on exact line'],
-   ['GitLens','GitKraken','Full Git history, blame, comparisons inline'],
-   ['One Dark Pro + Material Icons','Various','Best dark theme + file icons']
-  ].forEach(function(e) {
-    vc.innerHTML += '<div style="padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px"><b>'+e[0]+'</b> <span style="color:var(--sub);font-size:10px">('+e[1]+')</span><br><span style="color:var(--sub);font-size:11.5px">'+e[2]+'</span></div>';
-  });
-  vsc.appendChild(vc); pg.appendChild(vsc);
-
-  // Linux commands pane
-  var linux = div('tpane'); linux.id = 't-linux';
-  var lc = div('card');
-  lc.innerHTML = '<div class="ct">Linux Commands (46)</div>';
-  var srchInp = el('input', ''); srchInp.type = 'text'; srchInp.placeholder = 'Search commands...'; srchInp.style.marginBottom = '8px';
-  srchInp.addEventListener('input', function() {
-    var q = this.value.toLowerCase();
-    document.querySelectorAll('.ci').forEach(function(item) { item.style.display = item.dataset.k.includes(q) ? '' : 'none'; });
-  });
-  lc.appendChild(srchInp);
-  var cmdList = div(''); cmdList.id = 'cmdlist';
-  LINUX_CMDS.forEach(function(cmd) {
-    var item = div('ci'); item.dataset.k = (cmd.c + ' ' + cmd.k + ' ' + cmd.d).toLowerCase();
-    item.innerHTML = '<span class="ccat">'+cmd.c+'</span><code class="ccode">'+cmd.k+'</code><span class="cdesc">'+cmd.d+'</span>';
-    cmdList.appendChild(item);
-  });
-  lc.appendChild(cmdList); linux.appendChild(lc); pg.appendChild(linux);
-
-  // Python snippets pane
-  var py = div('tpane'); py.id = 't-py';
-  var pyc = div('card'); pyc.innerHTML = '<div class="ct">Python Networking Snippets</div>';
-  [['Netmiko — Pull Config','from netmiko import ConnectHandler\ndev = {\'device_type\':\'cisco_ios\',\'host\':\'192.168.1.1\',\n  \'username\':\'admin\',\'password\':\'pass\'}\nconn = ConnectHandler(**dev)\nprint(conn.send_command(\'show ip int brief\'))\nconn.disconnect()'],
-   ['NAPALM — Get Facts','from napalm import get_network_driver\ndrv = get_network_driver(\'ios\')\nd = drv(\'192.168.1.1\',\'admin\',\'pass\')\nd.open()\nprint(d.get_facts())\nd.close()'],
-   ['Nornir — Multi-Device','from nornir import InitNornir\nfrom nornir_netmiko.tasks import netmiko_send_command\nfrom nornir_utils.plugins.functions import print_result\nnr = InitNornir(config_file=\'config.yaml\')\nresult = nr.run(task=netmiko_send_command,\n  command_string=\'show ip route\')\nprint_result(result)'],
-   ['boto3 — List VPCs','import boto3\nec2 = boto3.client(\'ec2\', region_name=\'us-east-1\')\nfor v in ec2.describe_vpcs()[\'Vpcs\']:\n  print(v[\'VpcId\'], v.get(\'Tags\',[{}])[0].get(\'Value\',\'-\'))'],
-   ['Claude API','import anthropic\nclient = anthropic.Anthropic()\nresult = client.messages.create(\n  model=\'claude-opus-4-5\', max_tokens=1024,\n  messages=[{\'role\':\'user\',\'content\':\n    \'Design a resilient BGP failover for DX+VPN\'}])\nprint(result.content[0].text)']
-  ].forEach(function(s) {
-    pyc.innerHTML += '<div style="margin-bottom:10px"><div style="background:#306998;color:#fff;padding:5px 10px;border-radius:6px 6px 0 0;font-size:12px;font-weight:700">'+s[0]+'</div><pre style="border-radius:0 0 6px 6px;margin-top:0">'+s[1]+'</pre></div>';
-  });
-  py.appendChild(pyc); pg.appendChild(py);
 }
 
-// ── Render CLOUD ─────────────────────────────────────────────────────
 function renderCloud() {
   var pg = document.getElementById('cloud');
   pg.appendChild(div('card', '<div style="font-size:13px;font-weight:700;margin-bottom:6px;color:#e65100">CCNP Fast-Track: Skip CLF-C02, SAA-C03, AZ-900</div><div style="font-size:12px;color:var(--sub);line-height:1.7">Your CCNP background maps directly to ANS-C01 and AZ-700.<br>AZ-104 is still required alongside AZ-305 for the Expert badge.</div>'));
@@ -659,7 +624,7 @@ function renderMore() {
   renderNav();
   renderHome();
   renderPlan();
-  renderToolkit();
+  renderPython();
   renderCloud();
   renderMore();
 
