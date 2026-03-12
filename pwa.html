@@ -71,6 +71,7 @@ a{color:#1565c0}
   <div id="plan"    class="page"></div>
   <div id="toolkit" class="page"></div>
   <div id="cloud"   class="page"></div>
+  <div id="courses" class="page"></div>
   <div id="more"    class="page"></div>
 </main>
 <nav id="botnav"></nav>
@@ -152,106 +153,23 @@ var CLAUDE_SESSIONS = [
   {t:"Claude + MCP — Build Network Server",d:"Custom MCP server exposing network tools, Claude queries live devices in English",u:"https://docs.anthropic.com/en/docs/agents-and-tools/mcp"}
 ];
 
+var COURSES = [
+  {cat:'🐍 Core Python', items:['A.Cloud.Guru.Introduction.to.Jupyter.Notebooks','Coding Blocks - Python Fundamentals','CodingNinjas -  Python Foundation','FrontendMasters-Python.Fundamentals','LINKD - Hands-On Introduction JavaScript','LINKD - Hands-On Introduction Python','Linux Academy Introduction to Python Development','Livelessons - Introduction to Python','LIVELESSONS - Learn Enough Python to be Dangerous A Tutorial Introduction to Programming with Python','Livelessons - Python Fundamentals','Oreilly - Apress - Python Basics','Packt - Coding for Beginners- You can Learn to Code!','PEARSONS - Introduction to Python, 2nd Edition Learn How to Program Today with Python','PEARSONS - Rust Quickstart Programming Essentials in Rust','PluralSight - Python 3 Fundamentals','PluralSight.Python.3.Fundamentals.UPDATED.2023','PyCharm IDE 2022 Fundamentals By Abdul Rehman Yousaf','TeamTreeHouse.Python.Basics.3','UD - Introduction to Programming Python','UD - Introduction to Python- The basics with Hands-On in 2 hours!','UD - Micro Learning  Python Basics Crash Course','UD - Micro Learning  Python Fundamentals','UD - Micro Learning  Python Programming 20 Basic Practice','100 Python Challenges to Boost Your Python Skills','Ace the Python Coding Interview','ACG - Certified Entry-Level Python Programmer Certification','ACG - Python 3 Scripting for System Administrators','APRESS - TCPIP and UDPIP for Python 3','CBT-Python-3-Strings-Lists-and-Dictionaries.11.4','CBTNuggets - Certified Associate in Python Programming (PCAP)','CBTNuggets - Certified Entry-Level Python Programmer (PCEP™)','CBTNuggets - Certified Professional in Python Programming 1 (PCPP1)','CBTNuggets - Python Functions Tutorial','CBTNuggets - Python_Functions_Tutorial','CBTNuggets - Skill Up with Python Web Development Recipes','Coding Blocks-Python for Developers MasterCourse-20240130','Core-Python-Paths.18.2.1','COURSERA - Creative Coding Hands-On Python Specialization','COURSERA - Python Scripting for DevOps Specialization','Educative - Ace-the-Python-Coding-Interview','Educative - Python for Programmers','FrontendMasters-Practical.Guide.to.Python','INE -  HTTP Using Python','INE -  Python Collections','iNE - Regular Expressions with Python','iNE - Software Development with Python','LINKD -  Python-gui-development-with-tkinter-2','LINKD - Create An Open Source Project in python','LINKD - Faster Python Code','LINKD - Intermediate Python for Non-Programmers','LINKd - Learning Python','LINKD - Level Up Python','LINKD - Python Challenge Project']},
+  {cat:'🐍 Advanced Python', items:['Advanced Python Programming Accelerate your Python programs using proven techniques and design patterns 2nd Edition','ArjanCodes - Next-Level Python Become a Python Expert','CBTNuggets - Python Object-Oriented Programming Tutorial','iNE - Object Oriented Programming with Python','Introduction to Python Objects','LINKd - Advanced Python','LINKD - Advanced Python Build Hands-On Projects with Design Patterns','LINKD - Advanced Python Object-oriented-programming','LINKD - Advanced Python-language-features','LINKd - Functional Programming with Python ( CoderPad)','LINKD - Level Up Advanced Python','LINKd - Python Object-Oriented Programming','LINKD - Python Practice Object-Oriented Programming','Lynda - Python Object-Oriented Programming','Next Level Python -  Become a Python Expert','PACKT - Classes and Object-oriented Programming in Python 3','PEARSONS - Functional Programming Projects with Python 3 Write More Robust, Readable Code','PLS -  Advanced Python','PLS - Python 3 Decorators By mateo-prigl','PLSight - Functional Programming in Python 3 By gerald-britton','Pluralsight.Core.Python.Functions.And.Functional.Programming','Pluralsight.Practical.Functional.Programming.CodeMash','Python TOTAL - Advanced Developer in 16 days','UD - Learn Python Like a Pro Beginner to Advanced Course 2024']},
+  {cat:'🤖 Python AI/ML', items:['CBTNuggets - Python Training','CBTNuggets - Skill Up with Python Data Science and Machine Learning Recipes','iNE - Deep Learning with Python','LINKD - Python Essential Training 2023','LINKD - Python.Essential.Training.20.6','MANNING - Learn AI-Assisted Python Programming','MANNING - Learn AI-Assisted Python Programming, Second Edition, Video Edition','MANNING - Learn AI-Assisted Python Programming, Video Edition-20240118','PEARSONS - Generative AI for Python Developers','PLS - Python 3 Regex Playbook By Maaike van Putten','PLS - Python Data Essentials - Python Introduction By Faisal Memon','PLS - Python for Data Science and Machine Learning Essential Training Part 1','PRAGMATIC - AI_MASTERING_CORE_CONCEPTS_IN_PYTHON_FUNCTIONS','Pragmatic AI - Python for Beginners','Pragmatic AI - Python Functions and Classes','PRAGMATIC_AI - WHAT_IS__NAME__FOR_IN_PYTHON','PRAGMATIC_AI_FAST_AND_EASY_PYTHON_CLI','PRAGMATIC_AI_PYTHON_COMMAND_LINE_TOOLS_COURSE','PRAGMATIC_AI_PYTHON_DICTIONARIES_COURSE','PRAGMATIC_AI_ROBUST_PYTHON_CLI','TalkPython - Data Science Jumpstart with 10 Projects Course','UD - Data Science with Python-20230525','UD - Mastering Python FastAPI, Docker, Streamlit, PostgreSQL']},
+  {cat:'⚙️ Python Automation', items:['Everyday Automation Using Python (Update)','Linkedin.Learning.Using.Python.for.Automation','Packt.Complete.Python.Scripting.for.Automation','Packt.Python.Automation.Automate.Mundane.Tasks.with.Python','Packt.Python.Automation.for.Everyone','Packt.Python.for.Automating.Information.Security']},
+  {cat:'📡 Python Networking', items:['LINKD - Python Theory for Network Engineers','Linkedin - Python Theory for Network Engineers','OrhanErgun.net - Python for Network Engineers Course','Packt - Mastering Python Networking','Packt - Python Network Programming [Video]','Python Automation Using Paramiko For Network Engineers']},
+  {cat:'📊 Python Data/APIs', items:['Advanced Python Working with Databases','DATACAMP - Data Engineer in Python','LINKD - Advanced Python Working With Data','LINKD - Practical Python for Data Professionals','LINKD - Practice It Python Data Structures','LINKD - Python for Data Engineering from Beginner to Advanced','LINKD - python-data-structures-stacks-queues-and-deques','Linux.Academy.Using.Python.for.Data.Management.and.Reporting','Manage Invalid, Duplicate, and Missing Data in Python By axel-sirota','PACKT - Learn Python Requests [Video]','PLS - Python - Data Structures By Mateo Prigl','PLS - Python Data Essentials - Data Structures By mihaela-danci','Pluralsight Path. Web Scraping with Python (2021)','RealPython - Real Python - Dictionaries and Arrays - Selecting the Ideal Data Structure','Skillshare - Master Python and Data Libraries Comprehensive Bootcamp','TalkPython - Modern APIs with FastAPI and Python Course','TalkPython - Python Data Visualization']},
+  {cat:'🐳 Docker/Containers', items:['ACG - Docker Certified Associate (DCA)','ACloud Guru - Course Hands-on with Podman Containers on Linux','ACloudGuru - Docker for DevOps - From Development to Production','ArdanLabs.com - Ultimate Docker','CBTNuggets - Docker Training','CBTNUggets - How to Build Docker Images','Cloud Academy Basics of Using Containers in Production','CloudAcademy - Learning Path Docker and Container Technologies','CloudAcademy.com.Getting.Started.With.Docker','CodeWithMosh - The Ultimate Docker Course','Dive Into Docker','Dometrain - From Zero to Hero - Docker for Developers','DOMETRAIN - From Zero to Hero Docker for Developers','KodeKloud - Docker For The Absolute Beginner','Learn Docker in a Month of Lunches video edition','LINKD - Learning Docker','MANNING - Learn Docker In A Month Of Lunches [Video Edition]','Packt.Docker.Dockerfile.and.Docker-Compose.2020.Ready','Packt.Python.in.Containers','PEARSONS - Introduction to Docker and Containers','PLS - Getting Started with Docker on Windows By wes-mcclure','PLS - Implement and Manage Images with Podman By andrei-balint','Pragmatic - AI.Solutions.Learn.Docker.Containers.in.One.Hour.Video.Course','Skillshare.Docker.and.Docker.Compose.Project.Deployment.From.Scratch','TutorialEdge - Docker for Beginners']},
+  {cat:'☸️ Kubernetes', items:['A.Cloud.Guru.Kubernetes.Fundamentals','ACG - Deploying and Managing a Web Application in Kubernetes with Terraform','ACG - Developing Kubernetes Operators from the Ground Up','ACG - Google Kubernetes Engine Deep Dive','ACG - Introduction to Kubernetes','ACG - Monitoring_Kubernetes_With_Prometheus','ACloudGuru - Course Introduction to Kubernetes','Ardan Labs - Intensive Kubernetes 2.0 2023-10','Ardan Labs - Intensive Kubernetes Advanced Concepts 2021-2','Ardan Labs - Ultimate Service with Kubernetes 2023-10','CBTNuggets - Kubernetes Networking Tutorial','Dometrain - From Zero to Hero Kubernetes for Developers','INE - Kubernetes-Foundation-bootcamp.29.6','Kubernetes Installation and Configuration Fundamentals','LINKD - Learning Kubernetes','Livelessons - Professional.Hands.on.Kubernetes','MANNING - Acing the Certified Kubernetes Administrator Exam, Video Edition','MANNING - Continuous Delivery for Kubernetes MEAP V08','MANNING - Platform Engineering on Kubernetes, Video Edition','Pearson - Getting Started With Kubernetes Livelessons 2nd Edition','PEARSON - Kubernetes From Basics to Guru','PEARSONS - Certified Kubernetes Application Developer (CKAD) Complete Video Course (Video Training), 3rd Edition','PEARSONS - Getting Started with Kubernetes, 3rd Edition','PEARSONS - Kubernetes for Developers, Video Edition','PEARSONS - Kubernetes Step-by-Step(Van Gurf)','PLSight - Using Kubernetes as a Developer','Stone.River.eLearning.Complete.DevOps.Gitlab.and.Kubernetes']},
+  {cat:'⚙️ Ansible', items:['CBT Nuggets - Ansible','CBTNuggets - Automating Networks with Ansible','Cloud Academy Ansible Essentials Simplicity in Automation Technical Overview','Cloud Academy Getting Started With Ansible','KodeKloud - Ansible Certification Preparation Course','LINKd - Ansible for Automation Essential Training Advanced Playbooks, Roles, and Diverse Hosts','Livelessons - Ansible From Basics to Guru','OREILLY - Ansible in 4 hours  S.V Gurt','OReilly - Ansible.Certification.Red.Hat.EX407','Packt Dive Into Ansible From Beginner to Expert in Ansible','Packt.Automation.with.Ansible.Playbooks','PEARSON -  RED HAT CERTIFIED ENGINEER RHCE EX294 RED HAT ANSIBLE AUTOMATION','Pearson IT - Hands-on Ansible','PEARSONS - Ansible Core Concepts and Advanced Features','PEARSONS - Ansible From Basics to Guru, 2nd Edition','PLS - Ansible for Enterprise Automation','PLSight - Getting.Started.with.Ansible.for.Network.Automation','Skillshare - Ansible Mastery','UD - Ansible Basics for Network Engineers','Udemy - Ansible Beginner to Pro','Udemy - Ansible for Absolute Beginners']},
+  {cat:'🔀 Git & GitHub', items:['365DataScience -  Git and GitHub','ACloudGuru - GitHub for DevOps','AmigosCode - CICD with GitHub Actions','CBTNuggets - GitLab Certified Git Associate','Code With Chris - GitHub.Essentials','Code With Mosh-The Ultimate Git Mastery Course','CodeWithBeto - Master Git & GitHub','DOMETRAIN-From Zero to Hero GitHub Actions 2024-8','Git and GitHub Complete Course by Shahroz Rahman','GitHub Actions Tutorial Development Automation-20230528','IamTimCorey - Git From Start to Finish-20240118','Implementing and Managing GitHub for DevSecOps By Daniel Krzyczkowski','INE - GitHub for Everyone Bootcamp','KodeKloud - GitHub Copilot in Action (2025)','LINKD - Cert Prep GitHub Actions by Microsoft Press','LINKd - Complete Guide to GitHub Copilot for Developers by Microsoft Press','LINKd - Git Essential Training','LINKD - Git Intermediate Techniques','LINKD - GitHub Essential Training 1 The Basics','LINKD - GitHub for Data Science Job Seekers','LINKd - GitHub Foundations Cert Prep by Microsoft Press','LINKD - Learning GitHub','LINKD - Using Git With Visual Studio Code','LL - Learn Enough Developer Tools to Be Dangerous Git Version Control, Command Line, and Text Editors Essentials','Lynda.GitHub.Quick.Tips','Microsoft Press - Git Hub Advanced Security Cert Prep','Packt - Git.and.GitHub.for.DevOps.Engineers','Packt Git and GitHub Complete Master Class Beginner to Git Expert','Packt.Git.and.GitHub.Crash.Course','Packt.Git.and.GitHub.The.Complete.Git.and.GitHub.Course','Packt.Git.Essentials.Become.a.Git.and.GitHub.Ninja','PEARSONS - Learn GitHub Copilot by Example','PEARSONS - Use Git Like A Pro','PLS - Git Administration By mateo-prigl','PLS - Git Fundamentals By aaron-stewart','PLS - Using Git with a GUI By Xavier Morera','PLS - Working with Git and GitHub in Visual Studio 2022 By thomas-huber','PLSight - Git Configuration and Attributes By aj-foster','Pragmatic - AI.Solutions.Github.Actions.and.GitOps.in.One.Hour.Video.Course','Pragmatic - AI.Solutions.Jenkins.CI.CD.and.Github.in.One.Hour.Video.Course','PRAGMATIC AI RUN PYTHON IN GITHUB ACTIONS','Skillshare - Git with Visual Studio Code','Skillshare.Git.And.GitHub.Essentials.For.Beginners.Crash.Course','Skillshare.GitHub.Repository.Fundamentals','Skillshare.The.Complete.Git.and.GitHub.2020.Course.For.Beginner','Udemy - Git & GitHub - The Practical Guide']},
+  {cat:'🔁 CI/CD Pipelines', items:['ACG - Certified Jenkins Engineer','CBTNUggets - DevOps Fundamentals How to Create a CICD Pipeline','CBTNuggets - Intermediate GitLab Tutorial GitLab CICD','CBTNuggets -GitLab Training','INE - Introducing Network Programmability & Automation','INE.Introducing.Network.Programmability.And.Automation','Lynda.Azure.DevOps.Continuous.Delivery.with.YAML.Pipelines','Packt - OpenShift_Multi-Cluster_Management_Handbook_Go_from_architecture_to_pipelines_using_GitOps','PEARSONS - Build a CICD Pipeline','PEARSONS - Securing Your DevOps Pipelines','PLS - Building a Modern CICD Pipeline with Jenkins By chris-blackden','PLS - GitLab Fundamentals By Afzaal Ahmad Zeeshan','Pragmatic Zero To One Data Science To Mlops','Stone.River.eLearning.AWS.CodePipeline.DevOps.CI.CD.Masterclass','TechWorld - GitLab CI CD - From Zero To Hero By Nana']},
+  {cat:'🏗️ Terraform/IaC', items:['ACG - Advanced Terraform with GCP','LINKD - DevOps Foundations Infrastructure as Code','Packt.Automation.Solutions.with.Chef.Automate','Packt.Hands.On.Infrastructure.Automation.with.Puppet.6']},
+  {cat:'🌐 Network Automation', items:['LINKd - NetOps DevOps For Network Engineers Automating.Networks','SkillShare - Nornir Network Automation']},
+  {cat:'📦 Other DevOps', items:['ACG-MongoDB-Deep-Dive.23.5','Addison.Wesley.Professional.AWS.Certified.DevOps.Engineer.Professional','CBTNuggets - Microsoft Certified DevOps Engineer Expert - AZ-400 - Microsoft Certification Training','CBTNuggets - Using REST APIs and JSON - DevOps Training','Cloud Academy - DevOps Playbook Part 1','Cloud Academy DevOps Foundations - DevOps Institute Certification Exam Preparation','CloudAcademy - Learning Path DevOps Fundamentals','COURSERA - IBM Applied DevOps Engineering Professional Certificate-20240118','DevOps Engineer’s Guidebook Essential Techniques','DevOps from Start to Finish - Tim Corey','DevSecOps - The Big Picture By richard-harpur','FM-Enterprise DevOps and Cloud Infrastructure 2024-10','Go for DevOps','KodeKloud - DevOps Pre-Requisites','KodeKloud - DevOps The Pre-RequisiteCourse.2.3','LINKd - DevOps Foundations Continuous DeliveryContinuous Integration','LINKd - DevOps Foundations DevSecOps','LINKD - DevOps Institute Cert Prep DevOps Leader (DOL)','LINKD - DevOps Institute Cert Prep SRE Foundation (SRE)','LINKD - Git-Essential-Training-19417064','LINKD - Learning Google Cloud Developer and DevOps Tools','LINKD - Learning MongoDB','LINKD - Level Up Advanced MongoDB','LINKD - Level Up MongoDB','Lynda - DevOps Foundations- Accelerating Continuous Delivery in the Enterprise','Lynda - DevSecOps- Tips for Success','Lynda - Get Ahead in DevSecOps Learning-path [AhLaN]','Lynda - Postman Essential Training','Lynda - Programming Foundations - Version Control with Git','Lynda.Microsoft.Power.Automate.Advanced.Business.Automation','MANNING - Go in Practice, Second Edition, Video Edition','MANNING - Learn Go with Pocket-Sized Projects, Video Edition','Masterclass In DevOps Foundation By Spotle','Mastering Shell for DevOps -  Automate, streamline, and secure DevOps workflows with modern shell scripting','Oreilly -   Software  Architecture  Hour  Architecture  Meets  Data','Oreilly -  Open Source Software Superstream Series','Oreilly - Infrastructure & Ops Hour - GitOps','Oreilly - Infrastructure_And_Ops_Hour_Gitops-Illiterate','Packt - Data.Structures.and.Algorithms.The.Complete.Masterclass','PACKT - DevOps Complete Course-20221005']},
+];
 
-var TOPIC_URLS = {
-  // Linux Topics
-  'Linux File System':    'https://www.redhat.com/sysadmin/linux-directory-structure',
-  'Linux Permissions':    'https://www.redhat.com/sysadmin/linux-file-permissions-explained',
-  'Linux User Management':'https://www.redhat.com/sysadmin/linux-user-account-management',
-  'Linux Packages':       'https://www.redhat.com/sysadmin/how-manage-packages',
-  'Linux Processes':      'https://www.redhat.com/sysadmin/process-management-linux',
-  'Linux Networking':     'https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux',
-  'Linux Shell Nav':      'https://www.redhat.com/sysadmin/navigating-filesystem-linux-terminal',
-  'Linux grep':           'https://www.redhat.com/sysadmin/find-text-files-using-grep',
-  'Linux sed & awk':      'https://www.redhat.com/sysadmin/beginners-guide-sed',
-  'Linux Pipes':          'https://www.redhat.com/sysadmin/pipes-command-line-linux',
-  'Linux Bash Variables': 'https://www.redhat.com/sysadmin/bash-scripting',
-  'Linux find & xargs':   'https://www.redhat.com/sysadmin/linux-find-command-options',
-  'Linux Env Vars':       'https://www.redhat.com/sysadmin/linux-environment-variables',
-  'Linux Bash Loops':     'https://www.redhat.com/sysadmin/bash-scripting-loops',
-  'Linux Bash Functions': 'https://www.redhat.com/sysadmin/bash-scripting-loops',
-  'Linux Regex':          'https://www.redhat.com/sysadmin/regular-expressions-grep',
-  'Linux Cron Jobs':      'https://www.redhat.com/sysadmin/automate-linux-tasks-cron',
-  'Linux Debug set -x':   'https://www.redhat.com/sysadmin/bash-error-handling',
-  'Linux Exit Codes':     'https://www.redhat.com/sysadmin/bash-error-handling',
-  'Linux LVM & Storage':  'https://www.redhat.com/sysadmin/lvm-vs-partitioning',
-  'Linux Partitioning':   'https://www.redhat.com/sysadmin/partitioning-basics',
-  'Linux SELinux Concepts':'https://www.redhat.com/en/topics/linux/what-is-selinux',
-  'Linux SELinux Policies':'https://www.redhat.com/sysadmin/selinux-policies',
-  'Linux Systemd':        'https://www.redhat.com/sysadmin/systemd-commands',
-  'Linux Systemd Timers': 'https://www.redhat.com/sysadmin/systemd-timers',
-  'Linux Firewalld':      'https://www.redhat.com/sysadmin/firewalld-linux',
-  'Linux nmcli':          'https://www.redhat.com/sysadmin/nmcli',
-  'Linux Podman':         'https://www.redhat.com/en/topics/containers/what-is-podman',
-  'Linux Podman Images':  'https://www.redhat.com/sysadmin/podman-images',
-  'Linux Boot Process':   'https://www.redhat.com/sysadmin/linux-boot-process',
-  'Linux Memory Mgmt':    'https://www.redhat.com/sysadmin/memory-types-and-usage',
-  'Linux Perf Tuning':    'https://www.redhat.com/sysadmin/linux-performance-tuning',
-  'Linux Kernel':         'https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel',
-  'Linux RHCSA Mock':     'https://www.redhat.com/en/services/certification/rhcsa',
-  'Linux Advanced Net':   'https://www.redhat.com/sysadmin/advanced-linux-networking',
-  'Linux Monitoring':     'https://www.redhat.com/sysadmin/monitor-linux-system',
-  'Linux CI/CD':          'https://www.redhat.com/en/topics/devops/what-is-ci-cd',
-  'Linux Automation':     'https://www.redhat.com/en/topics/automation',
-  'Linux Profiling':      'https://www.redhat.com/sysadmin/linux-profiling-tools',
-  'Linux Hardening':      'https://www.redhat.com/sysadmin/linux-security-hardening',
-  'Linux GPU + CUDA':     'https://developer.nvidia.com/cuda-toolkit',
-  'Linux Docker for AI':  'https://docs.docker.com/get-started/',
-  'Linux venv & conda':   'https://docs.python.org/3/library/venv.html',
-  'Linux ML Env':         'https://realpython.com/python-machine-learning/',
-  'Linux Kernel for AI':  'https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel',
-  'Linux Review':         'https://www.redhat.com/en/services/certification/rhcsa',
-  // Python Topics
-  'Python Variables':      'https://docs.python.org/3/tutorial/introduction.html',
-  'Python Control Flow':   'https://docs.python.org/3/tutorial/controlflow.html',
-  'Python Functions':      'https://docs.python.org/3/tutorial/controlflow.html#defining-functions',
-  'Python Lists & Dicts':  'https://docs.python.org/3/tutorial/datastructures.html',
-  'Python Modules':        'https://docs.python.org/3/tutorial/modules.html',
-  'Python File I/O':       'https://docs.python.org/3/tutorial/inputoutput.html',
-  'Python Exceptions':     'https://docs.python.org/3/tutorial/errors.html',
-  'Python Comprehensions': 'https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions',
-  'Python Strings':        'https://docs.python.org/3/library/string.html',
-  'Python Recursion':      'https://realpython.com/python-recursion/',
-  'Python Classes & Objects':'https://docs.python.org/3/tutorial/classes.html',
-  'Python Inheritance':    'https://docs.python.org/3/tutorial/classes.html#inheritance',
-  'Python Polymorphism':   'https://realpython.com/python-polymorphism/',
-  'Python Magic Methods':  'https://rszalski.github.io/magicmethods/',
-  'Python Abstract Classes':'https://docs.python.org/3/library/abc.html',
-  'Python Decorators':     'https://realpython.com/primer-on-python-decorators/',
-  'Python Iterators':      'https://docs.python.org/3/tutorial/classes.html#iterators',
-  'Python Async/Await':    'https://docs.python.org/3/library/asyncio.html',
-  'Python Context Managers':'https://realpython.com/python-context-managers-and-with-statement/',
-  'Python pytest':         'https://docs.pytest.org/en/stable/getting-started.html',
-  'Python Sockets':        'https://docs.python.org/3/howto/sockets.html',
-  'Python Venv & Types':   'https://docs.python.org/3/library/venv.html',
-  'Python Regex':          'https://docs.python.org/3/library/re.html',
-  'Python Netmiko':        'https://ktbyers.github.io/netmiko/',
-  'Python NAPALM':         'https://napalm.readthedocs.io/',
-  'Python NAPALM Getters': 'https://napalm.readthedocs.io/en/latest/support/',
-  'Python REST APIs':      'https://docs.python-requests.org/',
-  'Python Paramiko':       'https://www.paramiko.org/',
-  'Python Nornir Setup':   'https://nornir.readthedocs.io/',
-  'Python Nornir Tasks':   'https://nornir.readthedocs.io/en/latest/tutorials/intro/executing_tasks.html',
-  'Python Ansible-runner': 'https://ansible-runner.readthedocs.io/',
-  'Python Logging':        'https://docs.python.org/3/library/logging.html',
-  // AI Topics  
-  'AI: Transformers':      'https://huggingface.co/learn/nlp-course/chapter1/1',
-  'AI: Tokenization':      'https://huggingface.co/learn/nlp-course/chapter2/4',
-  'AI: Attention':         'https://jalammar.github.io/illustrated-transformer/',
-  'AI: LLM Params':        'https://www.promptingguide.ai/introduction/settings',
-  'AI: LangChain':         'https://python.langchain.com/',
-  'AI: Vector DBs':        'https://docs.trychroma.com/',
-  'AI: Chunking & RAG':    'https://python.langchain.com/docs/use_cases/question_answering/',
-  'AI: Reranking':         'https://www.cohere.com/rerank',
-  'AI: LangGraph Agents':  'https://langchain-ai.github.io/langgraph/',
-  'AI: Tool Use':          'https://docs.anthropic.com/en/docs/build-with-claude/tool-use',
-  'AI: CrewAI':            'https://docs.crewai.com/',
-  'AI: Letta Memory':      'https://docs.letta.com/',
-  'AI: Production Arch':   'https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/',
-  'AI: LangSmith':         'https://docs.smith.langchain.com/',
-  'AI: MCP + Tools':       'https://docs.anthropic.com/en/docs/build-with-claude/mcp',
-  'AI: Guardrails':        'https://www.guardrailsai.com/docs'
-};
 var LINUX_CMDS = [
   {c:"Nav",k:"pwd",d:"Print working directory"},
   {c:"Nav",k:"ls -lah",d:"List all files with size and hidden"},
@@ -330,7 +248,8 @@ function renderNav() {
     {id:'plan',    icon:'\uD83D\uDCC5', label:'Plan'},
     {id:'toolkit', icon:'\uD83D\uDEE0\uFE0F', label:'Toolkit'},
     {id:'cloud',   icon:'\u2601\uFE0F',  label:'Cloud'},
-    {id:'more',    icon:'\uD83D\uDCDA',  label:'More'}
+    {id:'courses', icon:'\uD83D\uDCDA',  label:'Courses'},
+    {id:'more',    icon:'\u22EF',        label:'More'}
   ];
   tabs.forEach(function(t) {
     var btn = el('button', 'nbtn' + (t.id === 'home' ? ' on' : ''));
@@ -512,12 +431,7 @@ function renderPlan() {
           chk.addEventListener('change', function() { sv(cid, this.checked); });
         })(chk.id);
         var dlbl = div('dlbl', DAYS[d]);
-        var miUrl = TOPIC_URLS[mi] || '';
-        var eiUrl = TOPIC_URLS[ei] || '';
-        var miHtml = miUrl ? '<a href="' + miUrl + '" target="_blank" style="color:inherit;text-decoration:underline">' + mi + '</a>' : mi;
-        var eiHtml = eiUrl ? '<a href="' + eiUrl + '" target="_blank" style="color:inherit;text-decoration:underline">' + ei + '</a>' : ei;
-        var eiColor = isClaude ? '#e65100' : '#ab47bc';
-        var dinfo = div('dinfo', '<span class="mi">\uD83C\uDF05 ' + miHtml + '</span><span class="ei" style="color:' + eiColor + ';' + (isClaude ? 'font-weight:700' : '') + '">\uD83C\uDF19 ' + eiHtml + '</span>');
+        var dinfo = div('dinfo', '<span class="mi">\uD83C\uDF05 ' + mi + '</span><span class="ei" style="color:' + (isClaude ? '#e65100' : '#4a148c') + ';' + (isClaude ? 'font-weight:700' : '') + '">\uD83C\uDF19 ' + ei + '</span>');
         drow.appendChild(chk);
         drow.appendChild(dlbl);
         drow.appendChild(dinfo);
@@ -677,6 +591,34 @@ function renderCloud() {
 }
 
 // ── Render MORE ──────────────────────────────────────────────────────
+
+function renderCourses() {
+  var pg = document.getElementById('courses');
+  if (!pg) return;
+  pg.innerHTML = '';
+  pg.appendChild(div('card', '<div style="font-size:13px;font-weight:700;margin-bottom:2px">📚 My Course Library</div><div style="font-size:11px;color:var(--sub)">Tap any category to expand. ' + COURSES.reduce(function(a,c){return a+c.items.length;},0) + ' courses total.</div>'));
+  COURSES.forEach(function(sec, i) {
+    var wrap = div('');
+    wrap.style.cssText = 'background:var(--card);border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 4px var(--sh)';
+    var hdr = div('');
+    hdr.style.cssText = 'padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none';
+    var colors = ['#2e7d32','#1565c0','#7b1fa2','#e65100','#00695c','#4527a0','#283593','#37474f','#bf360c','#1b5e20','#0d47a1','#4a148c','#e65100','#006064','#33691e','#4e342e'];
+    var col = colors[i % colors.length];
+    hdr.innerHTML = '<div><span style="font-size:14px;font-weight:700;color:' + col + '">' + sec.cat + '</span><span style="font-size:11px;color:var(--sub);margin-left:8px">' + sec.items.length + ' courses</span></div><span style="font-size:16px;color:var(--sub)" class="carr">▶</span>';
+    var body = div('');
+    body.style.cssText = 'display:none;padding:0 14px 8px;max-height:320px;overflow-y:auto';
+    sec.items.forEach(function(name, idx) {
+      body.innerHTML += '<div style="padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px;color:var(--txt)">' + (idx+1) + '. ' + name + '</div>';
+    });
+    hdr.addEventListener('click', function() {
+      var open = body.style.display !== 'none';
+      body.style.display = open ? 'none' : 'block';
+      hdr.querySelector('.carr').textContent = open ? '▶' : '▼';
+    });
+    wrap.appendChild(hdr); wrap.appendChild(body); pg.appendChild(wrap);
+  });
+}
+
 function renderMore() {
   var pg = document.getElementById('more');
   var tabs = [{id:'m-claude',lbl:'Claude'},{id:'m-certs',lbl:'Certs'},{id:'m-li',lbl:'LinkedIn'},{id:'m-comm',lbl:'Community'}];
@@ -766,6 +708,7 @@ function renderMore() {
   renderPlan();
   renderToolkit();
   renderCloud();
+  renderCourses();
   renderMore();
 
   // Load saved progress
