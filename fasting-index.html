@@ -1,521 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#08101E">
-<title>NaijaFast</title>
-<link rel="manifest" href="fasting-manifest.json">
-<style>
-:root{
-  --bg:#08101E; --surface:#112034; --card:#162840; --border:rgba(255,255,255,.07);
-  --text:#EFF6FF; --sub:#64748B; --sub2:#475569;
-  --teal:#00D4AA; --orange:#F97316; --blue:#3B82F6; --danger:#F43F5E;
-  --grad1:linear-gradient(135deg,#F97316,#00D4AA);
-  --grad2:linear-gradient(135deg,#00D4AA,#3B82F6);
-  --nav:#0D1A2D; --nav-border:rgba(0,212,170,.1);
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html{background:#03080F;min-height:100vh;display:flex;justify-content:center;}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
-  background:#03080F;display:flex;justify-content:center;min-height:100vh;width:100%;}
-.app{width:100%;max-width:390px;background:var(--bg);min-height:100vh;
-  display:flex;flex-direction:column;position:relative;
-  padding-bottom:calc(68px + env(safe-area-inset-bottom));color:var(--text);}
-/* Header */
-.hdr{display:flex;align-items:center;justify-content:space-between;
-  padding:50px 18px 10px;}
-.logo{font-size:1rem;font-weight:800;background:var(--grad1);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hdr-acts{display:flex;gap:8px;}
-.hdr-btn{background:var(--surface);border:1px solid var(--border);color:var(--sub);
-  border-radius:50%;width:36px;height:36px;font-size:.85rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:border-color .2s;}
-.hdr-btn:hover{border-color:var(--teal);}
-/* Body */
-.body{flex:1;overflow-y:auto;padding:0 16px 12px;}
-/* Nav */
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:100%;max-width:390px;background:var(--nav);
-  border-top:1px solid var(--nav-border);
-  display:flex;justify-content:space-around;
-  padding:10px 0 calc(10px + env(safe-area-inset-bottom));
-  z-index:200;backdrop-filter:blur(16px);}
-.nav a{display:flex;flex-direction:column;align-items:center;gap:3px;
-  text-decoration:none;color:var(--sub);font-size:.6rem;font-weight:600;
-  min-width:60px;padding:2px 0;transition:color .2s;}
-.nav a.on{color:var(--orange);}
-.nav a .ni{font-size:1.2rem;}
-/* Stats */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.sbox{background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:12px 8px;text-align:center;}
-.sbox:nth-child(1) .sval{background:linear-gradient(135deg,#F97316,#FB923C);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sbox:nth-child(2) .sval{background:var(--grad2);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sbox:nth-child(3) .sval{background:var(--grad1);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sval{font-size:1.25rem;font-weight:800;}
-.slbl{font-size:.6rem;color:var(--sub);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
-/* Ring */
-.ring-wrap{display:flex;flex-direction:column;align-items:center;padding:6px 0 12px;}
-.ring-svg-wrap{position:relative;width:250px;height:250px;}
-.ring-svg-wrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
-.ring-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.r-time{font-size:2.4rem;font-weight:800;letter-spacing:-1px;line-height:1;}
-.r-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin:5px 0 6px;}
-.r-remain{font-size:.82rem;font-weight:600;color:var(--sub);}
-.zone-pill{margin-top:10px;padding:6px 18px;border-radius:20px;font-size:.76rem;
-  font-weight:700;border:1.5px solid var(--teal);color:var(--teal);letter-spacing:.3px;}
-/* Zone bar */
-.zbar-wrap{margin:0 0 12px;}
-.zbar-lbl{font-size:.6rem;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
-.zbar{display:flex;height:6px;border-radius:3px;overflow:hidden;gap:1px;}
-.zseg{flex:1;border-radius:2px;opacity:.2;transition:opacity .4s;}
-.zseg.on{opacity:1;}
-/* Zone article */
-.zarticle{background:var(--surface);border-radius:16px;padding:14px 15px;
-  margin-bottom:12px;border-left:3px solid var(--orange);transition:border-color .5s,background .3s;}
-.za-top{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
-.za-icon{font-size:1.4rem;}
-.za-title{font-size:.88rem;font-weight:800;flex:1;line-height:1.3;}
-.za-hrs{font-size:.6rem;padding:3px 8px;border-radius:8px;font-weight:700;flex-shrink:0;}
-.za-body{font-size:.77rem;color:#94A3B8;line-height:1.75;}
-/* Buttons */
-.act-row{display:flex;gap:10px;margin-bottom:14px;}
-.btn-go{flex:1;background:var(--grad1);color:#fff;border:none;
-  border-radius:16px;padding:17px;font-size:1rem;font-weight:800;
-  cursor:pointer;letter-spacing:.3px;box-shadow:0 6px 20px rgba(249,115,22,.25);}
-.btn-go:active{opacity:.9;transform:scale(.98);}
-.btn-stop{flex:1;background:rgba(244,63,94,.1);color:var(--danger);
-  border:1.5px solid rgba(244,63,94,.3);border-radius:16px;
-  padding:17px;font-size:1rem;font-weight:800;cursor:pointer;}
-/* Protocol section */
-.sec-lbl{font-size:.66rem;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
-.proto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;}
-.proto-more{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:none;}
-.proto-more::-webkit-scrollbar{display:none;}
-/* Protocol card — featured (16:8, 18:6) */
-.proto{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;
-  padding:12px 8px;cursor:pointer;transition:all .18s;text-align:center;}
-.proto.sel{background:rgba(249,115,22,.12);border-color:var(--orange);}
-.proto.feat{border-color:rgba(249,115,22,.35);}
-.proto.feat.sel{background:rgba(249,115,22,.15);}
-.proto:active{transform:scale(.95);}
-.p-label{font-size:1.3rem;font-weight:900;color:var(--text);letter-spacing:-.5px;line-height:1.1;}
-.p-name{font-size:.65rem;font-weight:700;color:var(--sub);margin:3px 0 0;}
-.p-tag{font-size:.55rem;padding:2px 6px;border-radius:6px;
-  background:rgba(249,115,22,.15);color:var(--orange);margin-top:4px;display:inline-block;}
-/* Scroll proto (extended fasts) */
-.proto-scroll-item{background:var(--surface);border:1.5px solid var(--border);
-  border-radius:12px;padding:10px 12px;min-width:80px;cursor:pointer;
-  transition:all .18s;flex-shrink:0;text-align:center;}
-.proto-scroll-item.sel{background:rgba(0,212,170,.1);border-color:var(--teal);}
-.proto-scroll-item:active{transform:scale(.95);}
-.psi-label{font-size:1.1rem;font-weight:900;color:var(--text);}
-.psi-name{font-size:.62rem;font-weight:600;color:var(--sub);margin-top:2px;}
-.psi-tag{font-size:.55rem;padding:2px 6px;border-radius:6px;
-  background:rgba(0,212,170,.12);color:var(--teal);margin-top:3px;display:inline-block;}
-.custom-row{display:flex;gap:8px;margin-bottom:12px;}
-.custom-row input{flex:1;background:var(--surface);border:1.5px solid var(--border);
-  border-radius:12px;padding:12px 14px;color:var(--text);font-size:.95rem;}
-.custom-row input:focus{outline:none;border-color:var(--teal);}
-.custom-row input::placeholder{color:var(--sub);}
-/* Health Connect card */
-.health-card{background:var(--surface);border-radius:16px;padding:14px 16px;
-  margin-bottom:14px;border:1px solid var(--border);}
-.hc-title{font-size:.8rem;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.hc-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.hc-row:last-child{border-bottom:none;}
-.hc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
-.hc-info{flex:1;}
-.hc-name{font-size:.82rem;font-weight:700;}
-.hc-status{font-size:.68rem;color:var(--sub);margin-top:1px;}
-.hc-btn{border:none;border-radius:10px;padding:7px 14px;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap;}
-.hc-btn.connect{background:linear-gradient(135deg,var(--orange),var(--teal));color:#fff;}
-.hc-btn.connected{background:rgba(0,212,170,.12);color:var(--teal);border:1px solid rgba(0,212,170,.3);}
-.hc-btn.disconnect{background:rgba(244,63,94,.1);color:var(--danger);border:1px solid rgba(244,63,94,.3);}
-/* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;
-  backdrop-filter:blur(4px);justify-content:center;align-items:flex-end;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border-radius:20px 20px 0 0;padding:20px 18px 32px;
-  width:100%;max-width:390px;border-top:1px solid var(--border);}
-.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.modal-title{font-size:1rem;font-weight:800;}
-.modal-close{background:var(--card);border:none;color:var(--sub);border-radius:50%;
-  width:30px;height:30px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.setup-step{font-size:.75rem;color:#94A3B8;line-height:1.7;background:rgba(255,255,255,.03);
-  border-radius:10px;padding:10px 12px;margin-top:10px;border:1px solid var(--border);}
-.setup-step code{background:rgba(0,212,170,.12);color:var(--teal);padding:1px 5px;border-radius:4px;font-size:.7rem;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>NaijaFast</title>
+    <link rel="manifest" href="fasting-manifest.json">
+    <style>
+        :root {
+            --bg: #F0F4F8;
+            --surface: #FFFFFF;
+            --primary: #5D5FEF;
+            --accent: #00D4AA;
+            --text: #1E293B;
+            --sub: #64748B;
+            --border: #E2E8F0;
+            --card-1: #E0E7FF;
+            --card-2: #FFF7ED;
+            --card-3: #F0FDF4;
+            --card-4: #F5F3FF;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; min-height: 100vh; }
+        .app { width: 100%; max-width: 450px; background: var(--surface); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 80px; }
+        .header { padding: 40px 20px 20px; text-align: center; }
+        .header h1 { font-size: 1.5rem; font-weight: 800; color: #1E293B; }
+        .header .subtitle { font-size: 0.9rem; color: var(--sub); margin-top: 4px; }
+        
+        .timer-container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .ring { position: relative; width: 280px; height: 280px; }
+        .ring svg { transform: rotate(-90deg); }
+        .ring-bg { fill: none; stroke: #E2E8F0; stroke-width: 10; }
+        .ring-progress { fill: none; stroke: var(--primary); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+        .ring-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .timer-val { font-size: 2.5rem; font-weight: 800; color: #1E293B; }
+        .timer-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); margin-top: 5px; }
+        
+        .btn-main { width: 80%; background: var(--primary); color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(93, 95, 239, 0.3); }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
+        .stat-card { background: var(--bg); padding: 15px; border-radius: 16px; display: flex; align-items: center; gap: 12px; }
+        .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-val { font-size: 1rem; font-weight: 700; }
+        .stat-label { font-size: 0.7rem; color: var(--sub); }
+
+        .nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--sub); font-size: 0.7rem; font-weight: 600; flex: 1; }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 1.4rem; }
+
+        /* Protocols Section */
+        .section-title { padding: 10px 20px; font-size: 1rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .protocols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 20px; }
+        .proto-card { padding: 20px; border-radius: 16px; border: 1px solid transparent; cursor: pointer; transition: transform 0.2s; }
+        .proto-card:active { transform: scale(0.98); }
+        .proto-card.selected { border-color: var(--primary); background: white !important; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .proto-time { font-size: 1.4rem; font-weight: 800; }
+        .proto-desc { font-size: 0.75rem; color: var(--sub); margin: 5px 0; }
+        .proto-tag { font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 5px; }
+
+    </style>
 </head>
 <body>
-<div class="app">
-
-  <div class="hdr">
-    <div class="logo">⏳ NaijaFast <span style="font-size:.58rem;background:rgba(249,115,22,.15);color:#F97316;padding:2px 7px;border-radius:8px;font-weight:700;vertical-align:middle;">v5</span></div>
-    <div class="hdr-acts">
-      <button class="hdr-btn" id="ctBtn" onclick="toggleCount()" title="Count up/down">⬆️</button>
-      <button class="hdr-btn" onclick="openHealthModal()" title="Health Apps">💪</button>
-      <button class="hdr-btn" id="thBtn" onclick="toggleTheme()">☀️</button>
-    </div>
-  </div>
-
-  <div class="body">
-    <!-- Stats -->
-    <div class="stats">
-      <div class="sbox"><div class="sval" id="sStreak">0</div><div class="slbl">🔥 Streak</div></div>
-      <div class="sbox"><div class="sval" id="sTotal">0</div><div class="slbl">Total Fasts</div></div>
-      <div class="sbox"><div class="sval" id="sLongest">0h</div><div class="slbl">Longest</div></div>
-    </div>
-
-    <!-- Ring -->
-    <div class="ring-wrap">
-      <div class="ring-svg-wrap">
-        <svg width="250" height="250" viewBox="0 0 250 250" fill="none">
-          <defs>
-            <linearGradient id="rg" x1="0" y1="0" x2="250" y2="250" gradientUnits="userSpaceOnUse">
-              <stop id="gs1" offset="0%" stop-color="#F97316"/>
-              <stop id="gs2" offset="100%" stop-color="#00D4AA"/>
-            </linearGradient>
-          </defs>
-          <circle cx="125" cy="125" r="108" stroke="rgba(255,255,255,.06)" stroke-width="12" fill="none"/>
-          <circle id="rProg" cx="125" cy="125" r="108"
-            stroke="url(#rg)" stroke-width="12" fill="none" stroke-linecap="round"
-            stroke-dasharray="678.6" stroke-dashoffset="678.6"/>
-        </svg>
-        <div class="ring-mid">
-          <div class="r-time" id="rTime">00:00:00</div>
-          <div class="r-lbl" id="rLbl">ELAPSED</div>
-          <div class="r-remain" id="rRemain">— remaining</div>
+    <div class="app">
+        <div class="header">
+            <h1 id="greeting">Get ready to fast</h1>
+            <div class="subtitle">Next fasting starts at 10:01 PM</div>
         </div>
-      </div>
-      <div class="zone-pill" id="zPill">🟡 Anabolic</div>
-    </div>
 
-    <!-- Zone article -->
-    <div class="zarticle" id="zArt">
-      <div class="za-top">
-        <div class="za-icon" id="zIcon">🟡</div>
-        <div class="za-title" id="zTitle">Anabolic — Fed State</div>
-        <div class="za-hrs" id="zHrs" style="background:rgba(245,158,11,.12);color:#F59E0B;">0–4 hrs</div>
-      </div>
-      <div class="za-body" id="zBody">Your body is in building and storage mode after eating. Insulin is elevated, driving glucose into cells. No fat burning yet — fasting starts the clock here.</div>
-    </div>
-
-    <!-- Zone bar -->
-    <div class="zbar-wrap">
-      <div class="zbar-lbl">Fasting Zones</div>
-      <div class="zbar" id="zBar"></div>
-    </div>
-
-    <!-- Action -->
-    <div class="act-row" id="actRow">
-      <button class="btn-go" onclick="startFast()">▶  Start Fast</button>
-    </div>
-
-    <!-- Protocols -->
-    <div id="protoSec">
-      <div class="sec-lbl">Popular Protocols</div>
-
-      <!-- Top featured grid: 16:8, 18:6, 20:4 -->
-      <div class="proto-grid" id="featGrid"></div>
-
-      <div class="sec-lbl" style="margin-top:10px;">All Protocols</div>
-      <!-- Scrollable full list -->
-      <div class="proto-more" id="protoMore"></div>
-
-      <div class="custom-row" id="custRow" style="display:none;">
-        <input type="number" id="custHrs" placeholder="Enter hours (e.g. 42)" min="1" max="240">
-      </div>
-    </div>
-  </div>
-</div><!-- /app -->
-
-<!-- Health Apps Modal -->
-<div class="modal-overlay" id="healthModal" onclick="closeModalOutside(event)">
-  <div class="modal">
-    <div class="modal-hdr">
-      <div class="modal-title">💪 Health App Connect</div>
-      <button class="modal-close" onclick="closeHealthModal()">✕</button>
-    </div>
-    <div class="health-card" style="margin-bottom:0">
-      <!-- Google Fit -->
-      <div class="hc-row">
-        <div class="hc-icon" style="background:rgba(66,133,244,.15);">🏃</div>
-        <div class="hc-info">
-          <div class="hc-name">Google Fit</div>
-          <div class="hc-status" id="gfStatus">Not connected</div>
+        <div class="timer-container">
+            <div class="ring">
+                <svg width="280" height="280">
+                    <circle class="ring-bg" cx="140" cy="140" r="130"></circle>
+                    <circle id="progress" class="ring-progress" cx="140" cy="140" r="130" stroke-dasharray="816.8" stroke-dashoffset="816.8"></circle>
+                </svg>
+                <div class="ring-content">
+                    <div id="proto-label" style="font-size: 0.8rem; font-weight: 700; background: #F1F5F9; padding: 4px 12px; border-radius: 12px; margin-bottom: 10px;">16:8 ></div>
+                    <div class="timer-label" id="timer-status">Starts in</div>
+                    <div class="timer-val" id="timer-display">00:00:00</div>
+                </div>
+            </div>
+            <button class="btn-main" id="start-btn" onclick="startFast()">Start Fasting</button>
+            <div style="display: flex; justify-content: space-between; width: 85%; margin-top: 20px; font-size: 0.8rem;">
+                <div style="text-align: left;"><span style="color:var(--sub)">Start time</span><br><b id="start-time-display">Today, 10:01 PM</b></div>
+                <div style="text-align: right;"><span style="color:var(--sub)">End time</span><br><b id="end-time-display">Tomorrow, 02:01 PM</b></div>
+            </div>
         </div>
-        <button class="hc-btn connect" id="gfBtn" onclick="connectGoogleFit()">Connect</button>
-      </div>
-      <!-- Fitbit -->
-      <div class="hc-row">
-        <div class="hc-icon" style="background:rgba(0,176,135,.15);">⌚</div>
-        <div class="hc-info">
-          <div class="hc-name">Fitbit</div>
-          <div class="hc-status" id="fbStatus">Not connected</div>
+
+        <div class="section-title">Daily task</div>
+        <div class="stats-grid">
+            <div class="stat-card" style="background: #E0F2FE;">
+                <div class="stat-icon" style="background: #BAE6FD;">💧</div>
+                <div class="stat-info">
+                    <div class="stat-val">0 / 2500 ml</div>
+                    <div class="stat-label">Water</div>
+                </div>
+            </div>
+            <div class="stat-card" style="background: #F0FDF4;">
+                <div class="stat-icon" style="background: #DCFCE7;">⚖️</div>
+                <div class="stat-info">
+                    <div class="stat-val">232.9 lbs</div>
+                    <div class="stat-label">Weight</div>
+                </div>
+            </div>
         </div>
-        <button class="hc-btn connect" id="fbBtn" onclick="connectFitbit()">Connect</button>
-      </div>
-      <!-- Sync -->
-      <div class="hc-row" id="syncRow" style="display:none;">
-        <div class="hc-icon" style="background:rgba(249,115,22,.15);">🔄</div>
-        <div class="hc-info">
-          <div class="hc-name">Sync Last Fast</div>
-          <div class="hc-status" id="syncStatus">Ready to sync</div>
+
+        <div class="section-title">Hot plans</div>
+        <div class="protocols">
+            <div class="proto-card" style="background: #EEF2FF;" onclick="selectProto(16)">
+                <div class="proto-time">16:8</div>
+                <div class="proto-desc">16h fasting<br>8h eating</div>
+                <div class="proto-tag" style="background: #FFE4E6; color: #E11D48;">Most popular</div>
+            </div>
+            <div class="proto-card" style="background: #FFF7ED;" onclick="selectProto(20)">
+                <div class="proto-time">20:4</div>
+                <div class="proto-desc">20h fasting<br>4h eating</div>
+                <div class="proto-tag" style="background: #FEF3C7; color: #D97706;">Warrior diet</div>
+            </div>
         </div>
-        <button class="hc-btn connect" onclick="syncFast()">Sync</button>
-      </div>
+
+        <nav class="nav">
+            <a href="fasting-index.html" class="nav-item active"><span class="nav-icon">⏱️</span><span>Fasting</span></a>
+            <a href="fasting-plans.html" class="nav-item"><span class="nav-icon">📖</span><span>Plan</span></a>
+            <a href="fasting-learn.html" class="nav-item"><span class="nav-icon">💡</span><span>Learn</span></a>
+            <a href="fasting-food.html" class="nav-item"><span class="nav-icon">🍳</span><span>Recipes</span></a>
+            <a href="fasting-history.html" class="nav-item"><span class="nav-icon">👤</span><span>Me</span></a>
+        </nav>
     </div>
-    <div class="setup-step" id="setupGuide">
-      <strong>⚙️ First-time setup:</strong><br>
-      1. Go to <code>console.cloud.google.com</code> → New Project<br>
-      2. Enable <code>Google Fit API</code><br>
-      3. Create OAuth 2.0 Web credentials<br>
-      4. Add your GitHub Pages URL as authorized origin<br>
-      5. Paste your <code>Client ID</code> below:<br><br>
-      <input id="gfClientId" placeholder="Google Client ID (paste here)"
-        style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 10px;color:var(--text);font-size:.75rem;margin-top:4px;">
-      <button onclick="saveClientId()" style="margin-top:6px;background:var(--grad1);border:none;color:#fff;border-radius:8px;padding:7px 14px;font-size:.72rem;font-weight:700;cursor:pointer;width:100%;">Save Client ID</button>
-    </div>
-  </div>
-</div>
 
-<nav class="nav">
-  <a href="fasting-index.html" class="on"><span class="ni">⏳</span>Timer</a>
-  <a href="fasting-food.html"><span class="ni">🍽️</span>Food</a>
-  <a href="fasting-history.html"><span class="ni">📊</span>History</a>
-</nav>
+    <script>
+        let fasting = false;
+        let selectedHours = 16;
+        const CIRC = 816.8;
 
-<script>
-const CIRC=678.6;
-let ticker=null,selHrs=16,countUp=true;
+        function selectProto(h) {
+            selectedHours = h;
+            document.getElementById('proto-label').innerText = h + ':8 >';
+            // Update UI selected state
+        }
 
+        function startFast() {
+            fasting = !fasting;
+            const btn = document.getElementById('start-btn');
+            const status = document.getElementById('timer-status');
+            if (fasting) {
+                btn.innerText = "End Fast";
+                btn.style.background = "#F43F5E";
+                status.innerText = "Elapsed";
+                localStorage.setItem('fStart', Date.now());
+            } else {
+                btn.innerText = "Start Fasting";
+                btn.style.background = "var(--primary)";
+                status.innerText = "Starts in";
+                localStorage.removeItem('fStart');
+            }
+        }
 
-const ZONES=[
-  {hrs:0, name:"Anabolic",   icon:"🟡",color:"#F59E0B",title:"Anabolic — Fed State",
-   article:"Your body is in building and storage mode after eating. Insulin is elevated, driving glucose into muscle and fat cells. The liver converts excess glucose into glycogen reserves. No fat burning is happening yet — fasting starts the clock here.",badge:"0–4 hrs"},
-  {hrs:4, name:"Catabolic",  icon:"🟠",color:"#F97316",title:"Catabolic — Glycogen Depleting",
-   article:"Blood glucose is falling and insulin levels are dropping. Your body releases glucagon to break down liver glycogen. Fat cells begin releasing small amounts of fatty acids. Mild hunger is your body switching fuel sources, not an emergency.",badge:"4–8 hrs"},
-  {hrs:8, name:"Fat Burning",icon:"🟢",color:"#22C55E",title:"Fat Burning — Lipolysis Active",
-   article:"Glycogen stores are nearly exhausted. Your body has switched its primary fuel to stored body fat through lipolysis. Free fatty acids flood the bloodstream. This is the core fat-loss benefit of daily intermittent fasting.",badge:"8–16 hrs"},
-  {hrs:16,name:"Ketosis",    icon:"🔵",color:"#3B82F6",title:"Ketosis — Ketones Rising",
-   article:"Your liver is converting fatty acids into ketone bodies. The brain switches to running efficiently on ketones. Most people report sharper mental clarity and sustained energy here. This is the target zone of the popular 16:8 protocol.",badge:"16–24 hrs"},
-  {hrs:24,name:"Deep Ketosis",icon:"🟣",color:"#8B5CF6",title:"Deep Ketosis — Autophagy Begins",
-   article:"Ketone levels are at their peak. Early autophagy is triggered — cells identify and break down damaged proteins and organelles. Growth hormone spikes, protecting lean muscle. Inflammation markers like IL-6 and TNF-alpha start to drop.",badge:"24–48 hrs"},
-  {hrs:48,name:"Autophagy",  icon:"🩷",color:"#EC4899",title:"Autophagy — Deep Cellular Cleanup",
-   article:"Autophagy (Greek: self-eating) is at peak activity. Cells aggressively recycle old, damaged, and misfolded proteins linked to disease and aging. This process is associated with neuroprotection and cancer prevention. The 2016 Nobel Prize in Medicine was awarded for discovering autophagy.",badge:"48–72 hrs"},
-  {hrs:72,name:"Immune Reset",icon:"🩵",color:"#06B6D4",title:"Immune Reset — Stem Cell Surge",
-   article:"Dr. Valter Longo's landmark USC study showed 72hrs of fasting triggers dramatic stem cell production. Old white blood cells are broken down and replaced with freshly generated immune cells — essentially a partial immune system reboot via the PKA enzyme and IGF-1 suppression pathway.",badge:"72–96 hrs"},
-  {hrs:96,name:"Deep Renewal",icon:"💎",color:"#10B981",title:"Deep Renewal — Full Regeneration",
-   article:"The deepest level of metabolic renewal. Stem cell activity peaks across major organ systems. Full systemic autophagy clears cellular debris. This level requires medical supervision, electrolyte support (sodium, potassium, magnesium), and a carefully planned refeeding protocol.",badge:"96+ hrs"},
-];
-
-
-// Featured protocols (top grid)
-const FEAT=[
-  {hrs:16,label:"16:8",name:"Intermittent Fast",tag:"⭐ Most Popular",feat:true},
-  {hrs:18,label:"18:6",name:"Lean Gains",tag:"Recommended",feat:true},
-  {hrs:20,label:"20:4",name:"Warrior Diet",feat:true},
-];
-// Full scroll list
-const ALL_PROTOS=[
-  {hrs:12,label:"12h",name:"12:12 Beginner",tag:"Easy Start"},
-  {hrs:14,label:"14h",name:"14:10"},
-  {hrs:16,label:"16h",name:"16:8",tag:"⭐ Popular"},
-  {hrs:18,label:"18h",name:"18:6",tag:"Top Pick"},
-  {hrs:20,label:"20h",name:"20:4"},
-  {hrs:23,label:"OMAD",name:"One Meal/Day"},
-  {hrs:24,label:"24h",name:"Full Day Fast"},
-  {hrs:36,label:"36h",name:"Monk Fast"},
-  {hrs:48,label:"48h",name:"2-Day Fast"},
-  {hrs:65,label:"65h",name:"Weekend Reset",tag:"🌟"},
-  {hrs:72,label:"72h",name:"3-Day Fast",tag:"🔮"},
-  {hrs:96,label:"96h",name:"4-Day Fast",tag:"💎"},
-  {hrs:120,label:"120h",name:"5-Day Fast",tag:"⚡"},
-  {hrs:0, label:"⚙️",name:"Custom"},
-];
-
-function getZone(ms){const h=ms/3600000;let z=ZONES[0];for(let x of ZONES)if(h>=x.hrs)z=x;return z;}
-function fmt(ms){let s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);s%=60;m%=60;return[h,m,s].map(v=>String(v).padStart(2,"0")).join(":");}
-function fmtR(ms){if(ms<=0)return"🎉 Goal reached!";let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?`${h}h ${m}m remaining`:`${m}m remaining`;}
-function fmtH(ms){let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?`${h}h ${m}m`:`${m}m`;}
-
-function buildBar(){document.getElementById("zBar").innerHTML=ZONES.map(z=>`<div class="zseg" id="zs${z.hrs}" style="background:${z.color}" title="${z.name}"></div>`).join("");}
-function updBar(ms){const h=ms/3600000;ZONES.forEach(z=>{const e=document.getElementById("zs"+z.hrs);if(e)e.classList.toggle("on",h>=z.hrs);});}
-function updZone(z){
-  document.getElementById("zArt").style.borderLeftColor=z.color;
-  document.getElementById("zIcon").textContent=z.icon;
-  document.getElementById("zTitle").textContent=z.title;
-  document.getElementById("zBody").textContent=z.article;
-  document.getElementById("zHrs").style.background=z.color+"22";
-  document.getElementById("zHrs").style.color=z.color;
-  document.getElementById("zHrs").textContent=z.badge;
-  document.getElementById("zPill").textContent=z.icon+" "+z.name;
-  document.getElementById("zPill").style.color=z.color;
-  document.getElementById("zPill").style.borderColor=z.color;
-  document.getElementById("gs1").setAttribute("stop-color",z.color);
-}
-function tick(){
-  const start=parseInt(localStorage.getItem("fStart")||"0");
-  const total=parseInt(localStorage.getItem("fDur")||"0");
-  if(!start)return;
-  const el=Date.now()-start;
-  const pct=Math.min(el/total,1);
-  const z=getZone(el);
-  document.getElementById("rProg").setAttribute("stroke-dashoffset",(CIRC*(1-pct)).toFixed(2));
-  document.getElementById("rTime").textContent=fmt(countUp?el:Math.max(total-el,0));
-  document.getElementById("rLbl").textContent=countUp?"ELAPSED":"REMAINING";
-  document.getElementById("rRemain").textContent=fmtR(total-el);
-  updZone(z);updBar(el);
-  if(el>=total&&total>0)completeFast();
-}
-function startFast(){
-  let h=selHrs;
-  if(h===0){h=parseFloat(document.getElementById("custHrs").value);if(!h||h<1){alert("Enter valid hours.");return;}}
-  if(!confirm(`Start ${h}-hour fast now?`))return;
-  localStorage.setItem("fStart",Date.now());
-  localStorage.setItem("fDur",h*3600000);
-  localStorage.setItem("fName",h+"h Fast");
-  showActive(true);runTick();
-}
-function endFast(){if(!confirm("End this fast?"))return;save();clearInterval(ticker);localStorage.removeItem("fStart");localStorage.removeItem("fDur");localStorage.removeItem("fName");document.getElementById("rProg").setAttribute("stroke-dashoffset",CIRC);document.getElementById("rTime").textContent="00:00:00";document.getElementById("rRemain").textContent="— remaining";showActive(false);loadStats();}
-function completeFast(){clearInterval(ticker);save();localStorage.removeItem("fStart");localStorage.removeItem("fDur");localStorage.removeItem("fName");showActive(false);loadStats();alert("🎉 Fast complete! Check Health Apps to sync.");}
-function save(){const s=parseInt(localStorage.getItem("fStart")||"0");const el=s?Date.now()-s:0;const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");h.unshift({date:new Date().toLocaleDateString(),elapsed:el,name:localStorage.getItem("fName")||"Fast",startTime:s,endTime:Date.now()});localStorage.setItem("fastHistory",JSON.stringify(h.slice(0,50)));localStorage.setItem("fastStreak",(parseInt(localStorage.getItem("fastStreak")||"0")+1));}
-function showActive(on){
-  document.getElementById("actRow").innerHTML=on
-    ?'<button class="btn-stop" onclick="endFast()">■  End Fast</button>'
-    :'<button class="btn-go" onclick="startFast()">▶  Start Fast</button>';
-  document.getElementById("protoSec").style.display=on?"none":"block";
-}
-function runTick(){clearInterval(ticker);tick();ticker=setInterval(tick,1000);}
-
-function buildProtos(){
-  // Featured grid
-  document.getElementById("featGrid").innerHTML=FEAT.map(p=>`
-    <div class="proto feat${p.hrs===selHrs?" sel":""}" onclick="selProto(this,${p.hrs},true)">
-      <div class="p-label">${p.label}</div>
-      <div class="p-name">${p.name}</div>
-      ${p.tag?`<div class="p-tag">${p.tag}</div>`:""}
-    </div>`).join("");
-  // Scroll list
-  document.getElementById("protoMore").innerHTML=ALL_PROTOS.map(p=>`
-    <div class="proto-scroll-item${p.hrs===selHrs?" sel":""}" onclick="selProto(this,${p.hrs},false)">
-      <div class="psi-label">${p.label}</div>
-      <div class="psi-name">${p.name}</div>
-      ${p.tag?`<div class="psi-tag">${p.tag}</div>`:""}
-    </div>`).join("");
-}
-function selProto(el,hrs,isFeat){
-  document.querySelectorAll(".proto,.proto-scroll-item").forEach(c=>c.classList.remove("sel"));
-  el.classList.add("sel");selHrs=hrs;
-  document.getElementById("custRow").style.display=hrs===0?"flex":"none";
-}
-function loadStats(){
-  const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");
-  document.getElementById("sTotal").textContent=h.length;
-  document.getElementById("sStreak").textContent=localStorage.getItem("fastStreak")||"0";
-  const lng=h.reduce((mx,f)=>Math.max(mx,f.elapsed||0),0);
-  document.getElementById("sLongest").textContent=lng>0?fmtH(lng):"0h";
-}
-function toggleCount(){countUp=!countUp;document.getElementById("ctBtn").textContent=countUp?"⬆️":"⬇️";}
-
-// ── Health Apps ──
-function openHealthModal(){
-  document.getElementById("healthModal").classList.add("open");
-  checkConnections();
-}
-function closeHealthModal(){document.getElementById("healthModal").classList.remove("open");}
-function closeModalOutside(e){if(e.target===document.getElementById("healthModal"))closeHealthModal();}
-
-function checkConnections(){
-  const gfToken=localStorage.getItem("gfToken");
-  const fbToken=localStorage.getItem("fbToken");
-  const gfBtn=document.getElementById("gfBtn");
-  const fbBtn=document.getElementById("fbBtn");
-  if(gfToken){
-    document.getElementById("gfStatus").textContent="✅ Connected";
-    gfBtn.className="hc-btn connected";gfBtn.textContent="Connected";
-    document.getElementById("syncRow").style.display="flex";
-    document.getElementById("setupGuide").style.display="none";
-  }
-  if(fbToken){
-    document.getElementById("fbStatus").textContent="✅ Connected";
-    fbBtn.className="hc-btn connected";fbBtn.textContent="Connected";
-  }
-}
-
-function saveClientId(){
-  const id=document.getElementById("gfClientId").value.trim();
-  if(!id){alert("Paste your Google Client ID first.");return;}
-  localStorage.setItem("gfClientId",id);
-  alert("✅ Client ID saved. Now tap Connect to authorise.");
-}
-
-function connectGoogleFit(){
-  const clientId=localStorage.getItem("gfClientId");
-  if(!clientId){document.getElementById("setupGuide").style.display="block";alert("⚠️ Paste your Google Client ID in the setup section below first.");return;}
-  const redirectUri=encodeURIComponent(window.location.origin+window.location.pathname);
-  const scope=encodeURIComponent("https://www.googleapis.com/auth/fitness.activity.write https://www.googleapis.com/auth/fitness.body.write");
-  const url=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}&prompt=consent`;
-  window.open(url,"_blank","width=500,height=600");
-  // Check for token in URL hash on return
-  window.addEventListener("message",e=>{if(e.data&&e.data.gfToken){localStorage.setItem("gfToken",e.data.gfToken);checkConnections();}});
-}
-
-function connectFitbit(){
-  const clientId=localStorage.getItem("fbClientId")||prompt("Paste your Fitbit App Client ID (get it at dev.fitbit.com):");
-  if(!clientId)return;
-  localStorage.setItem("fbClientId",clientId);
-  const redirectUri=encodeURIComponent(window.location.href);
-  const scope=encodeURIComponent("activity heartrate weight");
-  const url=`https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&expires_in=604800`;
-  window.location.href=url;
-}
-
-function syncFast(){
-  const token=localStorage.getItem("gfToken");
-  const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");
-  if(!h.length||!token){alert("No fast data to sync or not connected.");return;}
-  const last=h[0];
-  const session={id:"naijafast_"+last.startTime,name:last.name||"NaijaFast",startTimeMillis:last.startTime,endTimeMillis:last.endTime||last.startTime+last.elapsed,activityType:72};
-  fetch("https://www.googleapis.com/fitness/v1/users/me/sessions/"+session.id,{
-    method:"PUT",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},
-    body:JSON.stringify(session)
-  }).then(r=>r.ok?alert("✅ Synced to Google Fit!"):alert("❌ Sync failed. Token may have expired — reconnect."))
-     .catch(()=>alert("❌ Network error during sync."));
-}
-
-// Handle OAuth token return in URL
-(function(){
-  const hash=window.location.hash;
-  if(hash.includes("access_token")){
-    const token=new URLSearchParams(hash.slice(1)).get("access_token");
-    if(token){
-      if(hash.includes("fitness")){localStorage.setItem("gfToken",token);alert("✅ Google Fit connected!");}
-      else{localStorage.setItem("fbToken",token);alert("✅ Fitbit connected!");}
-      window.location.hash="";
-    }
-  }
-})();
-
-function toggleTheme(){
-  const lt=document.body.classList.toggle("lt");localStorage.setItem("lm",lt);
-  document.getElementById("thBtn").textContent=lt?"🌙":"☀️";
-  const t=lt?{"--bg":"#FFF7ED","--surface":"#FFFFFF","--card":"#FEF3E2","--text":"#1C1917","--sub":"#64748B","--nav":"#FFFFFF","--nav-border":"rgba(249,115,22,.15)","--border":"rgba(0,0,0,.07)"}
-             :{"--bg":"#08101E","--surface":"#112034","--card":"#162840","--text":"#EFF6FF","--sub":"#64748B","--nav":"#0D1A2D","--nav-border":"rgba(0,212,170,.1)","--border":"rgba(255,255,255,.07)"};
-  Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
-  document.querySelector("html").style.background=lt?"#FEE9D0":"#03080F";
-}
-
-if(localStorage.getItem("lm")==="true")toggleTheme();
-buildBar();buildProtos();loadStats();
-if(localStorage.getItem("fStart")){showActive(true);runTick();}
-if("serviceWorker" in navigator)navigator.serviceWorker.register("fasting-sw.js?v=5");
-</script>
+        setInterval(() => {
+            const start = localStorage.getItem('fStart');
+            if (start) {
+                const elapsed = Date.now() - start;
+                const h = Math.floor(elapsed / 3600000);
+                const m = Math.floor((elapsed % 3600000) / 60000);
+                const s = Math.floor((elapsed % 60000) / 1000);
+                document.getElementById('timer-display').innerText = 
+                    `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                
+                const pct = Math.min(elapsed / (selectedHours * 3600000), 1);
+                document.getElementById('progress').style.strokeDashoffset = CIRC * (1 - pct);
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
