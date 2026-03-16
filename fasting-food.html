@@ -1,154 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>NaijaFast - Recipes</title>
-  <style>
-    :root { --bg:#F0F4F8; --surface:#fff; --primary:#5D5FEF; --accent:#00D4AA; --text:#1E293B; --sub:#64748B; --border:#E2E8F0; }
-    * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); display:flex; justify-content:center; min-height:100vh; }
-    .app { width:100%; max-width:450px; background:var(--surface); min-height:100vh; display:flex; flex-direction:column; padding-bottom:80px; }
-    
-    .page-hdr { padding:40px 20px 10px; display:flex; justify-content:space-between; align-items:center; }
-    .page-title { font-size:1.5rem; font-weight:800; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>JydFasting - Recipes</title>
+    <style>
+        :root { --bg:#F0F4F8; --surface:#fff; --primary:#5D5FEF; --accent:#00D4AA; --text:#1E293B; --sub:#64748B; --border:#E2E8F0; }
+        * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); display:flex; justify-content:center; }
+        .app { width:100%; max-width:450px; background:var(--surface); min-height:100vh; display:flex; flex-direction:column; padding-bottom:80px; }
+        
+        .page-hdr { padding:40px 20px 10px; display:flex; justify-content:space-between; align-items:center; }
+        .page-title { font-size:1.5rem; font-weight:800; }
 
-    .tabs { display:flex; gap:12px; padding:10px 20px; overflow-x:auto; scrollbar-width:none; }
-    .tabs::-webkit-scrollbar { display:none; }
-    .tab-btn { padding:8px 16px; border-radius:20px; background:var(--bg); border:1px solid var(--border); font-size:0.8rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:all 0.2s; }
-    .tab-btn.on { background:var(--primary); color:white; border-color:var(--primary); }
+        .tabs { display:flex; gap:12px; padding:10px 20px; overflow-x:auto; scrollbar-width:none; }
+        .tabs::-webkit-scrollbar { display:none; }
+        .tab-btn { padding:8px 16px; border-radius:20px; background:var(--bg); border:1px solid var(--border); font-size:0.8rem; font-weight:600; cursor:pointer; }
+        .tab-btn.on { background:var(--primary); color:white; border-color:var(--primary); }
 
-    .content-area { padding:10px 20px; flex:1; overflow-y:auto; }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px; }
+        .content-area { padding:10px 20px; flex:1; overflow-y:auto; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px; }
+        
+        /* Recipe card with Jay-Z hover effect */
+        .dish-card { 
+            background:white; 
+            border-radius:16px; 
+            overflow:hidden; 
+            border:1px solid var(--border); 
+            text-decoration:none; 
+            color:inherit; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .dish-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .dish-img { width:100%; height:110px; object-fit:cover; background:#f1f1f1; }
+        .dish-info { padding:10px; }
+        .dish-name { font-size:0.8rem; font-weight:700; display:block; }
+        .dish-meta { font-size:0.65rem; color:var(--sub); margin-top:2px; }
 
-    /* Recipe card with Jay-Z hover effect */
-    .dish-card { 
-      background:white; 
-      border-radius:16px; 
-      overflow:hidden; 
-      border:1px solid var(--border); 
-      text-decoration:none; 
-      color:inherit; 
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-    }
-    .dish-card:hover { 
-      transform: translateY(-6px); 
-      box-shadow: 0 12px 24px rgba(0,0,0,0.1); 
-      border-color: var(--primary);
-    }
-    .dish-img { height:120px; background-size:cover; background-position:center; background-color:#F1F5F9; }
-    .dish-info { padding:12px; }
-    .dish-name { font-size:0.9rem; font-weight:700; margin-bottom:4px; }
-    .dish-meta { font-size:0.7rem; color:var(--sub); }
-
-    .nav { position:fixed; bottom:0; width:100%; max-width:450px; background:white; display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid var(--border); }
-    .nav-item { display:flex; flex-direction:column; align-items:center; gap:4px; text-decoration:none; color:var(--sub); font-size:0.7rem; font-weight:600; flex:1; }
-    .nav-item.active { color:var(--primary); }
-    .nav-icon { font-size:1.4rem; }
-
-    .tab-pane { display:none; }
-    .tab-pane.active { display:block; }
-  </style>
+        .nav { position:fixed; bottom:0; width:100%; max-width:450px; background:#fff; border-top:1px solid var(--border); display:flex; justify-content:space-around; padding:12px 0 24px; }
+        .nav-item { color:var(--sub); text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; transition: all 0.2s ease; }
+        .nav-item:hover { color: var(--primary); transform: translateY(-2px); }
+        .nav-item.active { color:var(--primary); }
+        .nav-item i { font-size:1.1rem; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="app">
-    <div class="page-hdr">
-      <div class="page-title">Recipes</div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab-btn on" onclick="switchPane('mains', this)">Main Dishes</button>
-      <button class="tab-btn" onclick="switchPane('swallows', this)">Swallows</button>
-      <button class="tab-btn" onclick="switchPane('veggies', this)">Vegetables</button>
-    </div>
-
-    <div class="content-area">
-      <!-- Mains Pane -->
-      <div id="mains" class="tab-pane active">
-        <div class="grid">
-          <a href="recipe-jollof.html" class="dish-card">
-            <div class="dish-img" style="background-image:url('https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=300&q=80')"></div>
-            <div class="dish-info">
-              <div class="dish-name">Jollof Rice</div>
-              <div class="dish-meta">1 plate • Moderate carbs</div>
-            </div>
-          </a>
-          <a href="recipe-beans.html" class="dish-card">
-            <div class="dish-img" style="background-image:url('https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=300&q=80')"></div>
-            <div class="dish-info">
-              <div class="dish-name">Beans & Plantain</div>
-              <div class="dish-meta">1 plate • High protein</div>
-            </div>
-          </a>
+    <div class="app">
+        <div class="page-hdr">
+            <h2 class="page-title">Recipes</h2>
+            <i class="fas fa-search" style="color:var(--sub); font-size:1.2rem;"></i>
         </div>
-      </div>
 
-      <!-- Swallows Pane -->
-      <div id="swallows" class="tab-pane">
-        <div class="grid">
-          <a href="recipe-eba.html" class="dish-card">
-            <div class="dish-img"></div>
-            <div class="dish-info">
-              <div class="dish-name">Eba (Garri)</div>
-              <div class="dish-meta">1 wrap • Energy booster</div>
-            </div>
-          </a>
-          <a href="recipe-pounded-yam.html" class="dish-card">
-            <div class="dish-img"></div>
-            <div class="dish-info">
-              <div class="dish-name">Pounded Yam</div>
-              <div class="dish-meta">1 wrap • Traditional</div>
-            </div>
-          </a>
+        <div class="tabs">
+            <button class="tab-btn on">All</button>
+            <button class="tab-btn" onclick="location.href='fasting-veg.html'">Vegetables</button>
+            <button class="tab-btn">High Protein</button>
+            <button class="tab-btn">Low Carb</button>
         </div>
-      </div>
 
-      <!-- Vegetables Pane -->
-      <div id="veggies" class="tab-pane">
-        <div class="grid">
-          <div class="dish-card">
-            <div class="dish-img" style="background-image:url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80')"></div>
-            <div class="dish-info">
-              <div class="dish-name">Green Bell Pepper</div>
-              <div class="dish-meta">Low cal • Vitamins</div>
+        <div class="content-area">
+            <p style="font-size:0.85rem; font-weight:700; color:var(--sub);">Nigerian Favorites</p>
+            <div class="grid">
+                <a href="#" class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1628102476695-885134407804?auto=format&fit=crop&w=200&q=80" alt="Jollof" class="dish-img">
+                    <div class="dish-info">
+                        <span class="dish-name">Smoky Jollof</span>
+                        <span class="dish-meta">1 plate • 450 kcal</span>
+                    </div>
+                </a>
+                <a href="#" class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=200&q=80" alt="Pounded Yam" class="dish-img">
+                    <div class="dish-info">
+                        <span class="dish-name">Pounded Yam & Egusi</span>
+                        <span class="dish-meta">1 wrap • 650 kcal</span>
+                    </div>
+                </a>
+                <a href="#" class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=200&q=80" alt="Moin Moin" class="dish-img">
+                    <div class="dish-info">
+                        <span class="dish-name">Oven-baked Moin Moin</span>
+                        <span class="dish-meta">2 pieces • 320 kcal</span>
+                    </div>
+                </a>
+                <a href="#" class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1512058560550-42749359a60b?auto=format&fit=crop&w=200&q=80" alt="Suya" class="dish-img">
+                    <div class="dish-info">
+                        <span class="dish-name">Beef Suya Platter</span>
+                        <span class="dish-meta">Medium • 400 kcal</span>
+                    </div>
+                </a>
             </div>
-          </div>
-          <div class="dish-card">
-            <div class="dish-img" style="background-image:url('https://images.unsplash.com/photo-1563513330611-42358bc75330?auto=format&fit=crop&w=300&q=80')"></div>
-            <div class="dish-info">
-              <div class="dish-name">Cabbage</div>
-              <div class="dish-meta">High fiber • Keto</div>
-            </div>
-          </div>
-          <div class="dish-card">
-            <div class="dish-img" style="background-image:url('https://images.unsplash.com/photo-1528137858917-649062222956?auto=format&fit=crop&w=300&q=80')"></div>
-            <div class="dish-info">
-              <div class="dish-name">Red Pepper (Tatashe)</div>
-              <div class="dish-meta">Spice & Flavor</div>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <nav class="nav">
+            <a href="fasting-index.html" class="nav-item">
+                <i class="fas fa-clock"></i>
+                <span>Fast</span>
+            </a>
+            <a href="fasting-plans.html" class="nav-item">
+                <i class="fas fa-fire"></i>
+                <span>Plans</span>
+            </a>
+            <a href="fasting-food.html" class="nav-item active">
+                <i class="fas fa-utensils"></i>
+                <span>Food</span>
+            </a>
+            <a href="fasting-history.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>History</span>
+            </a>
+        </nav>
     </div>
-
-    <nav class="nav">
-      <a href="fasting-index.html" class="nav-item"><span class="nav-icon">⏳️</span><span>Fasting</span></a>
-      <a href="fasting-plans.html" class="nav-item"><span class="nav-icon">📖</span><span>Plan</span></a>
-      <a href="fasting-learn.html" class="nav-item"><span class="nav-icon">💡</span><span>Learn</span></a>
-      <a href="fasting-food.html" class="nav-item active"><span class="nav-icon">🍳</span><span>Recipes</span></a>
-      <a href="fasting-history.html" class="nav-item"><span class="nav-icon">👤</span><span>Me</span></a>
-    </nav>
-  </div>
-
-  <script>
-    function switchPane(id, btn) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-  </script>
 </body>
 </html>
