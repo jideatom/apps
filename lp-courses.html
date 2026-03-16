@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c3aed">
+<link rel="manifest" href="manifest.json">
+<title>AI Engineering — LP Courses</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a14; color: #e0e0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+header { background: linear-gradient(135deg, #100a2a, #1a0a40); padding: 16px 18px; border-bottom: 1px solid #7c3aed; display: flex; align-items: center; gap: 12px; }
+.back-btn { color: #a78bfa; font-size: 1.2rem; text-decoration: none; }
+header h1 { font-size: 1rem; font-weight: 700; color: #fff; }
+header p { font-size: 0.72rem; color: #888; margin-top: 2px; }
+main { padding: 18px; max-width: 540px; margin: 0 auto; }
+
+.phase-block { margin-bottom: 28px; }
+.phase-title { font-size: 0.7rem; color: #7c3aed; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #1e1e3a; }
+.lp-item { background: #111120; border: 1px solid #1e1e3a; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: border-color 0.2s; }
+.lp-item:hover { border-color: #7c3aed; }
+.lp-item.done { background: #0a1a0f; border-color: #22c55e; }
+.lp-name { font-size: 0.82rem; color: #d0d0e8; flex: 1; padding-right: 12px; line-height: 1.3; }
+.lp-item.done .lp-name { color: #4ade80; }
+.lp-size { font-size: 0.7rem; color: #444; white-space: nowrap; }
+.lp-check { font-size: 1rem; margin-left: 10px; }
+.lp-item.done .lp-check { color: #22c55e; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back-btn">←</a>
+  <div>
+    <h1>🤖 AI Engineering — LP Courses</h1>
+    <p>40-week roadmap · 6 phases</p>
+  </div>
+</header>
+<main>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 0 — Claude Orientation (March 2026)</div>
+    <div class="lp-item" data-lp="lp01" onclick="toggleLP('lp01')"><span class="lp-name">AI for Everyday IT, Video Edition (2025)</span><span class="lp-size">1.68 GB</span><span class="lp-check" id="lpc-lp01">○</span></div>
+    <div class="lp-item" data-lp="lp02" onclick="toggleLP('lp02')"><span class="lp-name">PLS – First Look Claude Cowork 2026</span><span class="lp-size">99.2 MB</span><span class="lp-check" id="lpc-lp02">○</span></div>
+    <div class="lp-item" data-lp="lp03" onclick="toggleLP('lp03')"><span class="lp-name">PLS – Introduction to Claude Code</span><span class="lp-size">103 MB</span><span class="lp-check" id="lpc-lp03">○</span></div>
+    <div class="lp-item" data-lp="lp04" onclick="toggleLP('lp04')"><span class="lp-name">FASTER – Claude Code from Scratch</span><span class="lp-size">317 MB</span><span class="lp-check" id="lpc-lp04">○</span></div>
+    <div class="lp-item" data-lp="lp05" onclick="toggleLP('lp05')"><span class="lp-name">LINKd – Claude Code 101: From Prompt to Product</span><span class="lp-size">770 MB</span><span class="lp-check" id="lpc-lp05">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 1 — Python + MCP (Weeks 1–4)</div>
+    <div class="lp-item" data-lp="lp10" onclick="toggleLP('lp10')"><span class="lp-name">TOWARDS_AI – Beginner Python Primer for AI Engineering</span><span class="lp-size">1.12 GB</span><span class="lp-check" id="lpc-lp10">○</span></div>
+    <div class="lp-item" data-lp="lp11" onclick="toggleLP('lp11')"><span class="lp-name">PLS – Introduction to Model Context Protocol (MCP)</span><span class="lp-size">108 MB</span><span class="lp-check" id="lpc-lp11">○</span></div>
+    <div class="lp-item" data-lp="lp12" onclick="toggleLP('lp12')"><span class="lp-name">Dometrain – Getting Started with MCP</span><span class="lp-size">2.39 GB</span><span class="lp-check" id="lpc-lp12">○</span></div>
+    <div class="lp-item" data-lp="lp13" onclick="toggleLP('lp13')"><span class="lp-name">COURSERA – AI Agents with MCP Specialization</span><span class="lp-size">4.33 GB</span><span class="lp-check" id="lpc-lp13">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 2 — Claude Code Mastery (Weeks 5–8)</div>
+    <div class="lp-item" data-lp="lp20" onclick="toggleLP('lp20')"><span class="lp-name">FASTER – Claude Skills</span><span class="lp-size">585 MB</span><span class="lp-check" id="lpc-lp20">○</span></div>
+    <div class="lp-item" data-lp="lp21" onclick="toggleLP('lp21')"><span class="lp-name">COURSERA – Mastering Claude AI: Prompting, APIs, RAG & MCP</span><span class="lp-size">2.95 GB</span><span class="lp-check" id="lpc-lp21">○</span></div>
+    <div class="lp-item" data-lp="lp22" onclick="toggleLP('lp22')"><span class="lp-name">UD – Mastering Claude AI: Build AI Apps, Agents & MCP</span><span class="lp-size">3.56 GB</span><span class="lp-check" id="lpc-lp22">○</span></div>
+    <div class="lp-item" data-lp="lp23" onclick="toggleLP('lp23')"><span class="lp-name">MASTER CLAUDE CODE</span><span class="lp-size">2.48 GB</span><span class="lp-check" id="lpc-lp23">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 3 — LLM Engineering (Weeks 9–14)</div>
+    <div class="lp-item" data-lp="lp30" onclick="toggleLP('lp30')"><span class="lp-name">Coursera – IBM AI Engineering Professional Certificate</span><span class="lp-size">3.42 GB</span><span class="lp-check" id="lpc-lp30">○</span></div>
+    <div class="lp-item" data-lp="lp31" onclick="toggleLP('lp31')"><span class="lp-name">MANNING – Code with the Author of Build an LLM From Scratch</span><span class="lp-size">3.15 GB</span><span class="lp-check" id="lpc-lp31">○</span></div>
+    <div class="lp-item" data-lp="lp32" onclick="toggleLP('lp32')"><span class="lp-name">Towards AI – 10-Hour LLM Fundamentals 2025-7</span><span class="lp-size">2.61 GB</span><span class="lp-check" id="lpc-lp32">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 4 — RAG + Vector Search (Weeks 15–22)</div>
+    <div class="lp-item" data-lp="lp40" onclick="toggleLP('lp40')"><span class="lp-name">Coursera – IBM RAG and Agentic AI Professional Certificate</span><span class="lp-size">2.57 GB</span><span class="lp-check" id="lpc-lp40">○</span></div>
+    <div class="lp-item" data-lp="lp41" onclick="toggleLP('lp41')"><span class="lp-name">COURSERA – RAG with Assignments 2025-7</span><span class="lp-size">1.37 GB</span><span class="lp-check" id="lpc-lp41">○</span></div>
+    <div class="lp-item" data-lp="lp42" onclick="toggleLP('lp42')"><span class="lp-name">UD – Generative AI with Context: RAG, CAG & KAG</span><span class="lp-size">6.18 GB</span><span class="lp-check" id="lpc-lp42">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 5 — Network AI + Security (Weeks 23–30)</div>
+    <div class="lp-item" data-lp="lp50" onclick="toggleLP('lp50')"><span class="lp-name">OREILLY – AI for Network Engineer</span><span class="lp-size">2.37 GB</span><span class="lp-check" id="lpc-lp50">○</span></div>
+    <div class="lp-item" data-lp="lp51" onclick="toggleLP('lp51')"><span class="lp-name">PEARSON – AI-Enabled Programming, Networking & Cybersecurity</span><span class="lp-size">658 MB</span><span class="lp-check" id="lpc-lp51">○</span></div>
+    <div class="lp-item" data-lp="lp52" onclick="toggleLP('lp52')"><span class="lp-name">PEARSONS – Defending and Deploying AI (O.Santos)</span><span class="lp-size">3.36 GB</span><span class="lp-check" id="lpc-lp52">○</span></div>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-title">Phase 6 — Production & Launch (Weeks 31–40)</div>
+    <div class="lp-item" data-lp="lp60" onclick="toggleLP('lp60')"><span class="lp-name">UD – AI Engineer Core Track: LLM, RAG, QLoRA, Agents</span><span class="lp-size">32 GB</span><span class="lp-check" id="lpc-lp60">○</span></div>
+    <div class="lp-item" data-lp="lp61" onclick="toggleLP('lp61')"><span class="lp-name">MANNING – LLMs in Production, Video Edition</span><span class="lp-size">2.57 GB</span><span class="lp-check" id="lpc-lp61">○</span></div>
+    <div class="lp-item" data-lp="lp62" onclick="toggleLP('lp62')"><span class="lp-name">ZTM – AI Agents Bootcamp</span><span class="lp-size">1.72 GB</span><span class="lp-check" id="lpc-lp62">○</span></div>
+  </div>
+
+</main>
+<script src="app.js"></script>
+<script>
+const LP_KEY = 'lpProgress';
+function toggleLP(id) {
+  const s = getState(LP_KEY);
+  s[id] = !s[id];
+  setState(LP_KEY, s);
+  renderLP();
+}
+function renderLP() {
+  const s = getState(LP_KEY);
+  document.querySelectorAll('.lp-item').forEach(card => {
+    const id = card.dataset.lp;
+    const chk = document.getElementById('lpc-' + id);
+    if (s[id]) { card.classList.add('done'); if(chk) chk.textContent = '✓'; }
+    else        { card.classList.remove('done'); if(chk) chk.textContent = '○'; }
+  });
+}
+document.addEventListener('DOMContentLoaded', renderLP);
+</script>
+</body>
+</html>

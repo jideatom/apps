@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#38bdf8">
+<link rel="manifest" href="manifest.json">
+<title>Cloud Certifications</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a14; color: #e0e0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+header { background: linear-gradient(135deg, #0a1428, #081820); padding: 16px 18px; border-bottom: 1px solid #38bdf8; display: flex; align-items: center; gap: 12px; }
+.back-btn { color: #38bdf8; font-size: 1.2rem; text-decoration: none; }
+header h1 { font-size: 1rem; font-weight: 700; color: #fff; }
+header p  { font-size: 0.72rem; color: #888; margin-top: 2px; }
+main { padding: 18px; max-width: 540px; margin: 0 auto; }
+.cert-card { background: #111120; border: 1px solid #1e1e3a; border-radius: 14px; padding: 18px; margin-bottom: 14px; }
+.cert-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.cert-badge { display: inline-block; font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge-aws   { background: #1a1000; color: #f59e0b; }
+.badge-azure { background: #0a1528; color: #38bdf8; }
+.cert-note { font-size: 0.78rem; color: #666; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back-btn">←</a>
+  <div>
+    <h1>☁️ Cloud Certifications</h1>
+    <p>AWS + Azure tracks</p>
+  </div>
+</header>
+<main>
+  <div class="cert-card">
+    <span class="cert-badge badge-aws">AWS</span>
+    <div class="cert-title">AWS SAP-C02 + ANS-C01</div>
+    <p class="cert-note">Solutions Architect Professional + Advanced Networking Specialty. Leverages your existing network engineering background for the ANS exam — your strongest advantage.</p>
+  </div>
+  <div class="cert-card">
+    <span class="cert-badge badge-azure">Azure</span>
+    <div class="cert-title">AZ-700 — Networking + AZ-305 — Architecture</div>
+    <p class="cert-note">Azure Network Engineer Associate + Azure Solutions Architect Expert. AZ-700 maps directly to your routing/switching and firewall experience. Natural companion to AWS ANS.</p>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

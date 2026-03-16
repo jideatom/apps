@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<link rel="manifest" href="manifest.json">
+<title>Claude Track — Fast Track Sprint</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a14; color: #e0e0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+header { background: linear-gradient(135deg, #1a0800, #2a1000); padding: 16px 18px; border-bottom: 1px solid #f97316; display: flex; align-items: center; gap: 12px; }
+.back-btn { color: #f97316; font-size: 1.2rem; text-decoration: none; }
+header h1 { font-size: 1rem; font-weight: 700; color: #fff; }
+header p  { font-size: 0.72rem; color: #888; margin-top: 2px; }
+main { padding: 18px; max-width: 540px; margin: 0 auto; }
+
+/* Sprint section */
+.sprint-header { margin-bottom: 18px; }
+.sprint-badge { background: #f97316; color: #000; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+.sprint-header h2 { color: #fff; margin: 10px 0 4px; font-size: 1.2rem; }
+.sprint-subtitle { color: #888; font-size: 0.8rem; }
+
+/* Progress bar */
+.sprint-progress-bar { background: #1e1e2e; border-radius: 10px; height: 30px; position: relative; margin-bottom: 20px; overflow: hidden; }
+.sprint-fill { background: linear-gradient(90deg, #f97316, #fbbf24); height: 100%; border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+.sprint-pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+/* Course cards */
+.course-card { background: #111120; border: 1px solid #2a2a3a; border-radius: 14px; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.course-card:hover { border-color: #f97316; }
+.course-card.done { background: #0a1a10; border-color: #22c55e; }
+.course-meta { display: flex; align-items: flex-start; gap: 12px; }
+.course-num { color: #f97316; font-size: 1.6rem; font-weight: 900; min-width: 36px; line-height: 1; }
+.course-card.done .course-num { color: #22c55e; }
+.course-info { flex: 1; }
+.course-title { color: #e0e0f0; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+.course-sub   { color: #555; font-size: 0.72rem; }
+.check-icon   { font-size: 1.4rem; padding-top: 2px; }
+.course-card.done .check-icon { color: #22c55e; }
+.course-tag { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.tag-foundation { background: #0d2040; color: #60a5fa; }
+.tag-claude     { background: #2a1000; color: #f97316; }
+.tag-practical  { background: #0a2010; color: #4ade80; }
+.course-note { color: #666; font-size: 0.76rem; margin-top: 8px; line-height: 1.5; padding-top: 8px; border-top: 1px solid #1e1e2e; }
+
+/* April box */
+.next-phase-box { background: #0e0e1c; border: 1px dashed #2a2a4a; border-radius: 12px; padding: 16px 18px; margin-top: 20px; }
+.next-phase-box h3 { color: #666; font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+.next-course-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #1a1a2a; }
+.next-course-item:last-child { border-bottom: none; }
+.next-course-name { color: #555; font-size: 0.78rem; }
+.next-course-size { color: #444; font-size: 0.72rem; }
+
+/* Tip box */
+.tip-box { background: #0d1a2a; border-left: 3px solid #60a5fa; border-radius: 0 10px 10px 0; padding: 12px 16px; margin-bottom: 20px; font-size: 0.78rem; color: #7cb9f0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back-btn">←</a>
+  <div>
+    <h1>🟠 Claude Track — Fast Track</h1>
+    <p>March 2026 · Beginner Sprint · 5 Courses</p>
+  </div>
+</header>
+
+<main>
+  <div class="tip-box">
+    💡 Tap a course card to mark it complete. Progress is saved automatically on your device.
+  </div>
+
+  <div class="sprint-header">
+    <span class="sprint-badge">🚀 March 2026</span>
+    <h2>Claude Fast Track — Beginner Sprint</h2>
+    <p class="sprint-subtitle">5 courses · ~2.97 GB · IT pro → Claude practitioner</p>
+  </div>
+
+  <div class="sprint-progress-bar">
+    <div class="sprint-fill" id="sprintFill"></div>
+    <span class="sprint-pct" id="sprintPct">0% Complete (0/5)</span>
+  </div>
+
+  <!-- Course 1 -->
+  <div class="course-card" data-id="c1" onclick="toggleCourse('c1')">
+    <div class="course-meta">
+      <span class="course-num">01</span>
+      <div class="course-info">
+        <span class="course-tag tag-foundation">Foundation</span>
+        <p class="course-title">AI for Everyday IT, Video Edition (2025)</p>
+        <p class="course-sub">Mar 16–18 &nbsp;·&nbsp; 1.68 GB</p>
+      </div>
+      <span class="check-icon" id="chk-c1">○</span>
+    </div>
+    <p class="course-note">Bridges your 20-year IT/networking background into AI. Watch this first — Claude content will click much faster afterwards.</p>
+  </div>
+
+  <!-- Course 2 -->
+  <div class="course-card" data-id="c2" onclick="toggleCourse('c2')">
+    <div class="course-meta">
+      <span class="course-num">02</span>
+      <div class="course-info">
+        <span class="course-tag tag-claude">Claude Intro</span>
+        <p class="course-title">PLS – First Look: Claude Cowork 2026</p>
+        <p class="course-sub">Mar 19 (Evening) &nbsp;·&nbsp; 99.2 MB</p>
+      </div>
+      <span class="check-icon" id="chk-c2">○</span>
+    </div>
+    <p class="course-note">Freshest 2026 Claude content in your library. Only 99 MB — finish in a single evening sitting.</p>
+  </div>
+
+  <!-- Course 3 -->
+  <div class="course-card" data-id="c3" onclick="toggleCourse('c3')">
+    <div class="course-meta">
+      <span class="course-num">03</span>
+      <div class="course-info">
+        <span class="course-tag tag-claude">Claude Code</span>
+        <p class="course-title">PLS – Introduction to Claude Code</p>
+        <p class="course-sub">Mar 20 &nbsp;·&nbsp; 103 MB</p>
+      </div>
+      <span class="check-icon" id="chk-c3">○</span>
+    </div>
+    <p class="course-note">Official Pluralsight Claude Code intro. Pair with Course 2 on the same evening — combined &lt;210 MB, done in 2 hours.</p>
+  </div>
+
+  <!-- Course 4 -->
+  <div class="course-card" data-id="c4" onclick="toggleCourse('c4')">
+    <div class="course-meta">
+      <span class="course-num">04</span>
+      <div class="course-info">
+        <span class="course-tag tag-claude">Claude Code</span>
+        <p class="course-title">FASTER – Claude Code from Scratch</p>
+        <p class="course-sub">Mar 21–25 &nbsp;·&nbsp; 317 MB</p>
+      </div>
+      <span class="check-icon" id="chk-c4">○</span>
+    </div>
+    <p class="course-note">Systematic zero-to-working Claude Code. Best "from scratch" beginner course in your entire library — the name says it all.</p>
+  </div>
+
+  <!-- Course 5 -->
+  <div class="course-card" data-id="c5" onclick="toggleCourse('c5')">
+    <div class="course-meta">
+      <span class="course-num">05</span>
+      <div class="course-info">
+        <span class="course-tag tag-practical">Practical</span>
+        <p class="course-title">LINKd – Claude Code 101: From Prompt to Product</p>
+        <p class="course-sub">Mar 26–31 &nbsp;·&nbsp; 770 MB</p>
+      </div>
+      <span class="check-icon" id="chk-c5">○</span>
+    </div>
+    <p class="course-note">Close March with a real deliverable. Prompt → working product. End of month = something you built, not just theory consumed.</p>
+  </div>
+
+  <!-- April Preview -->
+  <div class="next-phase-box">
+    <h3>⏭ April — Claude Deepdive</h3>
+    <div class="next-course-item">
+      <span class="next-course-name">FASTER – Claude Skills</span>
+      <span class="next-course-size">585 MB</span>
+    </div>
+    <div class="next-course-item">
+      <span class="next-course-name">COURSERA – Mastering Claude AI: Prompting, APIs, RAG & MCP</span>
+      <span class="next-course-size">2.95 GB</span>
+    </div>
+    <div class="next-course-item">
+      <span class="next-course-name">UD – Mastering Claude AI: Build AI Apps, Agents & MCP</span>
+      <span class="next-course-size">3.56 GB</span>
+    </div>
+  </div>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>

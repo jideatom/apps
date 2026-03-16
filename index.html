@@ -2,24 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1a1a2e">
-<title>AI Network Engineer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5c35d4">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
+<title>AI Tracker — Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a14; color: #e0e0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+header { background: linear-gradient(135deg, #0f0f1f, #1a1030); padding: 20px 18px 14px; border-bottom: 1px solid #1e1e3a; }
+.header-top { display: flex; align-items: center; justify-content: space-between; }
+.header-top h1 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.header-sub { font-size: 0.75rem; color: #666; margin-top: 4px; }
+.badge-live { background: #22c55e; color: #000; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 20px; letter-spacing: 1px; }
+main { padding: 18px; max-width: 540px; margin: 0 auto; }
+
+/* Month banner */
+.month-banner { background: linear-gradient(135deg, #1a0a3a, #0d1a3a); border: 1px solid #5c35d4; border-radius: 14px; padding: 16px; margin-bottom: 20px; }
+.month-banner h2 { font-size: 1rem; color: #a78bfa; margin-bottom: 4px; }
+.month-banner p { font-size: 0.78rem; color: #888; line-height: 1.5; }
+.month-banner .sprint-link { display: inline-block; margin-top: 10px; background: #5c35d4; color: #fff; font-size: 0.78rem; font-weight: 700; padding: 7px 16px; border-radius: 8px; text-decoration: none; }
+
+/* Tracks */
+.section-title { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.tracks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.track-card { border-radius: 12px; padding: 16px 14px; text-decoration: none; display: block; border: 1px solid transparent; transition: transform 0.15s, opacity 0.15s; }
+.track-card:active { transform: scale(0.97); opacity: 0.85; }
+.track-card .t-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.track-card .t-name { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.track-card .t-sub  { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+.track-linux  { background: #0d1f3a; border-color: #3b82f6; }
+.track-python { background: #0d2a1a; border-color: #22c55e; }
+.track-ai     { background: #1a0d3a; border-color: #7c3aed; }
+.track-claude { background: #2a1000; border-color: #f97316; }
+.track-aws    { background: #1a1000; border-color: #f59e0b; }
+.track-azure  { background: #0a1a2a; border-color: #38bdf8; }
+
+/* Stats bar */
+.stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.stat-box { flex: 1; background: #111122; border: 1px solid #1e1e3a; border-radius: 10px; padding: 12px; text-align: center; }
+.stat-num { font-size: 1.4rem; font-weight: 800; color: #a78bfa; }
+.stat-label { font-size: 0.65rem; color: #555; margin-top: 2px; }
+</style>
 </head>
 <body>
-<header id="hdr"></header>
+<header>
+  <div class="header-top">
+    <div>
+      <h1>⚡ AI Engineer Tracker</h1>
+      <p class="header-sub">Your personal learning command centre</p>
+    </div>
+    <span class="badge-live">LIVE</span>
+  </div>
+</header>
+
 <main>
-  <div id="home"    class="page on"></div>
-  <div id="plan"    class="page"></div>
-  <div id="toolkit" class="page"></div>
-  <div id="cloud"   class="page"></div>
-  <div id="more"    class="page"></div>
+  <!-- March Sprint Banner -->
+  <div class="month-banner">
+    <h2>🚀 March 2026 — Claude Fast Track</h2>
+    <p>5 courses · 3 weeks · AI for Everyday IT → Claude Code 101</p>
+    <a href="claude.html" class="sprint-link">Open Claude Sprint →</a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Active Tracks</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">5</div>
+      <div class="stat-label">March Courses</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">40</div>
+      <div class="stat-label">Week Roadmap</div>
+    </div>
+  </div>
+
+  <!-- Learning Tracks -->
+  <p class="section-title">Your Learning Tracks</p>
+  <div class="tracks-grid">
+    <a href="linux.html" class="track-card track-linux">
+      <div class="t-icon">🐧</div>
+      <div class="t-name">Linux (RHCSA)</div>
+      <div class="t-sub">System admin</div>
+    </a>
+    <a href="python.html" class="track-card track-python">
+      <div class="t-icon">🐍</div>
+      <div class="t-name">Python</div>
+      <div class="t-sub">AI scripting</div>
+    </a>
+    <a href="lp-courses.html" class="track-card track-ai">
+      <div class="t-icon">🤖</div>
+      <div class="t-name">AI Engineering</div>
+      <div class="t-sub">LP Courses</div>
+    </a>
+    <a href="claude.html" class="track-card track-claude">
+      <div class="t-icon">🟠</div>
+      <div class="t-name">Claude Track</div>
+      <div class="t-sub">Fast Track · March</div>
+    </a>
+    <a href="cloud.html" class="track-card track-aws">
+      <div class="t-icon">☁️</div>
+      <div class="t-name">AWS SAP + ANS</div>
+      <div class="t-sub">Cloud certifications</div>
+    </a>
+    <a href="cloud.html" class="track-card track-azure">
+      <div class="t-icon">🔷</div>
+      <div class="t-name">Azure AZ-700/305</div>
+      <div class="t-sub">Cloud certifications</div>
+    </a>
+  </div>
 </main>
-<nav id="botnav"></nav>
 <script src="app.js"></script>
 </body>
 </html>
