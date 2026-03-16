@@ -4,349 +4,346 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#08101E">
 <title>NaijaFast</title>
 <link rel="manifest" href="fasting-manifest.json">
 <style>
+
+/* ── Reset & tokens ── */
 :root{
-  --bg:#08090d;--surface:#13141a;--surface2:#1c1e28;--text:#f0f0f5;
-  --sub:#6b7280;--nav:#0f1016;--nav-border:rgba(255,255,255,.06);
+  --bg:#08101E;--surface:#112034;--card:#162840;--border:rgba(255,255,255,.07);
+  --text:#EFF6FF;--sub:#64748B;--sub2:#475569;
+  --primary:#00D4AA;--primary2:#0080FF;--danger:#F43F5E;
+  --nav:#0D1A2D;--nav-border:rgba(0,212,170,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:var(--bg);}
-body{color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
-  display:flex;flex-direction:column;padding-bottom:calc(70px + env(safe-area-inset-bottom));}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;flex-shrink:0;}
-.app-logo{font-size:1.05rem;font-weight:800;letter-spacing:.5px;
-  background:linear-gradient(135deg,#f59e0b,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hdr-actions{display:flex;gap:10px;}
-.hdr-btn{background:var(--surface);border:none;color:var(--sub);border-radius:50%;
-  width:36px;height:36px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.scroll-area{flex:1;overflow-y:auto;padding:0 16px 16px;}
-/* Stats */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.stat-box{background:var(--surface);border-radius:14px;padding:14px 8px;text-align:center;border:1px solid rgba(255,255,255,.04);}
-.stat-val{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.stat-lbl{font-size:.62rem;color:var(--sub);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
-/* Ring */
-.timer-section{display:flex;flex-direction:column;align-items:center;padding:8px 0 14px;}
-.ring-container{position:relative;width:280px;height:280px;margin:0 auto;}
-.ring-container svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
-.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.ring-time{font-size:2.6rem;font-weight:800;letter-spacing:-1px;color:var(--text);line-height:1;}
-.ring-time-label{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin:4px 0 8px;}
-.ring-remain{font-size:.88rem;font-weight:600;color:var(--sub);}
-.zone-badge{margin-top:10px;padding:6px 18px;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.5px;border:1.5px solid currentColor;}
-/* Zone bar */
-.zone-bar-wrap{width:100%;max-width:320px;margin:0 auto 14px;}
-.zone-bar-label{font-size:.62rem;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;text-align:center;}
-.zone-bar{display:flex;height:7px;border-radius:4px;overflow:hidden;gap:1px;}
-.zone-seg{flex:1;border-radius:2px;opacity:.25;transition:opacity .5s;}
-.zone-seg.active{opacity:1;}
-/* Zone article card */
-.zone-article{background:var(--surface);border-radius:18px;padding:16px 18px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);border-left:3px solid #f59e0b;transition:border-color .5s;}
+html{background:#03080F;min-height:100vh;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+  background:#03080F;
+  display:flex;justify-content:center;
+  min-height:100vh;
+}
+/* ── Phone frame — the fix ── */
+.app{
+  width:100%;max-width:390px;
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  position:relative;
+  padding-bottom:calc(68px + env(safe-area-inset-bottom));
+  color:var(--text);
+}
+/* ── Header ── */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:52px 20px 12px;
+  background:var(--bg);
+}
+.logo{font-size:1rem;font-weight:800;letter-spacing:.3px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hdr-acts{display:flex;gap:8px;}
+.hdr-btn{background:var(--surface);border:1px solid var(--border);color:var(--sub);
+  border-radius:50%;width:36px;height:36px;font-size:.85rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+/* ── Scroll body ── */
+.body{flex:1;overflow-y:auto;padding:0 18px 12px;}
+/* ── Bottom nav ── */
+.nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:390px;
+  background:var(--nav);border-top:1px solid var(--nav-border);
+  display:flex;justify-content:space-around;
+  padding:10px 0 calc(10px + env(safe-area-inset-bottom));
+  z-index:200;backdrop-filter:blur(16px);
+}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:3px;
+  text-decoration:none;color:var(--sub);font-size:.6rem;font-weight:600;
+  min-width:60px;padding:2px 0;transition:color .2s;}
+.nav a.on{color:var(--primary);}
+.nav a .ni{font-size:1.2rem;}
+/* ── Stats row ── */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.sbox{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:12px 8px;text-align:center;}
+.sval{font-size:1.25rem;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.slbl{font-size:.6rem;color:var(--sub);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+/* ── Ring ── */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 14px;}
+.ring-svg-wrap{position:relative;width:250px;height:250px;}
+.ring-svg-wrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.ring-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.r-time{font-size:2.4rem;font-weight:800;letter-spacing:-1px;line-height:1;}
+.r-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin:5px 0 6px;}
+.r-remain{font-size:.82rem;font-weight:600;color:var(--sub);}
+.zone-pill{margin-top:10px;padding:6px 18px;border-radius:20px;font-size:.76rem;
+  font-weight:700;border:1.5px solid var(--primary);color:var(--primary);letter-spacing:.3px;}
+/* ── Zone bar ── */
+.zbar-wrap{margin:0 0 14px;width:100%;}
+.zbar-lbl{font-size:.6rem;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.zbar{display:flex;height:6px;border-radius:3px;overflow:hidden;gap:1px;}
+.zseg{flex:1;border-radius:2px;opacity:.2;transition:opacity .4s;}
+.zseg.on{opacity:1;}
+/* ── Zone article ── */
+.zarticle{background:var(--surface);border-radius:16px;padding:14px 16px;
+  margin-bottom:14px;border-left:3px solid var(--primary);transition:border-color .5s;}
 .za-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.za-icon{font-size:1.6rem;}
-.za-title{font-size:.95rem;font-weight:800;color:var(--text);}
-.za-badge{font-size:.62rem;padding:3px 8px;border-radius:8px;font-weight:700;margin-left:auto;flex-shrink:0;}
-.za-body{font-size:.8rem;color:#94a3b8;line-height:1.7;}
-/* Action */
-.action-row{display:flex;gap:10px;margin-bottom:18px;}
-.btn-start{flex:1;background:linear-gradient(135deg,#f59e0b,#7c3aed);color:#fff;border:none;
-  border-radius:16px;padding:18px;font-size:1.05rem;font-weight:800;cursor:pointer;
-  box-shadow:0 6px 24px rgba(124,58,237,.3);letter-spacing:.3px;}
-.btn-start:active{opacity:.9;transform:scale(.98);}
-.btn-end{flex:1;background:rgba(239,68,68,.1);color:#ef4444;border:1.5px solid rgba(239,68,68,.3);
-  border-radius:16px;padding:18px;font-size:1.05rem;font-weight:800;cursor:pointer;}
-/* Protocols */
-.section-hdr{font-size:.68rem;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
-.protocols-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px;scrollbar-width:none;}
-.protocols-scroll::-webkit-scrollbar{display:none;}
-.proto{background:var(--surface);border:1.5px solid rgba(255,255,255,.06);border-radius:14px;
-  padding:12px 14px;min-width:86px;cursor:pointer;transition:all .2s;flex-shrink:0;text-align:center;}
-.proto.sel{background:rgba(124,58,237,.2);border-color:#7c3aed;}
-.proto.hot{border-color:rgba(245,158,11,.3);}
-.proto.hot.sel{background:rgba(245,158,11,.15);border-color:#f59e0b;}
+.za-icon{font-size:1.5rem;}
+.za-title{font-size:.88rem;font-weight:800;flex:1;line-height:1.3;}
+.za-hrs{font-size:.62rem;padding:3px 8px;border-radius:8px;
+  background:rgba(0,212,170,.12);color:var(--primary);font-weight:700;flex-shrink:0;}
+.za-body{font-size:.78rem;color:#94A3B8;line-height:1.75;}
+/* ── Buttons ── */
+.act-row{display:flex;gap:10px;margin-bottom:16px;}
+.btn-go{flex:1;background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;border:none;border-radius:16px;padding:17px;
+  font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:.3px;
+  box-shadow:0 6px 20px rgba(0,212,170,.25);}
+.btn-go:active{opacity:.9;transform:scale(.98);}
+.btn-stop{flex:1;background:rgba(244,63,94,.1);color:var(--danger);
+  border:1.5px solid rgba(244,63,94,.3);border-radius:16px;padding:17px;
+  font-size:1rem;font-weight:800;cursor:pointer;}
+/* ── Protocols ── */
+.sec-lbl{font-size:.66rem;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.protos{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:none;}
+.protos::-webkit-scrollbar{display:none;}
+.proto{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;
+  padding:10px 12px;min-width:80px;cursor:pointer;transition:all .18s;flex-shrink:0;text-align:center;}
+.proto.sel{background:rgba(0,212,170,.12);border-color:var(--primary);}
+.proto.hot{border-color:rgba(0,128,255,.25);}
+.proto.hot.sel{background:rgba(0,128,255,.1);border-color:var(--primary2);}
 .proto:active{transform:scale(.95);}
-.proto-hrs{font-size:1.2rem;font-weight:800;color:var(--text);}
-.proto-name{font-size:.65rem;font-weight:600;color:var(--sub);margin:2px 0 0;}
-.proto-tag{font-size:.56rem;padding:2px 6px;border-radius:8px;background:rgba(245,158,11,.2);color:#f59e0b;margin-top:4px;display:inline-block;}
-.custom-wrap{display:flex;gap:10px;align-items:center;margin-bottom:14px;}
-.custom-wrap input{flex:1;background:var(--surface);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;color:var(--text);font-size:1rem;}
-.custom-wrap input:focus{outline:none;border-color:#7c3aed;}
-.custom-wrap input::placeholder{color:var(--sub);}
-/* Nav */
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--nav-border);
-  display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));z-index:200;backdrop-filter:blur(20px);}
-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--sub);font-size:.6rem;font-weight:600;min-width:64px;padding:4px 0;transition:color .2s;}
-nav a.active{color:#f59e0b;}
-nav a span.ni{font-size:1.25rem;}
+.p-hrs{font-size:1.15rem;font-weight:800;}
+.p-name{font-size:.62rem;color:var(--sub);margin:2px 0 0;font-weight:600;}
+.p-tag{font-size:.55rem;padding:2px 6px;border-radius:6px;
+  background:rgba(0,212,170,.15);color:var(--primary);margin-top:3px;display:inline-block;}
+.custom-row{display:flex;gap:8px;margin-bottom:12px;}
+.custom-row input{flex:1;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:12px;padding:12px 14px;color:var(--text);font-size:.95rem;}
+.custom-row input:focus{outline:none;border-color:var(--primary);}
+.custom-row input::placeholder{color:var(--sub);}
+
 </style>
 </head>
 <body>
-<header>
-  <div class="app-logo">⏳ NaijaFast</div>
-  <div class="hdr-actions">
-    <button class="hdr-btn" id="countToggle" onclick="toggleCountMode()" title="Toggle count up/down">⬆️</button>
-    <button class="hdr-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
-  </div>
-</header>
-
-<div class="scroll-area">
-  <div class="stats-row">
-    <div class="stat-box"><div class="stat-val" id="streakVal">0</div><div class="stat-lbl">🔥 Streak</div></div>
-    <div class="stat-box"><div class="stat-val" id="totalVal">0</div><div class="stat-lbl">Total Fasts</div></div>
-    <div class="stat-box"><div class="stat-val" id="longestVal">0h</div><div class="stat-lbl">Longest</div></div>
+<div class="app">
+  <div class="hdr">
+    <div class="logo">⏳ NaijaFast</div>
+    <div class="hdr-acts">
+      <button class="hdr-btn" id="ctBtn" onclick="toggleCount()" title="Count up/down">⬆️</button>
+      <button class="hdr-btn" id="thBtn" onclick="toggleTheme()">☀️</button>
+    </div>
   </div>
 
-  <div class="timer-section">
-    <div class="ring-container">
-      <svg width="280" height="280" viewBox="0 0 280 280" fill="none">
-        <defs>
-          <linearGradient id="ringGrad" x1="0" y1="0" x2="280" y2="280" gradientUnits="userSpaceOnUse">
-            <stop id="gs1" offset="0%" stop-color="#f59e0b"/>
-            <stop id="gs2" offset="100%" stop-color="#7c3aed"/>
-          </linearGradient>
-        </defs>
-        <circle cx="140" cy="140" r="122" stroke="rgba(255,255,255,.07)" stroke-width="14" fill="none"/>
-        <circle id="ringProg" cx="140" cy="140" r="122"
-          stroke="url(#ringGrad)" stroke-width="14" fill="none"
-          stroke-linecap="round" stroke-dasharray="766.5" stroke-dashoffset="766.5"/>
-      </svg>
-      <div class="ring-center">
-        <div class="ring-time" id="mainTime">00:00:00</div>
-        <div class="ring-time-label" id="timeLabel">ELAPSED</div>
-        <div class="ring-remain" id="remainTime">— remaining</div>
+  <div class="body">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="sbox"><div class="sval" id="sStreak">0</div><div class="slbl">🔥 Streak</div></div>
+      <div class="sbox"><div class="sval" id="sTotal">0</div><div class="slbl">Fasts</div></div>
+      <div class="sbox"><div class="sval" id="sLongest">0h</div><div class="slbl">Longest</div></div>
+    </div>
+
+    <!-- Ring -->
+    <div class="ring-wrap">
+      <div class="ring-svg-wrap">
+        <svg width="250" height="250" viewBox="0 0 250 250" fill="none">
+          <defs>
+            <linearGradient id="rg" x1="0" y1="0" x2="250" y2="250" gradientUnits="userSpaceOnUse">
+              <stop id="gs1" offset="0%" stop-color="#00D4AA"/>
+              <stop id="gs2" offset="100%" stop-color="#0080FF"/>
+            </linearGradient>
+          </defs>
+          <circle cx="125" cy="125" r="108" stroke="rgba(255,255,255,.06)" stroke-width="12" fill="none"/>
+          <circle id="rProg" cx="125" cy="125" r="108"
+            stroke="url(#rg)" stroke-width="12" fill="none"
+            stroke-linecap="round"
+            stroke-dasharray="678.6" stroke-dashoffset="678.6"/>
+        </svg>
+        <div class="ring-mid">
+          <div class="r-time" id="rTime">00:00:00</div>
+          <div class="r-lbl" id="rLbl">ELAPSED</div>
+          <div class="r-remain" id="rRemain">— remaining</div>
+        </div>
+      </div>
+      <div class="zone-pill" id="zPill">🟡 Anabolic</div>
+    </div>
+
+    <!-- Zone article -->
+    <div class="zarticle" id="zArt">
+      <div class="za-top">
+        <div class="za-icon" id="zIcon">🟡</div>
+        <div class="za-title" id="zTitle">Anabolic — Fed State</div>
+        <div class="za-hrs" id="zHrs">0–4 hrs</div>
+      </div>
+      <div class="za-body" id="zBody">Your body is in building and storage mode after eating. Insulin is elevated, driving glucose into muscle and fat cells. No fat burning yet — fasting starts the clock here.</div>
+    </div>
+
+    <!-- Zone progress bar -->
+    <div class="zbar-wrap">
+      <div class="zbar-lbl">Fasting Zones</div>
+      <div class="zbar" id="zBar"></div>
+    </div>
+
+    <!-- Action -->
+    <div class="act-row" id="actRow">
+      <button class="btn-go" onclick="startFast()">▶  Start Fast</button>
+    </div>
+
+    <!-- Protocol picker -->
+    <div id="protoSec">
+      <div class="sec-lbl">Choose Protocol</div>
+      <div class="protos" id="protoList"></div>
+      <div class="custom-row" id="custRow" style="display:none">
+        <input type="number" id="custHrs" placeholder="Enter hours (e.g. 42)" min="1" max="240">
       </div>
     </div>
-    <div class="zone-badge" id="zoneBadge" style="color:#f59e0b;border-color:#f59e0b;">🟡 Anabolic</div>
-  </div>
+  </div><!-- /body -->
+</div><!-- /app -->
 
-  <!-- Zone article -->
-  <div class="zone-article" id="zoneArticle">
-    <div class="za-top">
-      <div class="za-icon" id="zaIcon">🟡</div>
-      <div class="za-title" id="zaTitle">Anabolic Phase — Fed State</div>
-      <div class="za-badge" id="zaBadge" style="background:rgba(245,158,11,.15);color:#f59e0b;">0 hrs</div>
-    </div>
-    <div class="za-body" id="zaBody">Your body is in a building and storage mode right after eating. Insulin is elevated, driving glucose into muscle and fat cells for energy and glycogen storage. The liver is actively converting excess glucose into glycogen reserves. No meaningful fat burning is happening yet — fasting starts the clock here.</div>
-  </div>
-
-  <!-- Zone progress bar -->
-  <div class="zone-bar-wrap">
-    <div class="zone-bar-label">Fasting Zones</div>
-    <div class="zone-bar" id="zoneBar"></div>
-  </div>
-
-  <div class="action-row" id="actionRow">
-    <button class="btn-start" onclick="startFast()">▶ Start Fast</button>
-  </div>
-
-  <div id="protoSection">
-    <div class="section-hdr">Fasting Protocols</div>
-    <div class="protocols-scroll" id="protoScroll"></div>
-    <div class="custom-wrap" id="customWrap" style="display:none;">
-      <input type="number" id="customHrs" placeholder="Enter hours (e.g. 42)" min="1" max="240">
-    </div>
-  </div>
-</div>
-
-<nav>
-  <a href="fasting-index.html" class="active"><span class="ni">⏳</span>Timer</a>
-  <a href="fasting-food.html"><span class="ni">🍽️</span>Log Food</a>
+<nav class="nav">
+  <a href="fasting-index.html" class="on"><span class="ni">⏳</span>Timer</a>
+  <a href="fasting-food.html"><span class="ni">🍽️</span>Food</a>
   <a href="fasting-history.html"><span class="ni">📊</span>History</a>
 </nav>
 
 <script>
-const CIRC = 766.5;
-let ticker = null;
-let selectedHrs = 16;
-let countUp = true;
+const CIRC=678.6;
+let ticker=null,selHrs=16,countUp=true;
 
 
-const ZONES = [
-  {
-    hrs:0, name:"Anabolic", icon:"🟡", color:"#f59e0b",
-    title:"Anabolic Phase — Fed State",
-    article:`Your body is in a building and storage mode right after eating. Insulin is elevated, driving glucose into muscle and fat cells for energy and glycogen storage. The liver is actively converting excess glucose into glycogen reserves. No meaningful fat burning is happening yet — fasting starts the clock here.`
-  },
-  {
-    hrs:4, name:"Catabolic", icon:"🟠", color:"#f97316",
-    title:"Catabolic Phase — Glycogen Depletion",
-    article:`Blood glucose is falling and insulin levels are dropping steadily. Your body releases glucagon to break down liver glycogen and maintain blood sugar. Fat cells begin releasing small amounts of fatty acids into the bloodstream. You may feel mild hunger — that is simply your body switching fuel sources, not an emergency.`
-  },
-  {
-    hrs:8, name:"Fat Burning", icon:"🟢", color:"#22c55e",
-    title:"Fat Burning Phase — Lipolysis Active",
-    article:`Glycogen stores are nearly exhausted. Your body has switched its primary fuel source to stored body fat through a process called lipolysis. Free fatty acids flood the bloodstream and are transported to cells for energy. This is the core metabolic benefit of daily intermittent fasting — sustained fat oxidation.`
-  },
-  {
-    hrs:16, name:"Ketosis", icon:"🔵", color:"#3b82f6",
-    title:"Ketosis — Ketone Production Rising",
-    article:`Your liver is now converting fatty acids into ketone bodies — acetoacetate, beta-hydroxybutyrate, and acetone. The brain, which normally runs on glucose, switches to running efficiently on ketones. Many people report sharper mental clarity, reduced brain fog, and a surge of clean energy at this stage. This is the target zone for the popular 16:8 protocol.`
-  },
-  {
-    hrs:24, name:"Deep Ketosis", icon:"🟣", color:"#8b5cf6",
-    title:"Deep Ketosis — Autophagy Begins",
-    article:`Ketone levels are at their highest and your body is running almost entirely on fat. Early autophagy is now triggered — cells begin identifying and breaking down damaged proteins and dysfunctional organelles. Growth hormone levels spike significantly, protecting lean muscle mass during the fast. Inflammation markers like IL-6 and TNF-alpha start to measurably drop.`
-  },
-  {
-    hrs:48, name:"Autophagy", icon:"🩷", color:"#ec4899",
-    title:"Autophagy — Deep Cellular Cleanup",
-    article:`Autophagy — from the Greek meaning "self-eating" — is now at peak activity across your entire body. Cells are aggressively recycling old, damaged, and misfolded proteins that could otherwise lead to disease. This process is strongly linked to anti-aging, neuroprotection, and cancer prevention. The 2016 Nobel Prize in Medicine was awarded to Yoshinori Ohsumi specifically for discovering how autophagy works.`
-  },
-  {
-    hrs:72, name:"Immune Reset", icon:"🩵", color:"#06b6d4",
-    title:"Immune Reset — Stem Cell Surge",
-    article:`A landmark study by Dr. Valter Longo at USC found that 72 hours of fasting triggers a dramatic rise in stem cell production. Old, worn-out white blood cells are broken down via autophagy and replaced with freshly generated immune cells. This essentially gives your immune system a partial reboot. The pathway involves the PKA enzyme and IGF-1 suppression — the same mechanism studied for immune recovery after illness.`
-  },
-  {
-    hrs:96, name:"Deep Renewal", icon:"💎", color:"#10b981",
-    title:"Deep Renewal — Full Systemic Regeneration",
-    article:`You have reached the deepest level of metabolic and cellular renewal. Stem cell activity is at maximum across major organ systems — brain, gut lining, immune tissue, and muscle. Full systemic autophagy is clearing cellular debris built up over years. This level of fasting should only be attempted with medical supervision, adequate electrolyte support (sodium, potassium, magnesium), and a planned gentle refeeding protocol.`
-  },
+const ZONES=[
+  {hrs:0,name:"Anabolic",icon:"🟡",color:"#F59E0B",
+   title:"Anabolic — Fed State",
+   article:"Your body is in building and storage mode after eating. Insulin is elevated, driving glucose into muscle and fat cells for energy. The liver converts excess glucose into glycogen reserves. No fat burning is happening yet — fasting starts the clock here.",
+   badge:"0–4 hrs"},
+  {hrs:4,name:"Catabolic",icon:"🟠",color:"#F97316",
+   title:"Catabolic — Glycogen Depleting",
+   article:"Blood glucose is falling and insulin levels are dropping steadily. Your body releases glucagon to break down liver glycogen and maintain blood sugar. Fat cells begin releasing small amounts of fatty acids. You may feel mild hunger — that is simply your body switching fuel sources.",
+   badge:"4–8 hrs"},
+  {hrs:8,name:"Fat Burning",icon:"🟢",color:"#22C55E",
+   title:"Fat Burning — Lipolysis Active",
+   article:"Glycogen stores are nearly exhausted. Your body has switched its primary fuel source to stored body fat through lipolysis. Free fatty acids flood the bloodstream and are transported to cells for energy. This is the core benefit of daily intermittent fasting.",
+   badge:"8–16 hrs"},
+  {hrs:16,name:"Ketosis",icon:"🔵",color:"#3B82F6",
+   title:"Ketosis — Ketones Rising",
+   article:"Your liver is converting fatty acids into ketone bodies. The brain, which normally runs on glucose, switches to running efficiently on ketones. Many people report sharper mental clarity and a surge of clean energy here. This is the target zone for the 16:8 protocol.",
+   badge:"16–24 hrs"},
+  {hrs:24,name:"Deep Ketosis",icon:"🟣",color:"#8B5CF6",
+   title:"Deep Ketosis — Autophagy Begins",
+   article:"Ketone levels are at their highest. Early autophagy is triggered — cells begin identifying and breaking down damaged proteins and dysfunctional organelles. Growth hormone spikes significantly, protecting lean muscle mass. Inflammation markers start to measurably drop.",
+   badge:"24–48 hrs"},
+  {hrs:48,name:"Autophagy",icon:"🩷",color:"#EC4899",
+   title:"Autophagy — Deep Cellular Cleanup",
+   article:"Autophagy — Greek for 'self-eating' — is now at peak activity. Cells are aggressively recycling old, damaged, and misfolded proteins linked to disease. This is strongly associated with anti-aging and neuroprotection. The 2016 Nobel Prize in Medicine was awarded for discovering how autophagy works.",
+   badge:"48–72 hrs"},
+  {hrs:72,name:"Immune Reset",icon:"🩵",color:"#06B6D4",
+   title:"Immune Reset — Stem Cell Surge",
+   article:"A landmark USC study by Dr. Valter Longo found 72hrs of fasting triggers a dramatic rise in stem cell production. Old white blood cells are broken down and replaced with freshly generated immune cells. This essentially reboots your immune system via the PKA enzyme and IGF-1 suppression pathway.",
+   badge:"72–96 hrs"},
+  {hrs:96,name:"Deep Renewal",icon:"💎",color:"#10B981",
+   title:"Deep Renewal — Full Regeneration",
+   article:"You have reached the deepest level of metabolic renewal. Stem cell activity is at maximum across major organ systems. Full systemic autophagy is clearing cellular debris. This level should only be done with medical supervision, electrolyte support, and a planned refeeding protocol.",
+   badge:"96+ hrs"},
 ];
 
-const PROTOCOLS = [
-  {id:"13",  hrs:13, label:"13h",  name:"Circadian",    tag:"Starter"},
-  {id:"14",  hrs:14, label:"14h",  name:"14:10"},
-  {id:"16",  hrs:16, label:"16h",  name:"16:8",          tag:"⭐ Popular", hot:true},
-  {id:"18",  hrs:18, label:"18h",  name:"18:6"},
-  {id:"20",  hrs:20, label:"20h",  name:"20:4"},
-  {id:"23",  hrs:23, label:"OMAD", name:"One Meal/Day"},
-  {id:"24",  hrs:24, label:"24h",  name:"Full Day"},
-  {id:"36",  hrs:36, label:"36h",  name:"Monk Fast"},
-  {id:"48",  hrs:48, label:"48h",  name:"2-Day Fast"},
-  {id:"65",  hrs:65, label:"65h",  name:"Weekend Reset", tag:"🌟", hot:true},
-  {id:"72",  hrs:72, label:"72h",  name:"3-Day Fast",    tag:"🔮", hot:true},
-  {id:"96",  hrs:96, label:"96h",  name:"4-Day Fast",    tag:"💎", hot:true},
-  {id:"cus", hrs:0,  label:"⚙️",   name:"Custom"},
+
+const PROTOS=[
+  {hrs:13,label:"13h",name:"Circadian",tag:"Starter"},
+  {hrs:14,label:"14h",name:"14:10"},
+  {hrs:16,label:"16h",name:"16:8",tag:"⭐ Popular",hot:true},
+  {hrs:18,label:"18h",name:"18:6"},
+  {hrs:20,label:"20h",name:"20:4"},
+  {hrs:23,label:"OMAD",name:"One Meal/Day"},
+  {hrs:24,label:"24h",name:"Full Day"},
+  {hrs:36,label:"36h",name:"Monk Fast"},
+  {hrs:48,label:"48h",name:"2-Day Fast"},
+  {hrs:65,label:"65h",name:"Weekend Reset",tag:"🌟",hot:true},
+  {hrs:72,label:"72h",name:"3-Day Fast",tag:"🔮",hot:true},
+  {hrs:96,label:"96h",name:"4-Day Fast",tag:"💎",hot:true},
+  {hrs:0, label:"⚙️",name:"Custom"},
 ];
 
-function getZone(ms){
-  const h=ms/3600000; let z=ZONES[0];
-  for(let x of ZONES){ if(h>=x.hrs) z=x; }
-  return z;
+function getZone(ms){const h=ms/3600000;let z=ZONES[0];for(let x of ZONES){if(h>=x.hrs)z=x;}return z;}
+function fmt(ms){let s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);s%=60;m%=60;return[h,m,s].map(v=>String(v).padStart(2,"0")).join(":");}
+function fmtR(ms){if(ms<=0)return"Goal reached! 🎉";let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?`${h}h ${m}m remaining`:`${m}m remaining`;}
+function fmtH(ms){let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?`${h}h ${m}m`:`${m}m`;}
+
+function buildBar(){document.getElementById("zBar").innerHTML=ZONES.map(z=>`<div class="zseg" id="zs${z.hrs}" style="background:${z.color}" title="${z.name}"></div>`).join("");}
+function updBar(ms){const h=ms/3600000;ZONES.forEach(z=>{const e=document.getElementById("zs"+z.hrs);if(e)e.classList.toggle("on",h>=z.hrs);});}
+
+function updZone(z){
+  document.getElementById("zArt").style.borderLeftColor=z.color;
+  document.getElementById("zIcon").textContent=z.icon;
+  document.getElementById("zTitle").textContent=z.title;
+  document.getElementById("zBody").textContent=z.article;
+  document.getElementById("zHrs").style.background=z.color+"22";
+  document.getElementById("zHrs").style.color=z.color;
+  document.getElementById("zHrs").textContent=z.badge;
+  document.getElementById("zPill").textContent=z.icon+" "+z.name;
+  document.getElementById("zPill").style.color=z.color;
+  document.getElementById("zPill").style.borderColor=z.color;
+  document.getElementById("gs1").setAttribute("stop-color",z.color);
 }
-function fmtHMS(ms){
-  let s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);
-  s%=60;m%=60;
-  return [h,m,s].map(v=>String(v).padStart(2,"0")).join(":");
-}
-function fmtRemain(ms){
-  if(ms<=0) return "Goal reached! 🎉";
-  let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);
-  return h>0?`${h}h ${m}m remaining`:`${m}m remaining`;
-}
-function fmtHrs(ms){
-  let h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);
-  return h>0?`${h}h ${m}m`:`${m}m`;
-}
-function buildZoneBar(){
-  document.getElementById("zoneBar").innerHTML=ZONES.map(z=>
-    `<div class="zone-seg" id="zs${z.hrs}" style="background:${z.color}" title="${z.name}"></div>`
-  ).join("");
-}
-function updateZoneBar(ms){
-  const h=ms/3600000;
-  ZONES.forEach(z=>{ const el=document.getElementById("zs"+z.hrs); if(el) el.classList.toggle("active",h>=z.hrs); });
-}
-function updateZoneArticle(z, elapsedMs){
-  document.getElementById("zoneArticle").style.borderLeftColor = z.color;
-  document.getElementById("zaIcon").textContent = z.icon;
-  document.getElementById("zaTitle").textContent = z.title;
-  document.getElementById("zaBody").textContent = z.article;
-  document.getElementById("zaBadge").style.background = z.color+"25";
-  document.getElementById("zaBadge").style.color = z.color;
-  document.getElementById("zaBadge").textContent = z.hrs+"+ hrs";
-  document.getElementById("zoneBadge").textContent = z.icon+" "+z.name;
-  document.getElementById("zoneBadge").style.color = z.color;
-  document.getElementById("zoneBadge").style.borderColor = z.color;
-  document.getElementById("gs1").setAttribute("stop-color", z.color);
-}
+
 function tick(){
-  const start=parseInt(localStorage.getItem("fastStart")||"0");
-  const total=parseInt(localStorage.getItem("fastDuration")||"0");
-  if(!start) return;
-  const elapsed=Date.now()-start;
-  const pct=Math.min(elapsed/total,1);
-  const z=getZone(elapsed);
-  document.getElementById("ringProg").setAttribute("stroke-dashoffset",(CIRC*(1-pct)).toFixed(2));
-  const disp=countUp?elapsed:Math.max(total-elapsed,0);
-  document.getElementById("mainTime").textContent=fmtHMS(disp);
-  document.getElementById("remainTime").textContent=fmtRemain(total-elapsed);
-  updateZoneArticle(z, elapsed);
-  updateZoneBar(elapsed);
-  if(elapsed>=total&&total>0) completeFast();
+  const start=parseInt(localStorage.getItem("fStart")||"0");
+  const total=parseInt(localStorage.getItem("fDur")||"0");
+  if(!start)return;
+  const el=Date.now()-start;
+  const pct=Math.min(el/total,1);
+  const z=getZone(el);
+  document.getElementById("rProg").setAttribute("stroke-dashoffset",(CIRC*(1-pct)).toFixed(2));
+  document.getElementById("rTime").textContent=fmt(countUp?el:Math.max(total-el,0));
+  document.getElementById("rLbl").textContent=countUp?"ELAPSED":"REMAINING";
+  document.getElementById("rRemain").textContent=fmtR(total-el);
+  updZone(z); updBar(el);
+  if(el>=total&&total>0)completeFast();
 }
+
 function startFast(){
-  let hrs=selectedHrs;
-  if(hrs===0){ hrs=parseFloat(document.getElementById("customHrs").value); if(!hrs||hrs<1){alert("Enter valid hours.");return;} }
-  if(!confirm(`Start ${hrs}-hour fast now?`)) return;
-  localStorage.setItem("fastStart",Date.now());
-  localStorage.setItem("fastDuration",hrs*3600000);
-  localStorage.setItem("fastName",hrs+"h Fast");
-  showActive(true); startTicker();
+  let h=selHrs;
+  if(h===0){h=parseFloat(document.getElementById("custHrs").value);if(!h||h<1){alert("Enter valid hours.");return;}}
+  if(!confirm(`Start ${h}-hour fast now?`))return;
+  localStorage.setItem("fStart",Date.now());
+  localStorage.setItem("fDur",h*3600000);
+  localStorage.setItem("fName",h+"h Fast");
+  showActive(true);runTick();
 }
-function endFast(){
-  if(!confirm("End this fast?")) return;
-  saveFast(); clearInterval(ticker);
-  localStorage.removeItem("fastStart"); localStorage.removeItem("fastDuration"); localStorage.removeItem("fastName");
-  document.getElementById("ringProg").setAttribute("stroke-dashoffset",CIRC);
-  document.getElementById("mainTime").textContent="00:00:00";
-  document.getElementById("remainTime").textContent="— remaining";
-  showActive(false); loadStats();
-}
-function completeFast(){ clearInterval(ticker); saveFast(); localStorage.removeItem("fastStart"); localStorage.removeItem("fastDuration"); localStorage.removeItem("fastName"); showActive(false); loadStats(); alert("🎉 Fast complete!"); }
-function saveFast(){
-  const start=parseInt(localStorage.getItem("fastStart")||"0");
-  const elapsed=start?Date.now()-start:0;
-  const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");
-  h.unshift({date:new Date().toLocaleDateString(),elapsed,name:localStorage.getItem("fastName")||"Fast"});
-  localStorage.setItem("fastHistory",JSON.stringify(h.slice(0,50)));
-  localStorage.setItem("fastStreak",(parseInt(localStorage.getItem("fastStreak")||"0")+1));
-}
+function endFast(){if(!confirm("End this fast?"))return;save();clearInterval(ticker);localStorage.removeItem("fStart");localStorage.removeItem("fDur");localStorage.removeItem("fName");document.getElementById("rProg").setAttribute("stroke-dashoffset",CIRC);document.getElementById("rTime").textContent="00:00:00";document.getElementById("rRemain").textContent="— remaining";showActive(false);loadStats();}
+function completeFast(){clearInterval(ticker);save();localStorage.removeItem("fStart");localStorage.removeItem("fDur");localStorage.removeItem("fName");showActive(false);loadStats();alert("🎉 Fast complete!");}
+function save(){const s=parseInt(localStorage.getItem("fStart")||"0");const el=s?Date.now()-s:0;const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");h.unshift({date:new Date().toLocaleDateString(),elapsed:el,name:localStorage.getItem("fName")||"Fast"});localStorage.setItem("fastHistory",JSON.stringify(h.slice(0,50)));localStorage.setItem("fastStreak",(parseInt(localStorage.getItem("fastStreak")||"0")+1));}
+
 function showActive(on){
-  document.getElementById("actionRow").innerHTML=on
-    ?`<button class="btn-end" onclick="endFast()">■ End Fast</button>`
-    :`<button class="btn-start" onclick="startFast()">▶ Start Fast</button>`;
-  document.getElementById("protoSection").style.display=on?"none":"block";
+  document.getElementById("actRow").innerHTML=on
+    ?'<button class="btn-stop" onclick="endFast()">■  End Fast</button>'
+    :'<button class="btn-go" onclick="startFast()">▶  Start Fast</button>';
+  document.getElementById("protoSec").style.display=on?"none":"block";
 }
-function startTicker(){ clearInterval(ticker); tick(); ticker=setInterval(tick,1000); }
+function runTick(){clearInterval(ticker);tick();ticker=setInterval(tick,1000);}
 function buildProtos(){
-  document.getElementById("protoScroll").innerHTML=PROTOCOLS.map(p=>{
-    const sel=p.hrs===selectedHrs;
-    return `<div class="proto${sel?" sel":""}${p.hot?" hot":""}" onclick="selectProto(this,${p.hrs})">
-      <div class="proto-hrs">${p.label}</div>
-      <div class="proto-name">${p.name}</div>
-      ${p.tag?`<div class="proto-tag">${p.tag}</div>`:""}
-    </div>`;
-  }).join("");
+  document.getElementById("protoList").innerHTML=PROTOS.map(p=>`<div class="proto${p.hrs===selHrs?" sel":""}${p.hot?" hot":""}" onclick="selProto(this,${p.hrs})"><div class="p-hrs">${p.label}</div><div class="p-name">${p.name}</div>${p.tag?`<div class="p-tag">${p.tag}</div>`:""}</div>`).join("");
 }
-function selectProto(el,hrs){
-  document.querySelectorAll(".proto").forEach(c=>c.classList.remove("sel")); el.classList.add("sel");
-  selectedHrs=hrs; document.getElementById("customWrap").style.display=hrs===0?"flex":"none";
-}
-function loadStats(){
-  const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");
-  document.getElementById("totalVal").textContent=h.length;
-  document.getElementById("streakVal").textContent=localStorage.getItem("fastStreak")||"0";
-  const lng=h.reduce((mx,f)=>Math.max(mx,f.elapsed||0),0);
-  document.getElementById("longestVal").textContent=lng>0?fmtHrs(lng):"0h";
-}
-function toggleCountMode(){ countUp=!countUp; document.getElementById("countToggle").textContent=countUp?"⬆️":"⬇️"; }
+function selProto(el,h){document.querySelectorAll(".proto").forEach(c=>c.classList.remove("sel"));el.classList.add("sel");selHrs=h;document.getElementById("custRow").style.display=h===0?"flex":"none";}
+function loadStats(){const h=JSON.parse(localStorage.getItem("fastHistory")||"[]");document.getElementById("sTotal").textContent=h.length;document.getElementById("sStreak").textContent=localStorage.getItem("fastStreak")||"0";const lng=h.reduce((mx,f)=>Math.max(mx,f.elapsed||0),0);document.getElementById("sLongest").textContent=lng>0?fmtH(lng):"0h";}
+function toggleCount(){countUp=!countUp;document.getElementById("ctBtn").textContent=countUp?"⬆️":"⬇️";}
+
+// Light mode
 function toggleTheme(){
-  const lt=document.body.classList.toggle("lt"); localStorage.setItem("lightMode",lt);
-  document.getElementById("themeBtn").textContent=lt?"🌙":"☀️";
-  const d=lt?{"--bg":"#f0f4f8","--surface":"#ffffff","--text":"#0f172a","--sub":"#64748b","--nav":"#ffffff","--nav-border":"rgba(0,0,0,.08)"}
-             :{"--bg":"#08090d","--surface":"#13141a","--text":"#f0f0f5","--sub":"#6b7280","--nav":"#0f1016","--nav-border":"rgba(255,255,255,.06)"};
-  Object.entries(d).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+  const lt=document.body.classList.toggle("lt");localStorage.setItem("lm",lt);
+  document.getElementById("thBtn").textContent=lt?"🌙":"☀️";
+  const t=lt?{"--bg":"#F0F7FF","--surface":"#FFFFFF","--card":"#E8F3FF","--text":"#0F172A","--sub":"#64748B","--nav":"#FFFFFF","--nav-border":"rgba(0,180,140,.15)","--border":"rgba(0,0,0,.08)"}
+             :{"--bg":"#08101E","--surface":"#112034","--card":"#162840","--text":"#EFF6FF","--sub":"#64748B","--nav":"#0D1A2D","--nav-border":"rgba(0,212,170,.12)","--border":"rgba(255,255,255,.07)"};
+  Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+  document.querySelector("html").style.background=lt?"#E2EDF8":"#03080F";
 }
-// Init
-if(localStorage.getItem("lightMode")==="true") toggleTheme();
-buildZoneBar(); buildProtos(); loadStats();
-if(localStorage.getItem("fastStart")){ showActive(true); startTicker(); }
-if("serviceWorker" in navigator) navigator.serviceWorker.register("fasting-sw.js");
+
+if(localStorage.getItem("lm")==="true")toggleTheme();
+buildBar();buildProtos();loadStats();
+if(localStorage.getItem("fStart")){showActive(true);runTick();}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("fasting-sw.js");
 </script>
 </body>
 </html>

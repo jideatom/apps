@@ -54,9 +54,14 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px 
 nav a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--sub);font-size:.6rem;font-weight:600;min-width:64px;padding:4px 0;}
 nav a.active{color:#f59e0b;}
 nav a span.ni{font-size:1.25rem;}
+
+/* Phone wrap */
+.app{width:100%;max-width:390px;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;position:relative;padding-bottom:calc(68px + env(safe-area-inset-bottom));}
+html{background:#03080F;display:flex;justify-content:center;}
 </style>
 </head>
 <body>
+<div class="app">
 <header>
   <h1>📊 History</h1>
   <button class="hdr-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
@@ -131,5 +136,6 @@ function toggleTheme(){const isLight=document.body.classList.toggle("lt");localS
 if(localStorage.getItem("lightMode")==="true")toggleTheme();
 loadHistory();renderWeights();
 </script>
+</div>
 </body>
 </html>
