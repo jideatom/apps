@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>NaijaFast – Food Log</title>
+<link rel="manifest" href="fasting-manifest.json">
+<style>
+:root{--bg:#08090d;--surface:#13141a;--text:#f0f0f5;--sub:#6b7280;--accent:#f59e0b;--purple:#7c3aed;--nav:#0f1016;--nav-border:rgba(255,255,255,.06);--green:#22c55e;--red:#ef4444;--ibg:#1c1e28;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;min-height:100vh;padding-bottom:calc(70px + env(safe-area-inset-bottom));}
+header{background:var(--surface);border-bottom:1px solid rgba(255,255,255,.05);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
+header h1{font-size:1.1rem;font-weight:800;}
+.hdr-btn{background:rgba(255,255,255,.08);border:none;color:var(--sub);border-radius:50%;width:36px;height:36px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.container{padding:16px;max-width:520px;margin:0 auto;}
+.cal-card{background:var(--surface);border-radius:20px;padding:18px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);}
+.cal-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.cal-num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cal-sub{font-size:.72rem;color:var(--sub);margin-top:2px;}
+.cal-right{text-align:right;}
+.cal-remain{font-size:1.1rem;font-weight:700;color:var(--sub);}
+.cal-goal-lbl{font-size:.68rem;color:var(--sub);}
+.cal-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+.cal-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#7c3aed);border-radius:3px;transition:width .5s;}
+.macros-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+.macro-box{background:rgba(255,255,255,.04);border-radius:12px;padding:10px;text-align:center;}
+.macro-val{font-size:1rem;font-weight:700;}
+.macro-lbl{font-size:.62rem;color:var(--sub);margin-top:2px;}
+.search-wrap{position:relative;margin-bottom:10px;}
+.search-wrap input{width:100%;background:var(--ibg);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 16px 12px 44px;color:var(--text);font-size:.95rem;}
+.search-wrap input:focus{outline:none;border-color:var(--purple);}
+.search-wrap input::placeholder{color:var(--sub);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;}
+.cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:none;}
+.cats::-webkit-scrollbar{display:none;}
+.cat-btn{background:var(--ibg);border:1.5px solid rgba(255,255,255,.07);border-radius:20px;padding:6px 14px;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--sub);white-space:nowrap;}
+.cat-btn.active{background:rgba(124,58,237,.25);border-color:var(--purple);color:#a78bfa;}
+.food-item{background:var(--surface);border-radius:14px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.04);}
+.food-emoji{font-size:1.5rem;width:34px;text-align:center;flex-shrink:0;}
+.food-info{flex:1;min-width:0;}
+.food-name{font-size:.88rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.food-meta{font-size:.7rem;color:var(--sub);margin-top:2px;}
+.food-cal{font-size:.9rem;font-weight:700;color:var(--accent);flex-shrink:0;margin-right:6px;}
+.add-btn{background:linear-gradient(135deg,#f59e0b,#7c3aed);border:none;color:#fff;border-radius:10px;width:30px;height:30px;font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;}
+.section-hdr{font-size:.68rem;color:var(--sub);text-transform:uppercase;letter-spacing:1.5px;margin:16px 0 8px;}
+.log-item{background:var(--surface);border-radius:12px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.04);}
+.log-name{flex:1;font-size:.85rem;font-weight:600;}
+.log-cal{font-size:.82rem;font-weight:700;color:var(--green);flex-shrink:0;}
+.del-btn{background:none;border:none;color:rgba(239,68,68,.6);font-size:1rem;cursor:pointer;padding:4px;flex-shrink:0;}
+.empty{text-align:center;padding:28px 16px;color:var(--sub);font-size:.85rem;line-height:1.6;}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--nav-border);display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));z-index:200;backdrop-filter:blur(20px);}
+nav a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--sub);font-size:.6rem;font-weight:600;min-width:64px;padding:4px 0;}
+nav a.active{color:#f59e0b;}
+nav a span.ni{font-size:1.25rem;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🍽️ Food Log</h1>
+  <button class="hdr-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</header>
+<div class="container">
+  <div class="cal-card">
+    <div class="cal-top">
+      <div><div class="cal-num"><span id="todayCals">0</span> kcal</div><div class="cal-sub">Today's intake</div></div>
+      <div class="cal-right"><div class="cal-remain" id="remainCals">2000</div><div class="cal-goal-lbl">kcal remaining</div></div>
+    </div>
+    <div class="cal-bar"><div class="cal-fill" id="calFill" style="width:0%"></div></div>
+    <div class="macros-row">
+      <div class="macro-box"><div class="macro-val" id="mCarbs">0g</div><div class="macro-lbl">🌾 Carbs</div></div>
+      <div class="macro-box"><div class="macro-val" id="mProtein">0g</div><div class="macro-lbl">🥩 Protein</div></div>
+      <div class="macro-box"><div class="macro-val" id="mFat">0g</div><div class="macro-lbl">🧈 Fat</div></div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search Nigerian foods…" oninput="filterFoods()">
+  </div>
+  <div class="cats">
+    <button class="cat-btn active" onclick="filterCat(this,'All')">All</button>
+    <button class="cat-btn" onclick="filterCat(this,'Swallow')">🍚 Swallows</button>
+    <button class="cat-btn" onclick="filterCat(this,'Soup')">🍲 Soups</button>
+    <button class="cat-btn" onclick="filterCat(this,'Rice')">🍛 Rice/Yam</button>
+    <button class="cat-btn" onclick="filterCat(this,'Protein')">🥩 Protein</button>
+    <button class="cat-btn" onclick="filterCat(this,'Snack')">🌽 Snacks</button>
+    <button class="cat-btn" onclick="filterCat(this,'Drink')">🥤 Drinks</button>
+  </div>
+  <div id="foodList"></div>
+  <div class="section-hdr">Today's Log</div>
+  <div id="logList"><div class="empty">No meals logged today.<br>Search and add foods above 👆</div></div>
+</div>
+<nav>
+  <a href="fasting-index.html"><span class="ni">⏳</span>Timer</a>
+  <a href="fasting-food.html" class="active"><span class="ni">🍽️</span>Log Food</a>
+  <a href="fasting-history.html"><span class="ni">📊</span>History</a>
+</nav>
+<script>
+const GOAL=2000;
+// u = correct Nigerian portion label
+const DB=[
+  // Swallows — "wrap" or "½ wrap"
+  {e:"🍚",n:"Pounded Yam",        c:400,p:4, f:1, cr:87, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Eba (Garri)",        c:360,p:2, f:1, cr:85, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Amala",              c:352,p:3, f:1, cr:82, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Fufu / Akpu",        c:330,p:1, f:0, cr:79, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Semovita",           c:600,p:11,f:2, cr:120,u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Tuwo Masara",        c:450,p:5, f:2, cr:95, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Wheat Meal",         c:390,p:8, f:2, cr:80, u:"1 wrap",   cat:"Swallow"},
+  {e:"🍚",n:"Tuwo Shinkafa",      c:420,p:4, f:1, cr:90, u:"1 wrap",   cat:"Swallow"},
+  // Soups — "1 bowl"
+  {e:"🍲",n:"Egusi Soup",         c:300,p:12,f:22,cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Ewedu Soup",         c:20, p:1, f:0, cr:3,  u:"½ bowl",   cat:"Soup"},
+  {e:"🍲",n:"Okra Soup",          c:150,p:8, f:10,cr:9,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Ogbono Soup",        c:280,p:14,f:20,cr:6,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Banga Soup",         c:350,p:10,f:28,cr:10, u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Afang Soup",         c:310,p:15,f:22,cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Edikang Ikong",      c:320,p:16,f:23,cr:7,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Ofe Onugbu",         c:290,p:14,f:20,cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Efo Riro",           c:180,p:9, f:12,cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Oha Soup",           c:260,p:13,f:18,cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Miyan Kuka",         c:120,p:6, f:6, cr:8,  u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Tomato Stew",        c:160,p:4, f:12,cr:10, u:"1 bowl",   cat:"Soup"},
+  {e:"🍲",n:"Pepper Soup (Goat)", c:120,p:18,f:4, cr:2,  u:"1 bowl",   cat:"Soup"},
+  // Rice & Yam — "1 plate"
+  {e:"🍛",n:"Jollof Rice",        c:350,p:7, f:8, cr:60, u:"1 plate",  cat:"Rice"},
+  {e:"🍛",n:"Fried Rice",         c:410,p:8, f:14,cr:58, u:"1 plate",  cat:"Rice"},
+  {e:"🍛",n:"White Rice (cooked)",c:206,p:4, f:0, cr:45, u:"1 plate",  cat:"Rice"},
+  {e:"🍛",n:"Ofada Rice",         c:200,p:5, f:1, cr:43, u:"1 plate",  cat:"Rice"},
+  {e:"🍛",n:"Coconut Rice",       c:380,p:6, f:14,cr:58, u:"1 plate",  cat:"Rice"},
+  {e:"🍠",n:"Yam (boiled)",       c:177,p:2, f:0, cr:42, u:"1 plate",  cat:"Rice"},
+  {e:"🍠",n:"Yam (fried)",        c:220,p:2, f:8, cr:34, u:"1 plate",  cat:"Rice"},
+  {e:"🌾",n:"Ogi / Akamu (Pap)", c:150,p:2, f:1, cr:32, u:"1 bowl",   cat:"Rice"},
+  // Protein
+  {e:"🥩",n:"Suya (Beef)",        c:250,p:26,f:14,cr:3,  u:"100g",     cat:"Protein"},
+  {e:"🥩",n:"Kilishi",            c:420,p:45,f:20,cr:10, u:"100g",     cat:"Protein"},
+  {e:"🍗",n:"Chicken (grilled)",  c:165,p:31,f:4, cr:0,  u:"1 piece",  cat:"Protein"},
+  {e:"🐟",n:"Fried Catfish",      c:150,p:20,f:8, cr:2,  u:"1 piece",  cat:"Protein"},
+  {e:"🐟",n:"Stockfish",          c:360,p:60,f:3, cr:0,  u:"100g",     cat:"Protein"},
+  {e:"🥚",n:"Fried Egg",          c:148,p:10,f:11,cr:1,  u:"2 eggs",   cat:"Protein"},
+  {e:"🫘",n:"Brown Beans (boiled)",c:379,p:24,f:3,cr:62, u:"1 plate",  cat:"Protein"},
+  {e:"🫘",n:"Akara",              c:71, p:4, f:3, cr:8,  u:"1 ball",   cat:"Protein"},
+  {e:"🫘",n:"Moi Moi",            c:128,p:7, f:5, cr:14, u:"1 wrap",   cat:"Protein"},
+  {e:"🥩",n:"Nkwobi",             c:380,p:28,f:26,cr:4,  u:"1 plate",  cat:"Protein"},
+  {e:"🥩",n:"Isi Ewu",            c:450,p:32,f:32,cr:5,  u:"1 plate",  cat:"Protein"},
+  {e:"🥩",n:"Ugba (Oil Bean)",    c:406,p:20,f:35,cr:10, u:"100g",     cat:"Protein"},
+  {e:"🦴",n:"Oxtail Pepper Soup", c:200,p:22,f:8, cr:2,  u:"1 bowl",   cat:"Protein"},
+  // Snacks
+  {e:"🌽",n:"Roasted Corn",       c:150,p:4, f:2, cr:30, u:"1 cob",    cat:"Snack"},
+  {e:"🍌",n:"Fried Plantain (Dodo)",c:255,p:1,f:10,cr:37,u:"½ plate",  cat:"Snack"},
+  {e:"🍌",n:"Boiled Plantain",    c:206,p:1, f:0, cr:52, u:"½ plate",  cat:"Snack"},
+  {e:"🍌",n:"Boli (Roasted Plantain)",c:210,p:1,f:1,cr:50,u:"1 piece", cat:"Snack"},
+  {e:"🥜",n:"Groundnut (Roasted)",c:580,p:26,f:50,cr:16, u:"100g",     cat:"Snack"},
+  {e:"🍩",n:"Puff Puff",          c:350,p:5, f:16,cr:46, u:"3 balls",  cat:"Snack"},
+  {e:"🍪",n:"Chin Chin",          c:490,p:8, f:20,cr:68, u:"100g",     cat:"Snack"},
+  {e:"🍞",n:"Agege Bread",        c:275,p:8, f:4, cr:52, u:"2 slices", cat:"Snack"},
+  {e:"🥥",n:"Coconut",            c:354,p:3, f:33,cr:15, u:"100g",     cat:"Snack"},
+  {e:"🍚",n:"Masa",               c:180,p:4, f:4, cr:32, u:"3 pieces", cat:"Snack"},
+  // Drinks
+  {e:"🥤",n:"Zobo (Hibiscus)",    c:40, p:0, f:0, cr:10, u:"1 cup",    cat:"Drink"},
+  {e:"🥤",n:"Kunu",               c:100,p:2, f:1, cr:22, u:"1 cup",    cat:"Drink"},
+  {e:"🥤",n:"Tigernut Milk",      c:200,p:4, f:8, cr:28, u:"1 cup",    cat:"Drink"},
+  {e:"🥤",n:"Chapman",            c:220,p:0, f:0, cr:56, u:"1 glass",  cat:"Drink"},
+  {e:"🍺",n:"Palm Wine",          c:100,p:0, f:0, cr:24, u:"1 cup",    cat:"Drink"},
+  {e:"🥛",n:"Peak Milk",          c:150,p:8, f:9, cr:11, u:"100ml",    cat:"Drink"},
+];
+let activeCat="All",searchTerm="";
+function filterCat(btn,cat){document.querySelectorAll(".cat-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeCat=cat;renderFoods();}
+function filterFoods(){searchTerm=document.getElementById("searchInput").value.toLowerCase();renderFoods();}
+function renderFoods(){
+  const f=DB.filter(x=>(activeCat==="All"||x.cat===activeCat)&&(!searchTerm||x.n.toLowerCase().includes(searchTerm)));
+  const el=document.getElementById("foodList");
+  if(!f.length){el.innerHTML='<div class="empty">No foods found</div>';return;}
+  el.innerHTML=f.map(x=>`<div class="food-item"><div class="food-emoji">${x.e}</div><div class="food-info"><div class="food-name">${x.n}</div><div class="food-meta">${x.u} · ${x.cat}</div></div><span class="food-cal">${x.c} kcal</span><button class="add-btn" onclick='addFood(${JSON.stringify(x)})'>+</button></div>`).join("");
+}
+function getTodayKey(){return new Date().toDateString();}
+function addFood(f){const k=getTodayKey();const l=JSON.parse(localStorage.getItem("foodLog_"+k)||"[]");l.push({n:f.n,c:f.c,p:f.p,fat:f.f,cr:f.cr,e:f.e,t:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})});localStorage.setItem("foodLog_"+k,JSON.stringify(l));renderLog();updateCalBar();}
+function removeFood(i){const k=getTodayKey();const l=JSON.parse(localStorage.getItem("foodLog_"+k)||"[]");l.splice(i,1);localStorage.setItem("foodLog_"+k,JSON.stringify(l));renderLog();updateCalBar();}
+function renderLog(){const k=getTodayKey();const l=JSON.parse(localStorage.getItem("foodLog_"+k)||"[]");const el=document.getElementById("logList");if(!l.length){el.innerHTML='<div class="empty">No meals logged today.<br>Search and add foods above 👆</div>';return;}el.innerHTML=l.map((e,i)=>`<div class="log-item"><span style="font-size:1.2rem">${e.e}</span><span class="log-name">${e.n} <span style="font-size:.68rem;color:var(--sub)">${e.t}</span></span><span class="log-cal">+${e.c}</span><button class="del-btn" onclick="removeFood(${i})">✕</button></div>`).join("");}
+function updateCalBar(){const k=getTodayKey();const l=JSON.parse(localStorage.getItem("foodLog_"+k)||"[]");const tot=l.reduce((s,e)=>s+e.c,0);const pt=l.reduce((s,e)=>s+(e.p||0),0);const ft=l.reduce((s,e)=>s+(e.fat||0),0);const ct=l.reduce((s,e)=>s+(e.cr||0),0);const pct=Math.min((tot/GOAL)*100,100);document.getElementById("todayCals").textContent=tot;document.getElementById("remainCals").textContent=Math.max(GOAL-tot,0);document.getElementById("calFill").style.width=pct+"%";document.getElementById("mProtein").textContent=pt+"g";document.getElementById("mFat").textContent=ft+"g";document.getElementById("mCarbs").textContent=ct+"g";}
+function toggleTheme(){const lt=document.body.classList.toggle("lt");localStorage.setItem("lightMode",lt);document.getElementById("themeBtn").textContent=lt?"🌙":"☀️";const d=lt?{"--bg":"#f0f4f8","--surface":"#ffffff","--text":"#0f172a","--sub":"#64748b","--ibg":"#e8edf4","--nav":"#ffffff","--nav-border":"rgba(0,0,0,.08)"}:{"--bg":"#08090d","--surface":"#13141a","--text":"#f0f0f5","--sub":"#6b7280","--ibg":"#1c1e28","--nav":"#0f1016","--nav-border":"rgba(255,255,255,.06)"};Object.entries(d).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));}
+if(localStorage.getItem("lightMode")==="true")toggleTheme();
+renderFoods();renderLog();updateCalBar();
+</script>
+</body>
+</html>
