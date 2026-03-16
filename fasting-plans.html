@@ -20,34 +20,17 @@
         .plans-section-title { font-size:0.85rem; font-weight:800; color:var(--text); margin:12px 0 5px; }
         .plans-section-sub { font-size:0.72rem; color:var(--sub); margin-bottom:12px; }
         .plans-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px; }
-        .plan-card { 
-            padding:12px; 
-            border-radius:12px; 
-            cursor:pointer; 
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            position:relative; 
-            border: 1px solid #F1F5F9; 
-            text-decoration:none;
-            color:inherit;
-            display:block;
-        }
-        .plan-card:hover { 
-            transform: translateY(-5px) scale(1.03); 
-            box-shadow: 0 12px 24px rgba(93,95,239,0.12); 
-            border-color: var(--primary); 
-        }
+        .plan-card { padding:12px; border-radius:12px; cursor:pointer; transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); position:relative; border: 1px solid #F1F5F9; text-decoration:none; color:inherit; display:block; }
+        .plan-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 12px 24px rgba(93,95,239,0.12); border-color: var(--primary); }
         .plan-card.c1 { background:#E0E7FF; }
         .plan-card.c2 { background:#FFF7ED; }
         .plan-card.c3 { background:#F0FDF4; }
         .plan-card.c4 { background:#F5F3FF; }
         .plan-title { font-size:0.85rem; font-weight:800; display:block; margin-bottom:2px; }
         .plan-desc { font-size:0.65rem; color:var(--sub); line-height:1.2; }
-        
-        /* CSS to make Hot plans smaller */
         .plans-grid.small .plan-card { padding:10px; }
         .plans-grid.small .plan-title { font-size:0.75rem; }
         .plans-grid.small .plan-desc { font-size:0.6rem; }
-
         .nav { position:fixed; bottom:0; width:100%; max-width:450px; background:#fff; border-top:1px solid var(--border); display:flex; justify-content:space-around; padding:12px 0 24px; }
         .nav-item { color:var(--sub); text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; transition: all 0.2s ease; padding:8px 12px; border-radius:12px; }
         .nav-item:hover { color: var(--primary); background: #E0E7FF; transform: translateY(-2px); }
@@ -60,7 +43,7 @@
 <div class="app">
     <div class="page-hdr">
         <h2 style="font-size:1.3rem; font-weight:800;">Fasting Plans</h2>
-        <i class="fas fa-plus-circle" style="color:var(--primary); font-size:1.4rem; cursor:pointer;" onclick="prompt('Enter Custom Fast Name:')"></i>
+        <i class="fas fa-plus-circle" style="color:var(--primary); font-size:1.4rem; cursor:pointer;"></i>
     </div>
 
     <div class="tab-row">
@@ -82,7 +65,6 @@
                     <span class="plan-desc">Leangains Method</span>
                 </a>
             </div>
-
             <p class="plans-section-title">Intermediate</p>
             <p class="plans-section-sub">Step up your fasting game</p>
             <div class="plans-grid">
@@ -95,7 +77,6 @@
                     <span class="plan-desc">Warrior Diet</span>
                 </a>
             </div>
-
             <p class="plans-section-title">Advanced (Hot Plans)</p>
             <p class="plans-section-sub">Deep cellular cleanup</p>
             <div class="plans-grid small">
@@ -141,7 +122,8 @@
             <span>Plans</span>
         </a>
         <a href="fasting-food.html" class="nav-item">
-Link plans to detail pages + smaller hot cards + weekly clickable            <span>Food</span>
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
         </a>
         <a href="fasting-history.html" class="nav-item">
             <i class="fas fa-calendar-alt"></i>
@@ -155,20 +137,8 @@ Link plans to detail pages + smaller hot cards + weekly clickable            <sp
     const wTab = document.getElementById('weeklyTab');
     const dCont = document.getElementById('dailyContent');
     const wCont = document.getElementById('weeklyContent');
-
-    dTab.onclick = () => {
-        dTab.classList.add('on');
-        wTab.classList.remove('on');
-        dCont.classList.add('active');
-        wCont.classList.remove('active');
-    };
-
-    wTab.onclick = () => {
-        wTab.classList.add('on');
-        dTab.classList.remove('on');
-        wCont.classList.add('active');
-        dCont.classList.remove('active');
-    };
+    dTab.onclick = () => { dTab.classList.add('on'); wTab.classList.remove('on'); dCont.classList.add('active'); wCont.classList.remove('active'); };
+    wTab.onclick = () => { wTab.classList.add('on'); dTab.classList.remove('on'); wCont.classList.add('active'); dCont.classList.remove('active'); };
 </script>
 </body>
 </html>
