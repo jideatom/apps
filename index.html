@@ -184,6 +184,29 @@ body.dark .t-azure {background:#061624;border-color:#0a2a40;} body.dark .t-azure
 .ql-name{font-size:0.82rem;color:var(--text);font-weight:600;}
 .ql-sub{font-size:0.67rem;color:var(--text-sub);margin-top:1px;}
 .ql-arr{color:var(--text-muted);font-size:1rem;font-weight:400;}
+
+.notif-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;}
+.notif-row{display:flex;align-items:center;gap:12px;padding:13px 14px;}
+.notif-icon{width:36px;height:36px;background:var(--accent-bg);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.notif-info{flex:1;}
+.notif-title{font-size:0.83rem;font-weight:700;color:var(--text);}
+.notif-sub{font-size:0.68rem;color:var(--text-sub);margin-top:1px;}
+/* Toggle switch */
+.toggle{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.slider{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:24px;transition:0.2s;}
+.slider:before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.2s;}
+input:checked + .slider{background:var(--accent);}
+input:checked + .slider:before{transform:translateX(20px);}
+/* Time row */
+.notif-time-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--border);}
+.time-label{font-size:0.78rem;color:var(--text-sub);}
+.time-input{background:var(--bg-input);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:0.82rem;color:var(--text);font-family:inherit;cursor:pointer;}
+/* Status */
+.notif-status{font-size:0.72rem;padding:0 14px 11px;color:var(--text-sub);display:none;}
+.notif-status.show{display:block;}
+.notif-status.ok{color:#16a34a;}
+.notif-status.err{color:#dc2626;}
 </style>
 </head>
 <body>
@@ -269,6 +292,28 @@ body.dark .t-azure {background:#061624;border-color:#0a2a40;} body.dark .t-azure
     </a>
   </div>
 
+
+  <!-- ── Daily Reminder ───────────────────────────── -->
+  <p class="sec" style="margin-top:16px;">Daily Study Reminder</p>
+  <div class="notif-box">
+    <div class="notif-row">
+      <div class="notif-icon">🔔</div>
+      <div class="notif-info">
+        <div class="notif-title" id="notifTitle">Enable Study Reminders</div>
+        <div class="notif-sub"  id="notifSub">Get a daily push notification on your phone</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="notifToggle" onchange="handleNotifToggle(this)">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div id="notifTimeRow" class="notif-time-row" style="display:none;">
+      <span class="time-label">Reminder time</span>
+      <input type="time" id="reminderTime" value="20:00" onchange="saveReminderTime(this.value)" class="time-input">
+    </div>
+    <div id="notifStatus" class="notif-status"></div>
+  </div>
+
 </div><!-- /wrap -->
 
 
@@ -302,6 +347,147 @@ function loadAllProgress(){
   setBar('aws',cp);setBar('azure',cp);
 }
 loadAllProgress();
+
+// ── Notification logic ───────────────────────────────────────────
+function initNotif() {
+  var saved = localStorage.getItem('notifEnabled') === 'true';
+  var time  = localStorage.getItem('reminderTime') || '20:00';
+  document.getElementById('notifToggle').checked = saved;
+  document.getElementById('reminderTime').value  = time;
+  document.getElementById('notifTimeRow').style.display = saved ? 'flex' : 'none';
+  if (saved) { updateNotifLabel(true); }
+}
+
+function handleNotifToggle(el) {
+  if (el.checked) {
+    requestNotifPermission();
+  } else {
+    localStorage.setItem('notifEnabled','false');
+    document.getElementById('notifTimeRow').style.display = 'none';
+    setStatus('Reminders turned off.','');
+    updateNotifLabel(false);
+    unregisterSync();
+  }
+}
+
+function requestNotifPermission() {
+  if (!('Notification' in window)) {
+    setStatus('❌ Notifications not supported on this browser.','err');
+    document.getElementById('notifToggle').checked = false;
+    return;
+  }
+  Notification.requestPermission().then(function(perm) {
+    if (perm === 'granted') {
+      localStorage.setItem('notifEnabled','true');
+      document.getElementById('notifTimeRow').style.display = 'flex';
+      scheduleReminders();
+      updateNotifLabel(true);
+      // test notification
+      setTimeout(function() {
+        new Notification('AI Tracker ✅', {
+          body: 'Reminders enabled! You will get a daily study nudge.',
+          icon: 'icon-192.png'
+        });
+      }, 600);
+    } else {
+      document.getElementById('notifToggle').checked = false;
+      setStatus('❌ Permission denied. Enable notifications in your phone settings for this site.','err');
+    }
+  });
+}
+
+function saveReminderTime(val) {
+  localStorage.setItem('reminderTime', val);
+  scheduleReminders();
+  setStatus('✅ Reminder set for ' + formatTime(val) + ' daily.','ok');
+}
+
+function formatTime(t) {
+  var parts = t.split(':');
+  var h = parseInt(parts[0]), m = parts[1];
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return h + ':' + m + ' ' + ampm;
+}
+
+function scheduleReminders() {
+  var time = localStorage.getItem('reminderTime') || '20:00';
+  setStatus('✅ Daily reminder set for ' + formatTime(time) + '.','ok');
+  // Register Periodic Background Sync (Chrome Android)
+  if ('serviceWorker' in navigator && 'periodicSync' in window.ServiceWorkerRegistration.prototype) {
+    navigator.serviceWorker.ready.then(function(reg) {
+      reg.periodicSync.register('daily-study-reminder', { minInterval: 86400000 })
+        .catch(function(e) { console.log('periodicSync not granted:', e); });
+    });
+  }
+  // In-session timer: fires at the set time today if still in app
+  scheduleInSessionNotif(time);
+}
+
+function scheduleInSessionNotif(time) {
+  clearTimeout(window._notifTimer);
+  var now = new Date();
+  var parts = time.split(':');
+  var target = new Date();
+  target.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+  if (target <= now) { target.setDate(target.getDate() + 1); } // tomorrow
+  var delay = target - now;
+  window._notifTimer = setTimeout(function() {
+    if (Notification.permission === 'granted') {
+      new Notification('AI Tracker — Study Reminder 📚', {
+        body: 'Time to study! Open your tracker and tick off some progress.',
+        icon: 'icon-192.png',
+        tag: 'study-reminder',
+        renotify: true
+      });
+    }
+    scheduleInSessionNotif(time); // reschedule for next day
+  }, delay);
+}
+
+function unregisterSync() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(function(reg) {
+      if ('periodicSync' in reg) {
+        reg.periodicSync.unregister('daily-study-reminder').catch(function(){});
+      }
+    });
+  }
+}
+
+function updateNotifLabel(on) {
+  var time = localStorage.getItem('reminderTime') || '20:00';
+  document.getElementById('notifTitle').textContent = on ? 'Reminders On ✅' : 'Enable Study Reminders';
+  document.getElementById('notifSub').textContent   = on ? 'Daily nudge at ' + formatTime(time) : 'Get a daily push notification on your phone';
+}
+
+function setStatus(msg, type) {
+  var el = document.getElementById('notifStatus');
+  el.textContent = msg;
+  el.className = 'notif-status show' + (type ? ' ' + type : '');
+}
+
+// ── Open-app reminder: if enabled and not checked in today ───────
+function checkTodayReminder() {
+  if (Notification.permission !== 'granted') return;
+  if (localStorage.getItem('notifEnabled') !== 'true') return;
+  var lastSeen = localStorage.getItem('lastStudyOpen');
+  var today = new Date().toDateString();
+  if (lastSeen !== today) {
+    setTimeout(function() {
+      new Notification('AI Tracker 👋', {
+        body: 'Welcome back! Don\'t forget to log your study progress today.',
+        icon: 'icon-192.png',
+        tag: 'study-open'
+      });
+    }, 3000);
+  }
+  localStorage.setItem('lastStudyOpen', today);
+}
+
+initNotif();
+checkTodayReminder();
+
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
 </script>
 </body>
