@@ -9,111 +9,131 @@
         * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
         body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); display:flex; justify-content:center; }
         .app { width:100%; max-width:450px; background:var(--surface); min-height:100vh; display:flex; flex-direction:column; padding-bottom:80px; }
-        
         .page-hdr { padding:40px 20px 10px; display:flex; justify-content:space-between; align-items:center; }
         .page-title { font-size:1.5rem; font-weight:800; }
-
         .tabs { display:flex; gap:12px; padding:10px 20px; overflow-x:auto; scrollbar-width:none; }
         .tabs::-webkit-scrollbar { display:none; }
-        .tab-btn { padding:8px 16px; border-radius:20px; background:var(--bg); border:1px solid var(--border); font-size:0.8rem; font-weight:600; cursor:pointer; white-space:nowrap; transition: all 0.2s ease; }
+        .tab-btn { padding:8px 16px; border-radius:20px; background:var(--bg); border:1px solid var(--border); font-size:0.8rem; font-weight:600; cursor:pointer; white-space:nowrap; transition: all 0.2s ease; text-decoration:none; color:var(--text); display:inline-block; }
         .tab-btn.on { background:var(--primary); color:white; border-color:var(--primary); }
-        .tab-btn:hover { background:var(--primary); color:white; border-color:var(--primary); }
-
+        .tab-btn:hover { background:var(--primary); color:white; border-color:var(--primary); transform:translateY(-1px); }
         .content-area { padding:10px 20px; flex:1; }
+        .section-label { font-size:0.85rem; font-weight:700; color:var(--sub); margin-bottom:12px; margin-top:5px; }
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px; }
-        
-        .dish-card { 
-            background:white; 
-            border-radius:16px; 
-            overflow:hidden; 
-            border:1px solid var(--border); 
-            text-decoration:none; 
-            color:inherit; 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .dish-card {
+            background:white;
+            border-radius:16px;
+            overflow:hidden;
+            border:1px solid var(--border);
+            text-decoration:none;
+            color:inherit;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             flex-direction: column;
             cursor:pointer;
+            position:relative;
         }
-        .dish-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: var(--primary); }
-        .dish-img { width:100%; height:110px; object-fit:cover; background:#e8e8e8; display:flex; align-items:center; justify-content:center; font-size:2rem; }
+        .dish-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(93,95,239,0.15), 0 4px 8px rgba(0,0,0,0.08);
+            border-color: var(--primary);
+        }
+        .dish-card:hover .dish-img { filter: brightness(1.05); }
+        .dish-img { width:100%; height:110px; object-fit:cover; background:#e8e8e8; display:flex; align-items:center; justify-content:center; font-size:2rem; transition: filter 0.3s ease; }
         .dish-info { padding:10px; }
         .dish-name { font-size:0.8rem; font-weight:700; display:block; }
         .dish-meta { font-size:0.65rem; color:var(--sub); margin-top:2px; }
-
         .nav { position:fixed; bottom:0; width:100%; max-width:450px; background:#fff; border-top:1px solid var(--border); display:flex; justify-content:space-around; padding:12px 0 24px; }
-        .nav-item { color:var(--sub); text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; transition: all 0.2s ease; }
-        .nav-item:hover { color: var(--primary); transform: translateY(-2px); }
+        .nav-item { color:var(--sub); text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; transition: all 0.2s ease; padding:8px 12px; border-radius:12px; }
+        .nav-item:hover { color: var(--primary); background: #E0E7FF; transform: translateY(-2px); }
         .nav-item.active { color:var(--primary); }
         .nav-item i { font-size:1.1rem; }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="app">
-        <div class="page-hdr">
-            <h2 class="page-title">Recipes</h2>
-            <i class="fas fa-search" style="color:var(--sub); font-size:1.2rem; cursor:pointer;"></i>
-        </div>
-
-        <div class="tabs">
-            <button class="tab-btn on">All</button>
-            <button class="tab-btn" onclick="location.href='fasting-veg.html'">Vegetables</button>
-            <button class="tab-btn">High Protein</button>
-            <button class="tab-btn">Low Carb</button>
-        </div>
-
-        <div class="content-area">
-            <p style="font-size:0.85rem; font-weight:700; color:var(--sub); margin-bottom:4px;">Nigerian Favorites</p>
-            <div class="grid">
-                <div class="dish-card">
-                    <div class="dish-img" style="background:linear-gradient(135deg,#e74c3c,#c0392b);">🍛</div>
-                    <div class="dish-info">
-                        <span class="dish-name">Smoky Jollof</span>
-                        <span class="dish-meta">1 plate &bull; 450 kcal</span>
-                    </div>
-                </div>
-                <div class="dish-card">
-                    <div class="dish-img" style="background:linear-gradient(135deg,#f39c12,#e67e22);">🍲</div>
-                    <div class="dish-info">
-                        <span class="dish-name">Pounded Yam &amp; Egusi</span>
-                        <span class="dish-meta">1 wrap &bull; 650 kcal</span>
-                    </div>
-                </div>
-                <div class="dish-card">
-                    <div class="dish-img" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">🫘</div>
-                    <div class="dish-info">
-                        <span class="dish-name">Oven-baked Moin Moin</span>
-                        <span class="dish-meta">2 pieces &bull; 320 kcal</span>
-                    </div>
-                </div>
-                <div class="dish-card">
-                    <div class="dish-img" style="background:linear-gradient(135deg,#8e44ad,#9b59b6);">🥩</div>
-                    <div class="dish-info">
-                        <span class="dish-name">Beef Suya Platter</span>
-                        <span class="dish-meta">Medium &bull; 400 kcal</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <nav class="nav">
-            <a href="fasting-index.html" class="nav-item">
-                <i class="fas fa-clock"></i>
-                <span>Fast</span>
-            </a>
-            <a href="fasting-plans.html" class="nav-item">
-                <i class="fas fa-fire"></i>
-                <span>Plans</span>
-            </a>
-            <a href="fasting-food.html" class="nav-item active">
-                <i class="fas fa-utensils"></i>
-                <span>Food</span>
-            </a>
-            <a href="fasting-history.html" class="nav-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>History</span>
-            </a>
-        </nav>
+<div class="app">
+    <div class="page-hdr">
+        <h2 class="page-title">Recipes</h2>
+        <i class="fas fa-search" style="color:var(--sub); font-size:1.2rem; cursor:pointer;"></i>
     </div>
+
+    <div class="tabs">
+        <button class="tab-btn on">All</button>
+        <a href="fasting-veg.html" class="tab-btn">Vegetables</a>
+        <button class="tab-btn">High Protein</button>
+        <button class="tab-btn">Low Carb</button>
+    </div>
+
+    <div class="content-area">
+        <p class="section-label">Nigerian Favorites</p>
+        <div class="grid">
+            <a href="fasting-dish.html?id=jollof" class="dish-card">
+                <div class="dish-img">🍛</div>
+                <div class="dish-info">
+                    <span class="dish-name">Smoky Jollof</span>
+                    <span class="dish-meta">1 plate &bull; 450 kcal</span>
+                </div>
+            </a>
+            <a href="fasting-dish.html?id=pounded" class="dish-card">
+                <div class="dish-img">🍲</div>
+                <div class="dish-info">
+                    <span class="dish-name">Pounded Yam &amp; Egusi</span>
+                    <span class="dish-meta">1 wrap &bull; 650 kcal</span>
+                </div>
+            </a>
+            <a href="fasting-dish.html?id=moinmoin" class="dish-card">
+                <div class="dish-img">🪴</div>
+                <div class="dish-info">
+                    <span class="dish-name">Oven-baked Moin Moin</span>
+                    <span class="dish-meta">2 pieces &bull; 320 kcal</span>
+                </div>
+            </a>
+            <a href="fasting-dish.html?id=suya" class="dish-card">
+                <div class="dish-img">🥩</div>
+                <div class="dish-info">
+                    <span class="dish-name">Beef Suya Platter</span>
+                    <span class="dish-meta">Medium &bull; 400 kcal</span>
+                </div>
+            </a>
+        </div>
+
+        <p class="section-label" style="margin-top:20px;">High Protein</p>
+        <div class="grid">
+            <a href="fasting-dish.html?id=eggs" class="dish-card">
+                <div class="dish-img">🍳</div>
+                <div class="dish-info">
+                    <span class="dish-name">Nigerian Egg Stew</span>
+                    <span class="dish-meta">2 eggs &bull; 210 kcal</span>
+                </div>
+            </a>
+            <a href="fasting-dish.html?id=catfish" class="dish-card">
+                <div class="dish-img">🐟</div>
+                <div class="dish-info">
+                    <span class="dish-name">Peppered Catfish</span>
+                    <span class="dish-meta">1 fillet &bull; 280 kcal</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <nav class="nav">
+        <a href="fasting-index.html" class="nav-item">
+            <i class="fas fa-clock"></i>
+            <span>Fast</span>
+        </a>
+        <a href="fasting-plans.html" class="nav-item">
+            <i class="fas fa-fire"></i>
+            <span>Plans</span>
+        </a>
+        <a href="fasting-food.html" class="nav-item active">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+        </a>
+        <a href="fasting-history.html" class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>History</span>
+        </a>
+    </nav>
+</div>
 </body>
 </html>
