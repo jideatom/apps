@@ -133,7 +133,8 @@ initTheme();
 var el=document.getElementById('bn-python');if(el)el.classList.add('active');
 var K='pythonProgress';function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{}}catch(e){return{}}}function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}function tog(id){var s=load();s[id]=!s[id];save(s);render();}function render(){var s=load();document.querySelectorAll('.item').forEach(function(el){var k=el.dataset.k,c=document.getElementById('k-'+k);if(s[k]){el.className='item done';if(c)c.textContent='✓';}else{el.className='item';if(c)c.textContent='○';}});}render();
 
-sessionStorage.setItem('aiResume','python');
+var _rd={id:'python',icon:'🐍',title:'Python for AI Engineering',sub:'3 phases · AI scripting',color:'#22c55e',bg:'#EDFFF5',border:'#A8DDC4',tc:'#0d5c2e'};
+try{sessionStorage.setItem('aiResume',JSON.stringify(_rd));}catch(e){}
 </script>
 </body>
 </html>

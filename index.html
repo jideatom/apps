@@ -239,6 +239,21 @@ input:checked + .slider:before{transform:translateX(20px);}
   </div>
 
   <!-- Tracks -->
+  
+  <div id="rWrap" style="display:none;margin-bottom:4px;">
+    <p class="sec" style="margin-bottom:6px;">&#9654; Continue where you left off</p>
+    <a id="rBox" href="#" class="track" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:13px 14px;margin-bottom:14px;border:1px solid #ccc;">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;">
+        <span id="rIcon" style="font-size:1.4rem;">🏠</span>
+        <div>
+          <div id="rTitle" class="tn">Last Track</div>
+          <div id="rSub" class="ts" style="margin-top:2px;">Tap to continue</div>
+        </div>
+      </div>
+      <div id="rBtn" style="font-size:0.67rem;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;background:#1565C0;color:#fff;">Continue &#8594;</div>
+    </a>
+  </div>
+
   <p class="sec">Your Learning Tracks</p>
   <div class="grid">
     <a href="linux.html" class="track t-linux">
@@ -268,8 +283,6 @@ input:checked + .slider:before{transform:translateX(20px);}
   </div>
 
   <!-- Quick Links — RESTORED -->
-  
-  <a id="rBox" class="qlink" href="#" style="display:none;margin-bottom:8px;"><div class="ql-left"><div class="ql-dot" id="rIcon">🏠</div><div><div class="ql-name" id="rTitle">Resume where you left off</div><div class="ql-sub" id="rSub">Tap to return</div></div></div><span class="ql-arr">›</span></a>
   <p class="sec">Quick Links</p>
   <div class="qbox">
     <a href="claude.html" class="qlink">
@@ -492,26 +505,29 @@ checkTodayReminder();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
 
-// RESUME FEATURE
 (function(){
-  var id = '';
-  try { id = sessionStorage.getItem('aiResume') || ''; } catch(e) {}
-  if (!id) return;
-  var map = {
-    linux:{h:'linux.html',i:'🐧',t:'Linux (RHCSA)',s:'System admin'},
-    python:{h:'python.html',i:'🐍',t:'Python Track',s:'Python for AI'},
-    ai:{h:'lp-courses.html',i:'🤖',t:'AI Engineering LP',s:'6 phases · 40 weeks'},
-    claude:{h:'claude.html',i:'🟠',t:'Claude Track',s:'Fast Track · March'},
-    cloud:{h:'cloud.html',i:'☁️',t:'Cloud Certifications',s:'AWS + Azure'}
-  };
-  var c = map[id]; if (!c) return;
-  var b = document.getElementById('rBox'); if (!b) return;
-  document.getElementById('rIcon').textContent = c.i;
-  document.getElementById('rTitle').textContent = c.t;
-  document.getElementById('rSub').textContent = c.s;
-  b.href = c.h;
-  b.style.display = 'flex';
-  b.onclick = function(){ sessionStorage.removeItem('aiResume'); b.style.display='none'; };
+  var raw='';
+  try{raw=sessionStorage.getItem('aiResume')||'';}catch(e){}
+  if(!raw)return;
+  var d;try{d=JSON.parse(raw);}catch(e){return;}
+  if(!d||!d.id)return;
+  var map={linux:'linux.html',python:'python.html',ai:'lp-courses.html',claude:'claude.html',cloud:'cloud.html'};
+  var href=map[d.id];if(!href)return;
+  var wrap=document.getElementById('rWrap');
+  var box=document.getElementById('rBox');
+  var btn=document.getElementById('rBtn');
+  if(!wrap||!box)return;
+  document.getElementById('rIcon').textContent=d.icon;
+  document.getElementById('rTitle').textContent=d.title;
+  document.getElementById('rTitle').style.color=d.tc;
+  document.getElementById('rSub').textContent=d.sub;
+  document.getElementById('rSub').style.color=d.tc;
+  box.href=href;
+  box.style.background=d.bg;
+  box.style.borderColor=d.border;
+  if(btn){btn.style.background=d.color;}
+  wrap.style.display='block';
+  box.onclick=function(){try{sessionStorage.removeItem('aiResume');}catch(e){}};
 })();
 
 </script>

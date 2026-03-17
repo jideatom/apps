@@ -547,7 +547,8 @@ function updateProgress() {
 
 renderAll();
 
-sessionStorage.setItem('aiResume','ai');
+var _rd={id:'ai',icon:'🤖',title:'AI Engineering Roadmap',sub:'6-month roadmap · 40 weeks',color:'#8b5cf6',bg:'#F3EEFF',border:'#C4ACEA',tc:'#3a0d8a'};
+try{sessionStorage.setItem('aiResume',JSON.stringify(_rd));}catch(e){}
 </script>
 </body>
 </html>
