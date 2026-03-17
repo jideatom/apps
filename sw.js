@@ -1,5 +1,5 @@
 
-const CACHE = 'ai-tracker-v22';
+const CACHE = 'ai-tracker-v23';
 const URLS  = ['index.html','claude.html','lp-courses.html','cloud.html','linux.html','python.html'];
 
 // ── Install ──────────────────────────────────────────────────────

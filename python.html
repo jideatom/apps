@@ -147,6 +147,62 @@ var K='pythonProgress';function load(){try{return JSON.parse(localStorage.getIte
   }
 })();
 
+
+// Bulletproof storage - IndexedDB + sessionStorage fallback
+var StorageHelper = (function(){
+  var db = null;
+  var ready = false;
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      var request = indexedDB.open('AITracker', 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        db = request.result;
+        ready = true;
+        resolve();
+      };
+      request.onupgradeneeded = (e) => {
+        var db = e.target.result;
+        db.createObjectStore('resume', {keyPath: 'id'});
+      };
+    });
+  }
+
+  async function get(key) {
+    try {
+      if (!ready) await openDB();
+      var tx = db.transaction('resume', 'readonly');
+      var store = tx.objectStore('resume');
+      var req = store.get(key);
+      return new Promise((r,j) => {
+        req.onsuccess = () => r(req.result);
+        req.onerror = () => j(req.error);
+      });
+    } catch(e) {
+      return sessionStorage.getItem(key);
+    }
+  }
+
+  async function set(key, value) {
+    try {
+      if (!ready) await openDB();
+      var tx = db.transaction('resume', 'readwrite');
+      var store = tx.objectStore('resume');
+      store.put({id: key, data: value});
+    } catch(e) {
+      sessionStorage.setItem(key, value);
+    }
+  }
+
+  return {get, set};
+})();
+
+
+(function saveLastVisited() {
+  StorageHelper.set('lastVisited', 'python');
+})();
+
 </script>
 </body>
 </html>
