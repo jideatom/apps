@@ -550,5 +550,22 @@ renderAll();
 var _rd={id:'ai',icon:'🤖',title:'AI Engineering Roadmap',sub:'6-month roadmap · 40 weeks',color:'#8b5cf6',bg:'#F3EEFF',border:'#C4ACEA',tc:'#3a0d8a'};
 try{sessionStorage.setItem('aiResume',JSON.stringify(_rd));}catch(e){}
 </script>
+
+<section id="month4-claude" style="background:#f0f8ff;padding:30px;border-radius:12px;margin:40px 0;border-left:5px solid #0066cc;">
+<h2>🏆 Month 4: Claude Certified Architect</h2>
+<p style="color:#555">Anthropic Academy (Free) → 60-question Certification Exam</p>
+<div style="margin:15px 0"><div style="background:#eee;height:10px;border-radius:5px"><div id="c4bar" style="background:#0066cc;height:100%;width:0%;border-radius:5px;transition:width 0.3s"></div></div><span id="c4pct">0 / 4</span></div>
+<label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;cursor:pointer"><input type="checkbox" onchange="c4save('c4a',this.checked)"> ✅ Claude 101 + AI Fluency (Anthropic Academy Free)</label>
+<label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;cursor:pointer"><input type="checkbox" onchange="c4save('c4b',this.checked)"> ✅ Claude API: Structured Outputs + Streaming</label>
+<label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;cursor:pointer"><input type="checkbox" onchange="c4save('c4c',this.checked)"> ✅ MCP Tools + Function Calling (20% of exam)</label>
+<label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;cursor:pointer"><input type="checkbox" onchange="c4save('c4d',this.checked)"> ✅ Agentic Architecture + Exam Prep (27% of exam)</label>
+<br><a href="claude-8.html" style="background:#0066cc;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px">→ Claude Resources</a>
+</section>
+<script>
+function c4save(k,v){var p=JSON.parse(localStorage.c4||'{}');p[k]=v;localStorage.c4=JSON.stringify(p);c4ui();}
+function c4ui(){var p=JSON.parse(localStorage.c4||'{}');['c4a','c4b','c4c','c4d'].forEach(function(k){var cb=document.querySelector('input[onchange*="'+k+'"]');if(cb)cb.checked=!!p[k];});var d=['c4a','c4b','c4c','c4d'].filter(function(k){return p[k];}).length;document.getElementById('c4bar').style.width=(d/4*100)+'%';document.getElementById('c4pct').textContent=d+' / 4';}
+document.addEventListener('DOMContentLoaded',c4ui);
+</script>
+
 </body>
 </html>
