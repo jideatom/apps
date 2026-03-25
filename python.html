@@ -1,140 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#22c55e">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
-<title>Python Track</title>
+<title>Python Track · AI Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-
-:root {
-  --bg:        #DCE9F8;
-  --bg-card:   #EEF3F9;
-  --bg-header: #EEF3F9;
-  --bg-input:  #E4EDF7;
-  --text:      #1A2340;
-  --text-sub:  #6A7F99;
-  --text-muted:#AAB8CC;
-  --border:    #C8DCEF;
-  --accent:    #1565C0;
-  --accent2:   #0D47A1;
-  --accent-bg: #DDEEFF;
-  --shadow:    0 2px 10px rgba(21,101,192,0.09);
-  --radius:    13px;
-}
-body.dark {
-  --bg:        #0a0a14;
-  --bg-card:   #111120;
-  --bg-header: #0d0d22;
-  --bg-input:  #16162a;
-  --text:      #e0e0f0;
-  --text-sub:  #6a6a8a;
-  --text-muted:#3a3a5a;
-  --border:    #1e1e38;
-  --accent:    #8b5cf6;
-  --accent2:   #a78bfa;
-  --accent-bg: #13093a;
-  --shadow:    0 2px 12px rgba(0,0,0,0.4);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;}
-a{text-decoration:none;color:inherit;}
-button{font-family:inherit;}
-
-
-.bnav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--bg-header);
-  border-top:1px solid var(--border);
-  display:flex;justify-content:center;
-  z-index:100;
-  box-shadow:0 -2px 12px rgba(0,0,0,0.07);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.bnav-inner{
-  display:flex;
-  width:100%;
-  max-width:520px;
-}
-.ni{
-  flex:1;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;
-  min-height:52px; /* 44px+ touch target best practice */
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:opacity 0.1s;
-}
-.ni:active{opacity:0.6;}
-.ni span:first-child{font-size:1.1rem;line-height:1;}
-.ni span:last-child{font-size:0.52rem;color:var(--text-sub);font-weight:700;text-transform:uppercase;letter-spacing:0.4px;}
-.ni.active span:last-child{color:var(--accent);}
-.ni.active span:first-child{filter:saturate(1.8) brightness(0.9);}
-
-header{background:var(--bg-header);padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);position:sticky;top:0;z-index:10;}
-.back{color:var(--accent);font-size:1.3rem;font-weight:700;-webkit-tap-highlight-color:transparent;min-width:36px;min-height:44px;display:flex;align-items:center;}
-.htxt{flex:1;}
-.htxt h1{font-size:0.9rem;font-weight:800;color:var(--text);}
-.htxt p{font-size:0.67rem;color:var(--text-sub);margin-top:2px;}
-.theme-btn{background:var(--bg-input);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:0.82rem;cursor:pointer;min-height:36px;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
-.wrap{max-width:520px;margin:0 auto;padding:14px 14px 76px;}
-.tip{background:var(--accent-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:14px;font-size:0.75rem;color:var(--accent);line-height:1.5;}
-.section{margin-bottom:18px;}
-.sec-hdr{font-size:0.63rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;font-weight:800;padding-bottom:6px;border-bottom:2px solid var(--border);margin-bottom:8px;}
-.item{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:11px;
-  padding:11px 12px;margin-bottom:6px;
-  display:flex;align-items:center;gap:9px;
-  cursor:pointer;box-shadow:var(--shadow);
-  min-height:48px; /* touch target */
-  user-select:none;-webkit-tap-highlight-color:transparent;
-  transition:border-color 0.15s,background 0.1s;
-}
-.item:active{background:var(--bg-input);border-color:var(--accent);}
-.item.done{background:#f0fff4;border-color:#22c55e;}
-body.dark .item.done{background:#08180f;border-color:#22c55e;}
-.iname{flex:1;font-size:0.8rem;color:var(--text);line-height:1.3;}
-.item.done .iname{color:#16a34a;}
-body.dark .item.done .iname{color:#4ade80;}
-.isize{font-size:0.67rem;color:var(--text-muted);white-space:nowrap;margin-right:4px;}
-.ichk{font-size:1rem;min-width:18px;text-align:center;color:var(--text-muted);}
-.item.done .ichk{color:#22c55e;}
+:root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,0.08);--border2:rgba(15,23,42,0.14);--shadow:0 1px 3px rgba(15,23,42,0.08),0 4px 16px rgba(15,23,42,0.05);--radius:16px;--accent:#10b981;--a-bg:#ecfdf5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;}
+body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#334155;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--shadow:0 1px 3px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.2);--accent:#34d399;--a-bg:#052e16;}
+*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;}a{text-decoration:none;color:inherit;}button{font-family:var(--sans);cursor:pointer;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;justify-content:center;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px);}
+.bnav-inner{display:flex;width:100%;max-width:540px;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:6px 2px;}
+.ni:active{opacity:0.5;}.ni-icon{font-size:1.15rem;line-height:1;}.ni-lbl{font-size:0.48rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text3);}
+.ni.active .ni-lbl{color:var(--accent);}
+header{background:var(--bg2);padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.back-btn{background:transparent;border:none;color:var(--accent);font-size:1.3rem;font-weight:700;min-width:36px;min-height:44px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.hdr-title{flex:1;}.hdr-title h1{font-size:0.92rem;font-weight:700;}.hdr-title p{font-size:0.62rem;color:var(--text2);margin-top:2px;font-family:var(--mono);}
+.theme-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:5px 12px;font-size:0.8rem;min-height:34px;-webkit-tap-highlight-color:transparent;}
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 82px;}
+.tip{background:var(--a-bg);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:14px;font-size:0.74rem;color:var(--accent);line-height:1.6;}
+.prog-card{background:linear-gradient(135deg,#065f46,#059669);border-radius:16px;padding:16px;margin-bottom:16px;}
+.prog-label{color:rgba(255,255,255,0.7);font-size:0.62rem;font-family:var(--mono);margin-bottom:4px;}
+.prog-title{color:#fff;font-size:1rem;font-weight:700;margin-bottom:12px;}
+.prog-bar-bg{height:8px;background:rgba(255,255,255,0.2);border-radius:10px;overflow:hidden;margin-bottom:8px;}
+.prog-bar-fill{height:100%;background:#fff;border-radius:10px;transition:width 0.6s;}
+.prog-stats{display:flex;justify-content:space-between;}
+.prog-pct{color:#fff;font-size:1.2rem;font-weight:700;font-family:var(--mono);}
+.prog-frac{color:rgba(255,255,255,0.65);font-size:0.7rem;font-family:var(--mono);}
+.course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(15,23,42,0.06);}
+.course-pick{display:inline-flex;align-items:center;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;font-size:0.58rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;margin-bottom:8px;}
+.pill{display:inline-block;font-size:0.58rem;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;}
+.pill-green{background:var(--a-bg);color:var(--accent);}
+.course-name{font-size:0.88rem;font-weight:700;margin-bottom:4px;letter-spacing:-0.2px;}
+.course-meta{font-size:0.65rem;color:var(--text2);font-family:var(--mono);margin-bottom:6px;}
+.course-why{font-size:0.72rem;color:var(--text2);line-height:1.6;}
+.course-weeks{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.wk-tag{font-size:0.58rem;padding:2px 8px;border-radius:20px;background:var(--a-bg);color:var(--accent);border:1px solid rgba(16,185,129,0.2);}
+.seq-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:0 1px 3px rgba(15,23,42,0.06);}
+.seq-row{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);}
+.seq-row:last-child{border-bottom:none;}
+.seq-num{width:26px;height:26px;border-radius:50%;background:var(--a-bg);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--accent);font-family:var(--mono);flex-shrink:0;margin-top:1px;}
+.seq-body{flex:1;}
+.seq-name{font-size:0.8rem;font-weight:600;}
+.seq-detail{font-size:0.68rem;color:var(--text2);margin-top:2px;line-height:1.5;font-family:var(--mono);}
+.sec-hdr{font-size:0.58rem;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:700;font-family:var(--mono);padding-bottom:7px;border-bottom:1px solid var(--border2);margin-bottom:9px;margin-top:18px;display:flex;align-items:center;justify-content:space-between;}
+.sec-count{font-size:0.58rem;background:var(--a-bg);color:var(--accent);padding:2px 7px;border-radius:20px;}
+.item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 13px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;min-height:50px;user-select:none;-webkit-tap-highlight-color:transparent;transition:border-color 0.15s,background 0.12s;box-shadow:0 1px 2px rgba(15,23,42,0.04);}
+.item:active{background:var(--bg3);}
+.item.done{background:var(--a-bg);border-color:var(--accent);}
+body.dark .item.done{background:#052e16;border-color:#065f46;}
+.item-body{flex:1;}.item-name{font-size:0.8rem;font-weight:500;line-height:1.4;}.item-sub{font-size:0.62rem;color:var(--text2);margin-top:3px;font-family:var(--mono);line-height:1.5;}
+.item.done .item-name{color:var(--accent);}
+.ichk{font-size:1.1rem;min-width:20px;text-align:center;color:var(--text3);flex-shrink:0;margin-top:1px;}
+.item.done .ichk{color:var(--accent);}
+.milestone{background:var(--bg2);border:1.5px solid var(--accent);border-radius:14px;padding:14px;margin-top:14px;}
+.ms-hdr{font-size:0.58rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;font-family:var(--mono);margin-bottom:10px;}
+.ms-row{font-size:0.78rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:7px;line-height:1.5;}
+.ms-row:last-child{border-bottom:none;}.ms-arrow{color:var(--accent);flex-shrink:0;font-family:var(--mono);}
 </style>
 </head>
 <body>
 <header>
-  <a href="index.html" class="back">&#8592;</a>
-  <div class="htxt"><h1>🐍 Python Track</h1><p>Python for AI Engineering</p></div>
+  <button class="back-btn" onclick="history.back()">←</button>
+  <div class="hdr-title"><h1>🐍 Python Track</h1><p>Weeks 3–4 · AI scripting · network automation</p></div>
   <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
 </header>
 <div class="wrap">
-<style>.course-box{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}.cb{display:inline-block;background:#f0fff4;color:#16a34a;font-size:8px;font-weight:900;padding:2px 8px;border-radius:20px;text-transform:uppercase;margin-bottom:7px;}body.dark .cb{background:#0a2a10;color:#4ade80;}.ct{font-size:0.92rem;font-weight:800;color:var(--text);margin-bottom:5px;}.cn{font-size:0.76rem;color:var(--text-sub);line-height:1.6;}</style><div class="tip">💡 You need practical Python for AI — not maths or data science theory.</div><div class="course-box"><span class="cb">Start Here</span><div class="ct">TOWARDS_AI – Beginner Python Primer for AI Engineering</div><p class="cn">1.12 GB · Built for AI engineers. Covers exactly what you need to start building AI tools and agents.</p></div><div class="section"><div class="sec-hdr">Phase 1 — Python Basics</div><div class="item" data-k="py1a" onclick="tog('py1a')"><span class="iname">Variables, data types, strings, f-strings</span><span class="isize"></span><span class="ichk" id="k-py1a">○</span></div><div class="item" data-k="py1b" onclick="tog('py1b')"><span class="iname">Lists, dicts, tuples, sets</span><span class="isize"></span><span class="ichk" id="k-py1b">○</span></div><div class="item" data-k="py1c" onclick="tog('py1c')"><span class="iname">if/else, for/while loops</span><span class="isize"></span><span class="ichk" id="k-py1c">○</span></div><div class="item" data-k="py1d" onclick="tog('py1d')"><span class="iname">Functions, args, return values</span><span class="isize"></span><span class="ichk" id="k-py1d">○</span></div><div class="item" data-k="py1e" onclick="tog('py1e')"><span class="iname">Reading/writing files, JSON handling</span><span class="isize"></span><span class="ichk" id="k-py1e">○</span></div></div><div class="section"><div class="sec-hdr">Phase 2 — Practical Python</div><div class="item" data-k="py2a" onclick="tog('py2a')"><span class="iname">pip, virtual environments (venv)</span><span class="isize"></span><span class="ichk" id="k-py2a">○</span></div><div class="item" data-k="py2b" onclick="tog('py2b')"><span class="iname">Classes and OOP basics</span><span class="isize"></span><span class="ichk" id="k-py2b">○</span></div><div class="item" data-k="py2c" onclick="tog('py2c')"><span class="iname">Error handling — try/except</span><span class="isize"></span><span class="ichk" id="k-py2c">○</span></div><div class="item" data-k="py2d" onclick="tog('py2d')"><span class="iname">HTTP requests — requests library, APIs</span><span class="isize"></span><span class="ichk" id="k-py2d">○</span></div><div class="item" data-k="py2e" onclick="tog('py2e')"><span class="iname">Environment variables, .env files</span><span class="isize"></span><span class="ichk" id="k-py2e">○</span></div></div><div class="section"><div class="sec-hdr">Phase 3 — Python for AI</div><div class="item" data-k="py3a" onclick="tog('py3a')"><span class="iname">OpenAI / Anthropic SDK — API calls</span><span class="isize"></span><span class="ichk" id="k-py3a">○</span></div><div class="item" data-k="py3b" onclick="tog('py3b')"><span class="iname">Streaming responses from LLMs</span><span class="isize"></span><span class="ichk" id="k-py3b">○</span></div><div class="item" data-k="py3c" onclick="tog('py3c')"><span class="iname">Building a simple chatbot CLI</span><span class="isize"></span><span class="ichk" id="k-py3c">○</span></div><div class="item" data-k="py3d" onclick="tog('py3d')"><span class="iname">Reading docs and GitHub repos</span><span class="isize"></span><span class="ichk" id="k-py3d">○</span></div><div class="item" data-k="py3e" onclick="tog('py3e')"><span class="iname">First AI script — network ping + LLM summary</span><span class="isize"></span><span class="ichk" id="k-py3e">○</span></div></div>
+
+<div class="prog-card">
+  <div class="prog-label">Python Progress</div>
+  <div class="prog-title">From novice → network automation + AI scripting</div>
+  <div class="prog-bar-bg"><div class="prog-bar-fill" id="main-bar" style="width:0%"></div></div>
+  <div class="prog-stats"><span class="prog-pct" id="main-pct">0%</span><span class="prog-frac" id="main-frac">0 / 19 topics</span></div>
+</div>
+
+<div class="tip">💡 Don't copy-paste code examples — type every line. Muscle memory is the point. Open VS Code beside the video and type as you watch.</div>
+
+<!-- Course picks -->
+<div class="sec-hdr">Your 3 Course Picks From Your Library</div>
+
+<div class="course-card" style="border-color:rgba(16,185,129,0.3)">
+  <span class="course-pick">★ Pick 1 — Weeks 3–4 anchor</span>
+  <div class="course-name">UD — 100 Days of Code: Complete Python Pro Bootcamp</div>
+  <div class="course-meta">28.9 GB · Udemy · Angela Yu · world's most popular Python course</div>
+  <div class="course-why">Angela Yu explains the "why" behind every pattern, not just syntax. Daily project format — you build something every session. Do Days 1–35 in Weeks 3–4. Return to Days 55–100 in Phase 2 for APIs and automation.</div>
+  <div class="course-weeks"><span class="wk-tag">Week 3 → Days 1–18</span><span class="wk-tag">Week 4 → Days 19–35</span><span class="wk-tag">Phase 2 → Days 55–75</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pill pill-green">Pick 2 — Week 4 specialization</span>
+  <div class="course-name">OrhanErgun.net — Python for Network Engineers</div>
+  <div class="course-meta">2.21 GB · OrhanErgun.net · built for your exact background</div>
+  <div class="course-why">Every example uses real network scenarios — BGP tables, OSPF configs, network APIs. Bridges your 20 years of domain knowledge directly into Python. Run alongside Week 4, not instead of the Udemy foundation.</div>
+  <div class="course-weeks"><span class="wk-tag">Week 4 — netmiko labs</span><span class="wk-tag">Compliance checker project</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pill pill-green">Pick 3 — Weeks 7–8 bridge</span>
+  <div class="course-name">MANNING — Learn AI-Assisted Python Programming, 2nd Ed.</div>
+  <div class="course-meta">1.43 GB · Manning · 2nd Edition 2024/25 · AI-native workflow</div>
+  <div class="course-why">The only course that teaches Python how you'll write it going forward — using Claude and Copilot as a coding partner. Teaches how to prompt AI effectively to write and debug code. Do this at Week 7–8 as you transition into Phase 2 Claude API work.</div>
+  <div class="course-weeks"><span class="wk-tag">Weeks 7–8 bridge</span><span class="wk-tag">Reinforces Claude API intro</span></div>
+</div>
+
+<!-- Sequence -->
+<div class="sec-hdr" style="margin-top:4px">How to Sequence Them</div>
+<div class="seq-card">
+  <div class="seq-row"><div class="seq-num">1</div><div class="seq-body"><div class="seq-name">Week 3, Day 1 — Start 100 Days of Code</div><div class="seq-detail">Days 1–18 across the week. Pure Python fundamentals, zero distractions.</div></div></div>
+  <div class="seq-row"><div class="seq-num">2</div><div class="seq-body"><div class="seq-name">Week 4 — Add OrhanErgun alongside Days 19–35</div><div class="seq-detail">One OrhanErgun module per evening, apply to netmiko lab same night.</div></div></div>
+  <div class="seq-row"><div class="seq-num">3</div><div class="seq-body"><div class="seq-name">Week 7–8 — Manning AI-Assisted Python</div><div class="seq-detail">Upgrade your workflow before Phase 2 Claude API work begins.</div></div></div>
+  <div class="seq-row"><div class="seq-num">4</div><div class="seq-body"><div class="seq-name">Phase 2 onward — Return to 100 Days Pt 2</div><div class="seq-detail">Days 55–100: APIs, web automation, data tools — as it becomes relevant.</div></div></div>
+</div>
+
+<!-- Phase 1 -->
+<div class="sec-hdr">Phase 1 — Python Basics (Week 3 · 100 Days 1–18) <span class="sec-count" id="cnt-p1">0/5</span></div>
+<div class="item" data-k="py1a" onclick="tog('py1a')"><div class="item-body"><div class="item-name">Variables, data types, strings, f-strings</div><div class="item-sub">100 Days 1–3 · type(), str formatting, input()</div></div><span class="ichk" id="k-py1a">○</span></div>
+<div class="item" data-k="py1b" onclick="tog('py1b')"><div class="item-body"><div class="item-name">Lists, dicts, tuples, sets</div><div class="item-sub">100 Days 4–6 · Think: dict = routing table, key→value</div></div><span class="ichk" id="k-py1b">○</span></div>
+<div class="item" data-k="py1c" onclick="tog('py1c')"><div class="item-body"><div class="item-name">if/else, for/while loops</div><div class="item-sub">100 Days 7–10 · Lab: loop through router list, filter by vendor</div></div><span class="ichk" id="k-py1c">○</span></div>
+<div class="item" data-k="py1d" onclick="tog('py1d')"><div class="item-body"><div class="item-name">Functions, args, return values</div><div class="item-sub">100 Days 11–14 · def, return, *args, **kwargs, default params</div></div><span class="ichk" id="k-py1d">○</span></div>
+<div class="item" data-k="py1e" onclick="tog('py1e')"><div class="item-body"><div class="item-name">Reading/writing files, JSON handling</div><div class="item-sub">100 Days 15–18 · open(), with, json.load/dump · Lab: parse Cisco config file</div></div><span class="ichk" id="k-py1e">○</span></div>
+
+<!-- Phase 2 -->
+<div class="sec-hdr">Phase 2 — Practical Python (Week 3–4 · Days 19–35) <span class="sec-count" id="cnt-p2">0/5</span></div>
+<div class="item" data-k="py2a" onclick="tog('py2a')"><div class="item-body"><div class="item-name">pip, virtual environments (venv), pyenv</div><div class="item-sub">python -m venv, pip install, requirements.txt — essential for every project</div></div><span class="ichk" id="k-py2a">○</span></div>
+<div class="item" data-k="py2b" onclick="tog('py2b')"><div class="item-body"><div class="item-name">Classes and OOP basics</div><div class="item-sub">100 Days 25–28 · Lab: build NetworkDevice class with netmiko inside</div></div><span class="ichk" id="k-py2b">○</span></div>
+<div class="item" data-k="py2c" onclick="tog('py2c')"><div class="item-body"><div class="item-name">Error handling — try/except/finally</div><div class="item-sub">100 Days 29–30 · Never let a network device timeout crash your script</div></div><span class="ichk" id="k-py2c">○</span></div>
+<div class="item" data-k="py2d" onclick="tog('py2d')"><div class="item-body"><div class="item-name">HTTP requests — requests library, REST APIs</div><div class="item-sub">Week 3 Fri · pip install requests · Lab: call ipinfo.io with your own IPs</div></div><span class="ichk" id="k-py2d">○</span></div>
+<div class="item" data-k="py2e" onclick="tog('py2e')"><div class="item-body"><div class="item-name">Environment variables, .env files, dotenv</div><div class="item-sub">pip install python-dotenv · Never hardcode API keys — ever</div></div><span class="ichk" id="k-py2e">○</span></div>
+
+<!-- Phase 3 — Network automation -->
+<div class="sec-hdr">Phase 3 — Network Automation (Week 4 · OrhanErgun) <span class="sec-count" id="cnt-p3">0/5</span></div>
+<div class="item" data-k="py3a" onclick="tog('py3a')"><div class="item-body"><div class="item-name">Netmiko — SSH to Cisco/Juniper/Arista devices</div><div class="item-sub">OrhanErgun · pip install netmiko · run show commands, capture output</div></div><span class="ichk" id="k-py3a">○</span></div>
+<div class="item" data-k="py3b" onclick="tog('py3b')"><div class="item-body"><div class="item-name">Regex for config parsing (re module)</div><div class="item-sub">re.findall, re.search · Practice at regex101.com · parse running-config</div></div><span class="ichk" id="k-py3b">○</span></div>
+<div class="item" data-k="py3c" onclick="tog('py3c')"><div class="item-body"><div class="item-name">Project: multi-device config backup to S3</div><div class="item-sub">Week 4 Tue · netmiko + boto3 + S3 · your first real automation tool</div></div><span class="ichk" id="k-py3c">○</span></div>
+<div class="item" data-k="py3d" onclick="tog('py3d')"><div class="item-body"><div class="item-name">Project: IP enrichment tool (ipinfo.io API)</div><div class="item-sub">Week 3 Sat · reads IP list → calls API → writes JSON report. Push to GitHub.</div></div><span class="ichk" id="k-py3d">○</span></div>
+<div class="item" data-k="py3e" onclick="tog('py3e')"><div class="item-body"><div class="item-name">Project: config compliance checker</div><div class="item-sub">Week 4 Sat · regex checks: NTP, SSH v2, no telnet, encrypted passwords</div></div><span class="ichk" id="k-py3e">○</span></div>
+
+<!-- Phase 4 — Python for AI -->
+<div class="sec-hdr">Phase 4 — Python for AI (Weeks 7–8 · Manning course) <span class="sec-count" id="cnt-p4">0/4</span></div>
+<div class="item" data-k="py4a" onclick="tog('py4a')"><div class="item-body"><div class="item-name">Anthropic Python SDK — first API call</div><div class="item-sub">pip install anthropic · client.messages.create() · Week 7</div></div><span class="ichk" id="k-py4a">○</span></div>
+<div class="item" data-k="py4b" onclick="tog('py4b')"><div class="item-body"><div class="item-name">Streaming responses, async patterns</div><div class="item-sub">Manning course · stream=True · no loading spinners on your tools</div></div><span class="ichk" id="k-py4b">○</span></div>
+<div class="item" data-k="py4c" onclick="tog('py4c')"><div class="item-body"><div class="item-name">AI-assisted coding workflow (Claude + Copilot)</div><div class="item-sub">Manning course · how to prompt effectively for code generation + debugging</div></div><span class="ichk" id="k-py4c">○</span></div>
+<div class="item" data-k="py4d" onclick="tog('py4d')"><div class="item-body"><div class="item-name">Project: network ping + Claude summary tool</div><div class="item-sub">Week 8 · ping sweep → feed results to Claude → get natural language report</div></div><span class="ichk" id="k-py4d">○</span></div>
+
+<div class="milestone">
+  <div class="ms-hdr">Weeks 3–4 + Phase 1 Python Checkpoint</div>
+  <div class="ms-row"><span class="ms-arrow">→</span>Python feels comfortable — not fluent yet, but not scary</div>
+  <div class="ms-row"><span class="ms-arrow">→</span>3 GitHub projects: IP enricher, config backup, compliance checker</div>
+  <div class="ms-row"><span class="ms-arrow">→</span>Can SSH into network devices with netmiko from a script</div>
+  <div class="ms-row"><span class="ms-arrow">→</span>First Anthropic API call working (even if just "Hello World")</div>
+  <div class="ms-row"><span class="ms-arrow">→</span>Manning AI-Assisted Python completed — workflow upgraded</div>
+</div>
+
 </div>
 
 <nav class="bnav">
   <div class="bnav-inner">
-    <a href="index.html"      class="ni" id="bn-home">   <span>🏠</span><span>Home</span></a>
-    <a href="claude.html"     class="ni" id="bn-claude"> <span>🟠</span><span>Claude</span></a>
-    <a href="lp-courses.html" class="ni" id="bn-lp">     <span>📋</span><span>Courses</span></a>
-    <a href="cloud.html"      class="ni" id="bn-cloud">  <span>☁️</span><span>Cloud</span></a>
-    <a href="linux.html"      class="ni" id="bn-linux">  <span>🐧</span><span>Linux</span></a>
-    <a href="python.html"     class="ni" id="bn-python"> <span>🐍</span><span>Python</span></a>
+    <a href="index.html" class="ni" id="bn-home"><span class="ni-icon">🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="lp.html"    class="ni" id="bn-lp">  <span class="ni-icon">🤖</span><span class="ni-lbl">AI Path</span></a>
+    <a href="courses.html" class="ni" id="bn-courses"><span class="ni-icon">📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="linux.html" class="ni" id="bn-linux"><span class="ni-icon">🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="python.html" class="ni active" id="bn-python"><span class="ni-icon">🐍</span><span class="ni-lbl">Python</span></a>
+    <a href="claude.html" class="ni" id="bn-claude"><span class="ni-icon">🟠</span><span class="ni-lbl">Claude</span></a>
   </div>
 </nav>
 <script>
-
-function initTheme(){var t=localStorage.getItem('theme')||'light';if(t==='dark')document.body.classList.add('dark');updateBtn(t);}
-function toggleTheme(){var d=document.body.classList.toggle('dark');var t=d?'dark':'light';localStorage.setItem('theme',t);updateBtn(t);}
-function updateBtn(t){var b=document.getElementById('themeBtn');if(b)b.textContent=t==='dark'?'☀️':'🌙';}
+function initTheme(){var t=localStorage.getItem('theme')||'light';if(t==='dark')document.body.classList.add('dark');document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
+function toggleTheme(){var d=document.body.classList.toggle('dark');localStorage.setItem('theme',d?'dark':'light');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';}
 initTheme();
-
-var el=document.getElementById('bn-python');if(el)el.classList.add('active');
-var K='pythonProgress';function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{}}catch(e){return{}}}function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}function tog(id){var s=load();s[id]=!s[id];save(s);render();}function render(){var s=load();document.querySelectorAll('.item').forEach(function(el){var k=el.dataset.k,c=document.getElementById('k-'+k);if(s[k]){el.className='item done';if(c)c.textContent='✓';}else{el.className='item';if(c)c.textContent='○';}});}render();
-
-var _rd={id:'python',icon:'🐍',title:'Python for AI Engineering',sub:'3 phases · AI scripting',color:'#22c55e',bg:'#EDFFF5',border:'#A8DDC4',tc:'#0d5c2e'};
-try{sessionStorage.setItem('aiResume',JSON.stringify(_rd));}catch(e){}
+var K='pythonProgress';
+var GROUPS={p1:['py1a','py1b','py1c','py1d','py1e'],p2:['py2a','py2b','py2c','py2d','py2e'],p3:['py3a','py3b','py3c','py3d','py3e'],p4:['py4a','py4b','py4c','py4d']};
+var ALL=['py1a','py1b','py1c','py1d','py1e','py2a','py2b','py2c','py2d','py2e','py3a','py3b','py3c','py3d','py3e','py4a','py4b','py4c','py4d'];
+function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{};}catch(e){return{};}}
+function save(s){try{localStorage.setItem(K,JSON.stringify(s));}catch(e){}}
+function tog(id){var s=load();s[id]=!s[id];save(s);render();}
+function render(){
+  var s=load();
+  ALL.forEach(function(k){var el=document.querySelector('[data-k="'+k+'"]'),chk=document.getElementById('k-'+k);if(el)el.className=s[k]?'item done':'item';if(chk)chk.textContent=s[k]?'✓':'○';});
+  Object.keys(GROUPS).forEach(function(g){var keys=GROUPS[g],done=keys.filter(function(k){return s[k];}).length;var el=document.getElementById('cnt-'+g);if(el)el.textContent=done+'/'+keys.length;});
+  var done=ALL.filter(function(k){return s[k];}).length,total=ALL.length,pct=Math.round(done/total*100);
+  var bar=document.getElementById('main-bar'),pctEl=document.getElementById('main-pct'),frac=document.getElementById('main-frac');
+  if(bar)bar.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%';if(frac)frac.textContent=done+' / '+total+' topics';
+}
+render();
+try{sessionStorage.setItem('aiResume',JSON.stringify({href:'python.html',icon:'🐍',title:'Python Track',sub:'Weeks 3–4 · automation + AI scripting'}));}catch(e){}
 </script>
 </body>
 </html>

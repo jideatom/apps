@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>Course Library · AI Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,0.08);--border2:rgba(15,23,42,0.14);--shadow:0 1px 3px rgba(15,23,42,0.08),0 4px 16px rgba(15,23,42,0.05);--radius:16px;--accent:#6366f1;--a-bg:#eef2ff;--green:#10b981;--g-bg:#ecfdf5;--amber:#f59e0b;--am-bg:#fffbeb;--blue:#3b82f6;--bl-bg:#eff6ff;--orange:#f97316;--or-bg:#fff7ed;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;}
+body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#334155;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--accent:#818cf8;--a-bg:#1e1b4b;--green:#34d399;--g-bg:#052e16;--amber:#fbbf24;--am-bg:#1c1400;--blue:#60a5fa;--bl-bg:#0c1a35;--orange:#fb923c;--or-bg:#1c0f00;}
+*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;}a{text-decoration:none;color:inherit;}button{font-family:var(--sans);cursor:pointer;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;justify-content:center;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px);}
+.bnav-inner{display:flex;width:100%;max-width:540px;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:6px 2px;}
+.ni:active{opacity:0.5;}.ni-icon{font-size:1.15rem;line-height:1;}.ni-lbl{font-size:0.48rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text3);}.ni.active .ni-lbl{color:var(--accent);}
+header{background:var(--bg2);padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.back-btn{background:transparent;border:none;color:var(--accent);font-size:1.3rem;font-weight:700;min-width:36px;min-height:44px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.hdr-title{flex:1;}.hdr-title h1{font-size:0.92rem;font-weight:700;}.hdr-title p{font-size:0.62rem;color:var(--text2);margin-top:2px;font-family:var(--mono);}
+.theme-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:5px 12px;font-size:0.8rem;min-height:34px;-webkit-tap-highlight-color:transparent;}
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 82px;}
+.tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:0.68rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text2);-webkit-tap-highlight-color:transparent;transition:all 0.15s;min-height:34px;font-family:var(--mono);}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.panel{display:none;}.panel.active{display:block;}
+.sec-label{font-size:0.58rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.8px;margin-bottom:10px;margin-top:4px;font-family:var(--mono);}
+.tip{background:var(--a-bg);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:14px;font-size:0.74rem;color:var(--accent);line-height:1.6;}
+.course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);}
+.course-card.top{border-width:1.5px;border-color:var(--accent);}
+.pick-badge{display:inline-flex;align-items:center;font-size:0.58rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;margin-bottom:8px;letter-spacing:0.4px;}
+.pick-1{background:linear-gradient(135deg,var(--accent),#818cf8);color:#fff;}
+.pick-2{background:var(--a-bg);color:var(--accent);}
+.pick-3{background:var(--am-bg);color:var(--amber);}
+.pick-later{background:var(--bg3);color:var(--text3);}
+.course-name{font-size:0.88rem;font-weight:700;margin-bottom:4px;letter-spacing:-0.2px;line-height:1.35;}
+.course-meta{font-size:0.64rem;color:var(--text3);font-family:var(--mono);margin-bottom:8px;}
+.course-why{font-size:0.73rem;color:var(--text2);line-height:1.65;}
+.course-weeks{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.wk-tag{font-size:0.58rem;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--text2);border:1px solid var(--border2);}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+.skip-list{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.skip-row{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);font-size:0.75rem;}
+.skip-row:last-child{border-bottom:none;}
+.skip-icon{font-size:0.9rem;flex-shrink:0;width:20px;text-align:center;margin-top:1px;}
+.skip-body{flex:1;line-height:1.5;}
+.skip-name{font-weight:600;color:var(--text);}
+.skip-reason{color:var(--text2);font-size:0.68rem;margin-top:2px;font-family:var(--mono);}
+</style>
+</head>
+<body>
+<header>
+  <button class="back-btn" onclick="history.back()">←</button>
+  <div class="hdr-title"><h1>📚 Course Library</h1><p>Your picks from 75+ GB of content</p></div>
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+</header>
+<div class="wrap">
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0,this)">Linux</div>
+  <div class="tab" onclick="sw(1,this)">Python</div>
+  <div class="tab" onclick="sw(2,this)">Later</div>
+</div>
+
+<!-- LINUX PICKS -->
+<div class="panel active" id="p0">
+  <div class="tip">One rule: pick, commit, don't browse. Decision fatigue is the enemy. Start the Udemy course tonight.</div>
+
+  <div class="course-card top">
+    <span class="pick-badge pick-1">★ Pick 1 — Start Here · Weeks 1–2</span>
+    <div class="course-name">UD — Hands-On Linux Bootcamp: Real-World Skills 2025</div>
+    <div class="course-meta">12.4 GB · Udemy · 2025 · hands-on throughout</div>
+    <div class="course-why">Most comprehensive hands-on course in your library. Structured for beginners who need to move fast — covers CLI, permissions, processes, networking commands, and bash scripting. The 2025 edition means current tooling. One course, full focus for both weeks.</div>
+    <div class="course-weeks"><span class="wk-tag">Week 1 — CLI, permissions, networking cmds</span><span class="wk-tag">Week 2 — SSH, scripting, environment</span></div>
+  </div>
+
+  <div class="course-card">
+    <span class="pick-badge pick-2">Pick 2 — Week 2 bash deep-dive</span>
+    <div class="course-name">PIKUMA — Master the Linux Command-Line & Bash Scripting</div>
+    <div class="course-meta">1.69 GB · Pikuma · focused scope · exceptional teaching</div>
+    <div class="course-why">PIKUMA courses explain the "why" behind every concept, not just the commands. Tight scope — complete in Week 2 as your bash scripting anchor. Don't run it before the Udemy foundation is solid.</div>
+    <div class="course-weeks"><span class="wk-tag">Week 2 — bash scripts anchor</span><span class="wk-tag">Weeks 3–4 reference</span></div>
+  </div>
+
+  <div class="course-card">
+    <span class="pick-badge pick-3">Pick 3 — Weeks 6–8 · hidden gem</span>
+    <div class="course-name">O'REILLY — Optimizing Linux for AI</div>
+    <div class="course-meta">1.74 GB · O'Reilly · Linux × AI intersection</div>
+    <div class="course-why">The only course in your entire collection at the exact intersection of your two goals. Covers kernel tuning, GPU/CPU scheduling, memory, and storage as they relate to AI workloads. Nobody on your future team has watched this. Do it after you have a Linux foundation.</div>
+    <div class="course-weeks"><span class="wk-tag">Weeks 6–8 — AI infra context</span><span class="wk-tag">Phase 3 revisit</span></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Save for later</div>
+  <div class="skip-list">
+    <div class="skip-row"><span class="skip-icon">⏳</span><div class="skip-body"><span class="skip-name">CBTNuggets RHCSA/RHCE</span><div class="skip-reason">Excellent cert-depth — revisit after Month 4</div></div></div>
+    <div class="skip-row"><span class="skip-icon">⏳</span><div class="skip-body"><span class="skip-name">Linux Privilege Escalation Bootcamp</span><div class="skip-reason">Security specialization — Phase 3 AIOps work</div></div></div>
+    <div class="skip-row"><span class="skip-icon">⏳</span><div class="skip-body"><span class="skip-name">Red Hat Ansible RH294</span><div class="skip-reason">Perfect for Phase 3 automation work — too early now</div></div></div>
+    <div class="skip-row"><span class="skip-icon">⏳</span><div class="skip-body"><span class="skip-name">PEARSONS Linux Networking</span><div class="skip-reason">You know this material — skim only for Linux syntax</div></div></div>
+    <div class="skip-row"><span class="skip-icon">⏳</span><div class="skip-body"><span class="skip-name">ZTM Bash Scripting</span><div class="skip-reason">Solid backup if PIKUMA doesn't click — don't run both</div></div></div>
+  </div>
+</div>
+
+<!-- PYTHON PICKS -->
+<div class="panel" id="p1">
+  <div class="tip">Your Python collection has several gems built exactly for your background. Same rule — pick and commit. Don't switch between courses.</div>
+
+  <div class="course-card top">
+    <span class="pick-badge pick-1">★ Pick 1 — Weeks 3–4 anchor</span>
+    <div class="course-name">UD — 100 Days of Code: Complete Python Pro Bootcamp</div>
+    <div class="course-meta">28.9 GB · Udemy · Angela Yu · world's most popular Python course</div>
+    <div class="course-why">Angela Yu explains the "why" behind every pattern, not just syntax. Daily project format means you build something every session. Do Days 1–35 in Weeks 3–4. The trap is watching without coding — type every line. Return to Days 55–100 in Phase 2 for APIs and web automation.</div>
+    <div class="course-weeks"><span class="wk-tag">Week 3 → Days 1–18</span><span class="wk-tag">Week 4 → Days 19–35</span><span class="wk-tag">Phase 2 → Days 55–75</span></div>
+  </div>
+
+  <div class="course-card">
+    <span class="pick-badge pick-2">Pick 2 — Week 4 specialization</span>
+    <div class="course-name">OrhanErgun.net — Python for Network Engineers</div>
+    <div class="course-meta">2.21 GB · OrhanErgun.net · built for your exact background</div>
+    <div class="course-why">Orhan Ergun is one of the most respected names in enterprise networking education. Every example uses real network scenarios — BGP tables, OSPF configs, network APIs. This makes Week 4's netmiko and regex work land 3x faster. Run alongside Week 4, not as a replacement.</div>
+    <div class="course-weeks"><span class="wk-tag">Week 4 — netmiko/regex labs</span><span class="wk-tag">Compliance checker project</span></div>
+  </div>
+
+  <div class="course-card">
+    <span class="pick-badge pick-3">Pick 3 — Weeks 7–8 bridge to AI</span>
+    <div class="course-name">MANNING — Learn AI-Assisted Python Programming, 2nd Ed.</div>
+    <div class="course-meta">1.43 GB · Manning · 2nd Edition · AI-native Python workflow</div>
+    <div class="course-why">The only course that teaches Python how you'll write it going forward — using Claude and Copilot as coding partners. Teaches you how to prompt AI tools to write and debug Python effectively. A meta-skill that compounds through all of Phase 2 and beyond. Do it at Week 7–8 as you transition into Claude API work.</div>
+    <div class="course-weeks"><span class="wk-tag">Weeks 7–8 — Phase 1→2 bridge</span><span class="wk-tag">Reinforces Claude API Month 3</span></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Save for later (wrong time, not wrong courses)</div>
+  <div class="skip-list">
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">Packt — Mastering Python Networking (5.92 GB)</span><div class="skip-reason">Excellent but overlaps OrhanErgun at 3× the length — after Month 4</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">TalkPython — Modern APIs with FastAPI</span><div class="skip-reason">Phase 2/3 — FastAPI is how you'll expose your AI tools as services</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">iNE — Deep Learning with Python</span><div class="skip-reason">Too much math before Python fluency — save for Phase 2</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">ArjanCodes — Next-Level Python</span><div class="skip-reason">Genuinely excellent for clean code — return at Month 5</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">UD — FastAPI + Docker + Streamlit</span><div class="skip-reason">Phase 2/3 — Streamlit is how you'll build UIs for your AI demos</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📅</span><div class="skip-body"><span class="skip-name">MANNING — Full Stack Python Security</span><div class="skip-reason">Phase 3 — production AI systems need securing</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🗑️</span><div class="skip-body"><span class="skip-name">Python Automation Using Paramiko</span><div class="skip-reason">Micro-course fully covered by OrhanErgun — skip entirely</div></div></div>
+  </div>
+</div>
+
+<!-- LATER -->
+<div class="panel" id="p2">
+  <div class="tip">These are Phase 2–3 resources. Don't touch them until you hit the milestone listed. Having a plan for them stops you from getting distracted now.</div>
+
+  <p class="sec-label" style="margin-top:0">Phase 2 — Months 3–4 (Claude API + RAG)</p>
+  <div class="skip-list" style="margin-bottom:14px">
+    <div class="skip-row"><span class="skip-icon">🤖</span><div class="skip-body"><span class="skip-name">TalkPython — Modern APIs with FastAPI</span><div class="skip-reason">Expose your Claude tools as production APIs · Month 4</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🐍</span><div class="skip-body"><span class="skip-name">iNE — Deep Learning with Python</span><div class="skip-reason">Embeddings + neural net intuition · Month 3 RAG work</div></div></div>
+    <div class="skip-row"><span class="skip-icon">📊</span><div class="skip-body"><span class="skip-name">100 Days of Code — Days 55–100</span><div class="skip-reason">APIs, web automation, data tools · resuming your own course</div></div></div>
+  </div>
+
+  <p class="sec-label">Phase 3 — Months 5–6 (AI Infra + AIOps)</p>
+  <div class="skip-list" style="margin-bottom:14px">
+    <div class="skip-row"><span class="skip-icon">🧹</span><div class="skip-body"><span class="skip-name">ArjanCodes — Next-Level Python</span><div class="skip-reason">Clean production code patterns for your AI tools · Month 5</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🔐</span><div class="skip-body"><span class="skip-name">MANNING — Full Stack Python Security</span><div class="skip-reason">Secure your production AI APIs · Month 5–6</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🐧</span><div class="skip-body"><span class="skip-name">O'REILLY — Optimizing Linux for AI</span><div class="skip-reason">Linux kernel + GPU for AI workloads · Month 5 infra deep-dive</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🛡️</span><div class="skip-body"><span class="skip-name">Linux Privilege Escalation Bootcamp</span><div class="skip-reason">Security hardening for AI infrastructure · Phase 3</div></div></div>
+    <div class="skip-row"><span class="skip-icon">⚙️</span><div class="skip-body"><span class="skip-name">Red Hat Ansible RH294</span><div class="skip-reason">Automate your AI infra deployment · Phase 3 AIOps</div></div></div>
+    <div class="skip-row"><span class="skip-icon">🖥️</span><div class="skip-body"><span class="skip-name">UD — FastAPI + Docker + Streamlit</span><div class="skip-reason">UI layer for your AI portfolio demos · Month 5–6</div></div></div>
+  </div>
+</div>
+
+</div>
+
+<nav class="bnav">
+  <div class="bnav-inner">
+    <a href="index.html" class="ni" id="bn-home"><span class="ni-icon">🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="lp.html"    class="ni" id="bn-lp">  <span class="ni-icon">🤖</span><span class="ni-lbl">AI Path</span></a>
+    <a href="courses.html" class="ni active" id="bn-courses"><span class="ni-icon">📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="linux.html" class="ni" id="bn-linux"><span class="ni-icon">🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="python.html" class="ni" id="bn-python"><span class="ni-icon">🐍</span><span class="ni-lbl">Python</span></a>
+    <a href="claude.html" class="ni" id="bn-claude"><span class="ni-icon">🟠</span><span class="ni-lbl">Claude</span></a>
+  </div>
+</nav>
+<script>
+function initTheme(){var t=localStorage.getItem('theme')||'light';if(t==='dark')document.body.classList.add('dark');document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
+function toggleTheme(){var d=document.body.classList.toggle('dark');localStorage.setItem('theme',d?'dark':'light');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';}
+initTheme();
+function sw(i,btn){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});document.getElementById('p'+i).classList.add('active');btn.classList.add('active');}
+</script>
+</body>
+</html>
