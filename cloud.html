@@ -3,138 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1565C0">
+<meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
-<title>Cloud Certifications</title>
+<title>Cloud Certs · AI Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-
-:root {
-  --bg:        #DCE9F8;
-  --bg-card:   #EEF3F9;
-  --bg-header: #EEF3F9;
-  --bg-input:  #E4EDF7;
-  --text:      #1A2340;
-  --text-sub:  #6A7F99;
-  --text-muted:#AAB8CC;
-  --border:    #C8DCEF;
-  --accent:    #1565C0;
-  --accent2:   #0D47A1;
-  --accent-bg: #DDEEFF;
-  --shadow:    0 2px 10px rgba(21,101,192,0.09);
-  --radius:    13px;
-}
-body.dark {
-  --bg:        #0a0a14;
-  --bg-card:   #111120;
-  --bg-header: #0d0d22;
-  --bg-input:  #16162a;
-  --text:      #e0e0f0;
-  --text-sub:  #6a6a8a;
-  --text-muted:#3a3a5a;
-  --border:    #1e1e38;
-  --accent:    #8b5cf6;
-  --accent2:   #a78bfa;
-  --accent-bg: #13093a;
-  --shadow:    0 2px 12px rgba(0,0,0,0.4);
-}
+:root{--bg:#f0f2f7;--bg2:#ffffff;--bg3:#e8ecf4;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--border:rgba(15,23,42,0.08);--border2:rgba(15,23,42,0.14);--shadow:0 1px 3px rgba(15,23,42,0.08),0 4px 16px rgba(15,23,42,0.05);--radius:16px;--aws:#f59e0b;--aws-bg:#fffbeb;--aws-dark:#92400e;--az:#0ea5e9;--az-bg:#f0f9ff;--az-dark:#0c4a6e;--green:#10b981;--g-bg:#ecfdf5;--mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;}
+body.dark{--bg:#080c14;--bg2:#0f1623;--bg3:#141d2e;--text:#e2e8f0;--text2:#94a3b8;--text3:#334155;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--shadow:0 1px 3px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.2);--aws:#fbbf24;--aws-bg:#1c1400;--aws-dark:#fde68a;--az:#38bdf8;--az-bg:#071424;--az-dark:#bae6fd;--green:#34d399;--g-bg:#052e16;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;}
-a{text-decoration:none;color:inherit;}
-button{font-family:inherit;}
-
-
-.bnav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--bg-header);
-  border-top:1px solid var(--border);
-  display:flex;justify-content:center;
-  z-index:100;
-  box-shadow:0 -2px 12px rgba(0,0,0,0.07);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.bnav-inner{
-  display:flex;
-  width:100%;
-  max-width:520px;
-}
-.ni{
-  flex:1;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;
-  min-height:52px; /* 44px+ touch target best practice */
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:opacity 0.1s;
-}
-.ni:active{opacity:0.6;}
-.ni span:first-child{font-size:1.1rem;line-height:1;}
-.ni span:last-child{font-size:0.52rem;color:var(--text-sub);font-weight:700;text-transform:uppercase;letter-spacing:0.4px;}
-.ni.active span:last-child{color:var(--accent);}
-.ni.active span:first-child{filter:saturate(1.8) brightness(0.9);}
-
-header{background:var(--bg-header);padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);position:sticky;top:0;z-index:10;}
-.back{color:var(--accent);font-size:1.3rem;font-weight:700;-webkit-tap-highlight-color:transparent;min-width:36px;min-height:44px;display:flex;align-items:center;}
-.htxt{flex:1;}
-.htxt h1{font-size:0.9rem;font-weight:800;color:var(--text);}
-.htxt p{font-size:0.67rem;color:var(--text-sub);margin-top:2px;}
-.theme-btn{background:var(--bg-input);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:0.82rem;cursor:pointer;min-height:36px;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
-.wrap{max-width:520px;margin:0 auto;padding:14px 14px 76px;}
-.tip{background:var(--accent-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:14px;font-size:0.75rem;color:var(--accent);line-height:1.5;}
-.section{margin-bottom:18px;}
-.sec-hdr{font-size:0.63rem;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;font-weight:800;padding-bottom:6px;border-bottom:2px solid var(--border);margin-bottom:8px;}
-.item{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:11px;
-  padding:11px 12px;margin-bottom:6px;
-  display:flex;align-items:center;gap:9px;
-  cursor:pointer;box-shadow:var(--shadow);
-  min-height:48px; /* touch target */
-  user-select:none;-webkit-tap-highlight-color:transparent;
-  transition:border-color 0.15s,background 0.1s;
-}
-.item:active{background:var(--bg-input);border-color:var(--accent);}
-.item.done{background:#f0fff4;border-color:#22c55e;}
-body.dark .item.done{background:#08180f;border-color:#22c55e;}
-.iname{flex:1;font-size:0.8rem;color:var(--text);line-height:1.3;}
-.item.done .iname{color:#16a34a;}
-body.dark .item.done .iname{color:#4ade80;}
-.isize{font-size:0.67rem;color:var(--text-muted);white-space:nowrap;margin-right:4px;}
-.ichk{font-size:1rem;min-width:18px;text-align:center;color:var(--text-muted);}
-.item.done .ichk{color:#22c55e;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}button{font-family:var(--sans);cursor:pointer;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;justify-content:center;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px);}
+.bnav-inner{display:flex;width:100%;max-width:540px;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:6px 2px;}
+.ni:active{opacity:0.5;}.ni-icon{font-size:1.15rem;line-height:1;}.ni-lbl{font-size:0.48rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text3);}.ni.active .ni-lbl{color:var(--az);}
+header{background:var(--bg2);padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.back-btn{background:transparent;border:none;color:var(--az);font-size:1.3rem;font-weight:700;min-width:36px;min-height:44px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.hdr-title{flex:1;}.hdr-title h1{font-size:0.92rem;font-weight:700;}.hdr-title p{font-size:0.62rem;color:var(--text2);margin-top:2px;font-family:var(--mono);}
+.theme-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:5px 12px;font-size:0.8rem;min-height:34px;-webkit-tap-highlight-color:transparent;}
+.wrap{max-width:540px;margin:0 auto;padding:16px 16px 82px;}
+.tabs{display:flex;gap:8px;margin-bottom:16px;}
+.tab{flex:1;padding:9px 6px;border-radius:12px;font-size:0.72rem;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);-webkit-tap-highlight-color:transparent;transition:all 0.15s;text-align:center;min-height:40px;font-family:var(--mono);}
+.tab.aws-active{background:#b45309;color:#fff;border-color:#b45309;}
+.tab.az-active{background:#0369a1;color:#fff;border-color:#0369a1;}
+.panel{display:none;}.panel.active{display:block;}
+.prog-card{border-radius:18px;padding:18px;margin-bottom:16px;}
+.aws-grad{background:linear-gradient(135deg,#78350f,#b45309,#d97706);}
+.az-grad{background:linear-gradient(135deg,#0c4a6e,#0369a1,#0ea5e9);}
+.pc-label{color:rgba(255,255,255,0.65);font-size:0.6rem;font-family:var(--mono);margin-bottom:3px;}
+.pc-title{color:#fff;font-size:1rem;font-weight:700;margin-bottom:3px;letter-spacing:-0.3px;}
+.pc-sub{color:rgba(255,255,255,0.7);font-size:0.7rem;line-height:1.5;margin-bottom:14px;}
+.pc-prog-row{display:flex;justify-content:space-between;margin-bottom:4px;}
+.pc-plbl{color:rgba(255,255,255,0.6);font-size:0.6rem;font-family:var(--mono);}
+.pc-ppct{color:#fff;font-size:0.65rem;font-weight:700;font-family:var(--mono);}
+.pc-bar{height:6px;background:rgba(255,255,255,0.2);border-radius:10px;overflow:hidden;}
+.pc-fill{height:100%;background:#fff;border-radius:10px;transition:width 0.5s;}
+.seq{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow);}
+.seq-row{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);}
+.seq-row:last-child{border-bottom:none;}
+.seq-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;font-family:var(--mono);flex-shrink:0;margin-top:1px;}
+.aws-num{background:var(--aws-bg);color:var(--aws-dark);}
+.az-num{background:var(--az-bg);color:var(--az-dark);}
+.seq-body{flex:1;}.seq-cert{font-size:0.82rem;font-weight:700;margin-bottom:2px;}.seq-why{font-size:0.68rem;color:var(--text2);line-height:1.5;font-family:var(--mono);}
+.seq-tag{font-size:0.55rem;font-weight:700;padding:1px 7px;border-radius:20px;margin-left:6px;display:inline-block;vertical-align:middle;}
+.tag-now{background:#fef3c7;color:#92400e;}.tag-next{background:#e0f2fe;color:#0c4a6e;}
+.course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);}
+.course-card.top-aws{border-color:rgba(180,83,9,0.35);}.course-card.top-az{border-color:rgba(14,165,233,0.35);}
+.pick-badge{display:inline-flex;font-size:0.58rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;margin-bottom:8px;letter-spacing:0.4px;}
+.pick-1-aws{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;}
+.pick-1-az{background:linear-gradient(135deg,#0369a1,#0ea5e9);color:#fff;}
+.pick-2{background:var(--aws-bg);color:var(--aws-dark);}
+.pick-2-az{background:var(--az-bg);color:var(--az-dark);}
+.course-name{font-size:0.88rem;font-weight:700;margin-bottom:4px;letter-spacing:-0.2px;line-height:1.35;}
+.course-meta{font-size:0.63rem;color:var(--text3);font-family:var(--mono);margin-bottom:7px;}
+.course-why{font-size:0.72rem;color:var(--text2);line-height:1.65;}
+.course-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.ctag{font-size:0.56rem;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--text2);border:1px solid var(--border2);}
+.sec-hdr{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-family:var(--mono);padding-bottom:6px;border-bottom:1px solid var(--border2);margin-bottom:9px;margin-top:18px;display:flex;align-items:center;justify-content:space-between;}
+.sec-hdr:first-of-type{margin-top:0;}
+.sec-count{font-size:0.58rem;background:var(--bg3);color:var(--text2);padding:1px 7px;border-radius:20px;}
+.item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 13px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;min-height:50px;user-select:none;-webkit-tap-highlight-color:transparent;transition:border-color 0.15s,background 0.12s;box-shadow:0 1px 2px rgba(15,23,42,0.04);}
+.item:active{background:var(--bg3);}
+.item.done{background:var(--g-bg);border-color:var(--green);}
+body.dark .item.done{background:#052e16;border-color:#065f46;}
+.item-body{flex:1;}.item-name{font-size:0.8rem;font-weight:500;line-height:1.4;}.item-sub{font-size:0.62rem;color:var(--text2);margin-top:3px;font-family:var(--mono);line-height:1.5;}
+.item.done .item-name{color:var(--green);}body.dark .item.done .item-name{color:#34d399;}
+.ichk{font-size:1.1rem;min-width:20px;text-align:center;color:var(--text3);flex-shrink:0;margin-top:1px;}
+.item.done .ichk{color:var(--green);}
+.adv-badge{font-size:0.5rem;font-weight:700;padding:1px 5px;border-radius:5px;background:#fef3c7;color:#92400e;margin-left:5px;vertical-align:middle;}
+body.dark .adv-badge{background:#1c1400;color:#fde68a;}
+.tip{border-left:3px solid;border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:14px;font-size:0.73rem;line-height:1.6;}
+.tip-aws{background:var(--aws-bg);border-color:var(--aws);color:var(--aws-dark);}body.dark .tip-aws{color:var(--aws);}
+.tip-az{background:var(--az-bg);border-color:var(--az);color:var(--az-dark);}body.dark .tip-az{color:var(--az);}
+.milestone{background:var(--bg2);border:1.5px solid var(--green);border-radius:var(--radius);padding:14px;margin-top:14px;}
+.ms-hdr{font-size:0.58rem;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;font-family:var(--mono);margin-bottom:10px;}
+.ms-row{font-size:0.77rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:7px;line-height:1.5;}
+.ms-row:last-child{border-bottom:none;}.ms-arr{color:var(--green);flex-shrink:0;font-family:var(--mono);}
+.skip-list{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:14px;box-shadow:var(--shadow);}
+.skip-hdr{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);padding:10px 13px;border-bottom:1px solid var(--border);font-family:var(--mono);}
+.skip-row{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-bottom:1px solid var(--border);font-size:0.74rem;}
+.skip-row:last-child{border-bottom:none;}
+.skip-name{flex:1;font-weight:500;color:var(--text);}
+.skip-when{font-size:0.6rem;color:var(--text3);font-family:var(--mono);margin-top:2px;}
 </style>
 </head>
 <body>
 <header>
-  <a href="index.html" class="back">&#8592;</a>
-  <div class="htxt"><h1>☁️ Cloud Certifications</h1><p>AWS + Azure tracks</p></div>
+  <button class="back-btn" onclick="history.back()">←</button>
+  <div class="hdr-title"><h1>☁️ Cloud Certifications</h1><p>AWS SAP + ANS · Azure AZ-700 + AZ-305</p></div>
   <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
 </header>
 <div class="wrap">
-<style>.cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:14px;margin-bottom:8px;box-shadow:var(--shadow);}.cbadge{display:inline-block;font-size:8px;font-weight:900;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:7px;}.aws-b{background:#fff8e6;color:#b45309;}body.dark .aws-b{background:#1c1200;color:#f59e0b;}.azure-b{background:#e8f4ff;color:#1a5fa8;}body.dark .azure-b{background:#071428;color:#38bdf8;}.ctitle{font-size:0.92rem;font-weight:800;color:var(--text);margin-bottom:5px;}.cnote{font-size:0.76rem;color:var(--text-sub);line-height:1.6;}</style><div class="cert-card"><span class="cbadge aws-b">AWS</span><div class="ctitle">SAP-C02 + ANS-C01</div><p class="cnote">Solutions Architect Professional + Advanced Networking Specialty. Your 20+ yr network background is a massive ANS advantage.</p></div><div class="section"><div class="sec-hdr">AWS Key Topics</div><div class="item" data-k="a1" onclick="tog('a1')"><span class="iname">VPC design — subnets, route tables, NACLs, SGs</span><span class="isize"></span><span class="ichk" id="k-a1">○</span></div><div class="item" data-k="a2" onclick="tog('a2')"><span class="iname">Transit Gateway, VPN, Direct Connect</span><span class="isize"></span><span class="ichk" id="k-a2">○</span></div><div class="item" data-k="a3" onclick="tog('a3')"><span class="iname">Route 53, CloudFront, Global Accelerator</span><span class="isize"></span><span class="ichk" id="k-a3">○</span></div><div class="item" data-k="a4" onclick="tog('a4')"><span class="iname">IAM roles, policies, cross-account access</span><span class="isize"></span><span class="ichk" id="k-a4">○</span></div><div class="item" data-k="a5" onclick="tog('a5')"><span class="iname">Well-Architected Framework, HA patterns</span><span class="isize"></span><span class="ichk" id="k-a5">○</span></div></div><div class="cert-card" style="margin-top:10px"><span class="cbadge azure-b">Azure</span><div class="ctitle">AZ-700 + AZ-305</div><p class="cnote">Azure Network Engineer + Solutions Architect Expert. AZ-700 mirrors your Cisco/Fortinet expertise.</p></div><div class="section"><div class="sec-hdr">Azure Key Topics</div><div class="item" data-k="z1" onclick="tog('z1')"><span class="iname">VNet design, peering, hub-and-spoke</span><span class="isize"></span><span class="ichk" id="k-z1">○</span></div><div class="item" data-k="z2" onclick="tog('z2')"><span class="iname">Azure Firewall, NSGs, Azure Bastion</span><span class="isize"></span><span class="ichk" id="k-z2">○</span></div><div class="item" data-k="z3" onclick="tog('z3')"><span class="iname">ExpressRoute, VPN Gateway, Virtual WAN</span><span class="isize"></span><span class="ichk" id="k-z3">○</span></div><div class="item" data-k="z4" onclick="tog('z4')"><span class="iname">Load Balancer, App Gateway, Traffic Manager</span><span class="isize"></span><span class="ichk" id="k-z4">○</span></div><div class="item" data-k="z5" onclick="tog('z5')"><span class="iname">Azure AD, RBAC, Conditional Access</span><span class="isize"></span><span class="ichk" id="k-z5">○</span></div></div>
+
+<div class="tabs">
+  <div class="tab aws-active" id="tab-aws" onclick="sw('aws',this)">☁️ AWS Track</div>
+  <div class="tab" id="tab-az" onclick="sw('az',this)">🔷 Azure Track</div>
 </div>
+
+<!-- ═══ AWS ═══ -->
+<div class="panel active" id="panel-aws">
+<div class="prog-card aws-grad">
+  <div class="pc-label">AWS Certification Path</div>
+  <div class="pc-title">CLF-C02 → SAA-C03 → ANS-C01 → SAP-C02</div>
+  <div class="pc-sub">Your 20 years of enterprise networking is a direct advantage — ANS-C01 is built for people like you. BGP, Direct Connect, Transit Gateway: this is your daily work mapped to AWS.</div>
+  <div class="pc-prog-row"><span class="pc-plbl">Overall AWS progress</span><span class="pc-ppct" id="aws-pct">0%</span></div>
+  <div class="pc-bar"><div class="pc-fill" id="aws-bar" style="width:0%"></div></div>
+</div>
+
+<div class="sec-hdr" style="margin-top:0">Cert Sequence — Do in Order</div>
+<div class="seq">
+  <div class="seq-row"><div class="seq-num aws-num">1</div><div class="seq-body"><div class="seq-cert">CLF-C02 — Cloud Practitioner <span class="seq-tag tag-now">Phase 1 · Wk 6</span></div><div class="seq-why">Foundation vocabulary. ~$100. Complete in 2 weeks alongside Phase 1 cloud week.</div></div></div>
+  <div class="seq-row"><div class="seq-num aws-num">2</div><div class="seq-body"><div class="seq-cert">SAA-C03 — Solutions Architect Associate <span class="seq-tag tag-next">Month 5</span></div><div class="seq-why">Most recognised AWS cert. Required before SAP-C02. Your VPC knowledge covers 40% of this.</div></div></div>
+  <div class="seq-row"><div class="seq-num aws-num">3</div><div class="seq-body"><div class="seq-cert">ANS-C01 — Advanced Networking Specialty <span class="seq-tag tag-next">Month 6</span></div><div class="seq-why">Your killer cert. BGP, Direct Connect, Transit Gateway deep. Do before SAP — faster than you expect.</div></div></div>
+  <div class="seq-row"><div class="seq-num aws-num">4</div><div class="seq-body"><div class="seq-cert">SAP-C02 — Solutions Architect Professional <span class="seq-tag tag-next">Month 7–8</span></div><div class="seq-why">The pinnacle. Multi-account, complex migrations, HA at enterprise scale. Average holder: $168k+.</div></div></div>
+</div>
+
+<div class="tip tip-aws">💡 ANS-C01 advantage: Transit Gateway, BGP routing, Direct Connect, VPN — you configure this equipment daily. The exam tests what you already know. Treat it as revision, not learning.</div>
+
+<div class="sec-hdr">Course Picks — From Your Library</div>
+
+<div class="course-card top-aws">
+  <span class="pick-badge pick-1-aws">★ CLF-C02 · Start Here</span>
+  <div class="course-name">ACG — Certified Cloud Practitioner (CLF-C02)</div>
+  <div class="course-meta">10.6 GB · A Cloud Guru · all 4 domains + hands-on labs</div>
+  <div class="course-why">The most comprehensive CLF course in your library. Sets the vocabulary for everything above it. Complete in 2 weeks alongside Phase 1 cloud week — do not skip even if you think you know it.</div>
+  <div class="course-tags"><span class="ctag">Week 5–6</span><span class="ctag">Foundation</span><span class="ctag">~$100 exam</span></div>
+</div>
+
+<div class="course-card top-aws">
+  <span class="pick-badge pick-1-aws">★ SAA-C03 · Primary</span>
+  <div class="course-name">Adrian Cantrill — AWS SAA-C03 (10.6 GB version)</div>
+  <div class="course-meta">10.6 GB · Adrian Cantrill · the gold standard — most respected AWS instructor</div>
+  <div class="course-why">The definitive SAA-C03 preparation. Teaches you to think like an architect, not memorise answers. Deep, hands-on, technically rigorous. You also own his 6.84 GB version — use the 10.6 GB one, it's more complete. This is the one course worth prioritising above all others for SAA.</div>
+  <div class="course-tags"><span class="ctag">Month 5</span><span class="ctag">Core cert</span><span class="ctag">~$300 exam</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2">SAA-C03 · Practice Exams</span>
+  <div class="course-name">UD — AWS SAA-C03 [NEW] 2026 (TutorialsDojo)</div>
+  <div class="course-meta">15.3 GB · Udemy · TutorialsDojo · 2026 · closest practice exams to the real thing</div>
+  <div class="course-why">Use Cantrill as primary — use this for practice exams only. TutorialsDojo SAA-C03 tests are the hardest available and the closest to real exam questions. Don't watch the lectures cover-to-cover, just target the practice tests.</div>
+  <div class="course-tags"><span class="ctag">Month 5</span><span class="ctag">Practice exams only</span></div>
+</div>
+
+<div class="course-card top-aws">
+  <span class="pick-badge pick-1-aws">★ ANS-C01 · Your Power Cert</span>
+  <div class="course-name">CBTNuggets — AWS Certified Advanced Networking Specialty</div>
+  <div class="course-meta">6.62 GB · CBTNuggets · enterprise-grade networking depth</div>
+  <div class="course-why">The most thorough ANS-C01 course in your library. Covers exactly what you know at depth: BGP, Direct Connect, Transit Gateway routing, VPN architectures, Network Firewall. CBTNuggets teaches at enterprise engineer level — no padding. You'll recognise 70% of content and just learn the AWS-specific implementation.</div>
+  <div class="course-tags"><span class="ctag">Month 6</span><span class="ctag">Your strongest exam</span><span class="ctag">~$300 exam</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2">ANS-C01 · Labs + Practice</span>
+  <div class="course-name">UD — AWS Certified Advanced Networking ANS-C01 2026</div>
+  <div class="course-meta">11.9 GB · Udemy · TutorialsDojo · 2026</div>
+  <div class="course-why">Use for practice exams and topics needing a second explanation. TutorialsDojo ANS-C01 tests are the closest to the real exam. Dip in where needed — don't watch cover-to-cover alongside CBTNuggets.</div>
+  <div class="course-tags"><span class="ctag">Month 6</span><span class="ctag">Practice tests</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2">ANS-C01 · VPC Labs</span>
+  <div class="course-name">Udemy — AWS Networking Masterclass: VPC &amp; Hybrid Cloud (2025)</div>
+  <div class="course-meta">2.76 GB · Udemy · 2025 · hands-on VPC + hybrid connectivity labs</div>
+  <div class="course-why">Purpose-built for the VPC and hybrid connectivity sections of ANS-C01. Transit Gateway, VPN, Direct Connect, PrivateLink with labs. Completeable in a weekend. Run the week before your ANS-C01 exam as your final hands-on drill.</div>
+  <div class="course-tags"><span class="ctag">Pre-ANS exam week</span><span class="ctag">Lab-heavy</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2">ANS-C01 · Focused Supplement</span>
+  <div class="course-name">PEARSONS — Hands-on AWS VPC Labs: Essential Lab Exercises</div>
+  <div class="course-meta">1.56 GB · Pearson · lab-only format · no lectures</div>
+  <div class="course-why">Pure labs — no lectures. Build VPCs, configure Transit Gateway, set up Direct Connect simulations. Do this the week before your ANS-C01 exam as your muscle-memory drill. Lab confidence is what gets you through the practical questions.</div>
+  <div class="course-tags"><span class="ctag">ANS-C01 final week</span><span class="ctag">Labs only</span></div>
+</div>
+
+<div class="course-card top-aws">
+  <span class="pick-badge pick-1-aws">★ SAP-C02 · Well-Architected Prep</span>
+  <div class="course-name">PLS — AWS Well-Architected Framework Deep Dive</div>
+  <div class="course-meta">7.58 GB · Pluralsight · all 6 pillars at design depth</div>
+  <div class="course-why">SAP-C02 is 30% Well-Architected Framework. This Pluralsight course is the most thorough WAF resource in your library — operational excellence, security, reliability, performance efficiency, cost optimisation, sustainability. The 6 pillars are the vocabulary of the SAP exam. Do this alongside SAP-C02 prep.</div>
+  <div class="course-tags"><span class="ctag">Month 7</span><span class="ctag">30% of SAP exam</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2">SAP-C02 · Professional Mindset</span>
+  <div class="course-name">Adrian Cantrill — AWS Certified DevOps Engineer Professional</div>
+  <div class="course-meta">7.45 GB · Adrian Cantrill · professional-level AWS thinking</div>
+  <div class="course-why">SAP-C02 and the DevOps Pro share many architectural patterns. Cantrill's professional courses are deliberately harder than the exams — use this to build the professional-level thinking required for SAP. Do before the SAP-C02 — it bridges the gap from associate to professional mindset.</div>
+  <div class="course-tags"><span class="ctag">Month 7</span><span class="ctag">Pre-SAP bridge</span></div>
+</div>
+
+<!-- AWS Topics -->
+<div class="sec-hdr">CLF-C02 — Foundation Topics <span class="sec-count" id="cnt-clf">0/6</span></div>
+<div class="item" data-k="a-clf1" onclick="tog('a-clf1')"><div class="item-body"><div class="item-name">Cloud concepts — 6 advantages, shared responsibility, pricing models</div><div class="item-sub">On-demand vs reserved vs spot. Support plan tiers. TCO calculator.</div></div><span class="ichk" id="k-a-clf1">○</span></div>
+<div class="item" data-k="a-clf2" onclick="tog('a-clf2')"><div class="item-body"><div class="item-name">Core services — EC2, S3, RDS, Lambda, VPC, IAM (use-case level)</div><div class="item-sub">Know what each service does and when you'd choose it — not deep config.</div></div><span class="ichk" id="k-a-clf2">○</span></div>
+<div class="item" data-k="a-clf3" onclick="tog('a-clf3')"><div class="item-body"><div class="item-name">Well-Architected Framework — 6 pillars overview</div><div class="item-sub">Operational Excellence · Security · Reliability · Performance · Cost · Sustainability</div></div><span class="ichk" id="k-a-clf3">○</span></div>
+<div class="item" data-k="a-clf4" onclick="tog('a-clf4')"><div class="item-body"><div class="item-name">Global infrastructure — Regions, AZs, Edge Locations, Local Zones</div><div class="item-sub">Why multi-AZ. How CloudFront edges differ from Regions. Latency vs data residency.</div></div><span class="ichk" id="k-a-clf4">○</span></div>
+<div class="item" data-k="a-clf5" onclick="tog('a-clf5')"><div class="item-body"><div class="item-name">IAM — users, groups, roles, policies, MFA, principle of least privilege</div><div class="item-sub">Root account protection. Never use root day-to-day. Service roles vs user roles.</div></div><span class="ichk" id="k-a-clf5">○</span></div>
+<div class="item" data-k="a-clf6" onclick="tog('a-clf6')"><div class="item-body"><div class="item-name">Practice exam — 85%+ before booking (AWS sample + ExamPro)</div><div class="item-sub">Book the exam once hitting 85% consistently. Commitment forces focus.</div></div><span class="ichk" id="k-a-clf6">○</span></div>
+
+<div class="sec-hdr">SAA-C03 — Architect Associate <span class="sec-count" id="cnt-saa">0/8</span></div>
+<div class="item" data-k="a-saa1" onclick="tog('a-saa1')"><div class="item-body"><div class="item-name">VPC advanced — flow logs, VPC endpoints, PrivateLink, peering limits</div><div class="item-sub">Interface vs Gateway endpoints. Transit peering. VPC sharing. Reachability Analyzer.</div></div><span class="ichk" id="k-a-saa1">○</span></div>
+<div class="item" data-k="a-saa2" onclick="tog('a-saa2')"><div class="item-body"><div class="item-name">EC2 advanced — placement groups, EBS types, Auto Scaling, Launch Templates</div><div class="item-sub">Cluster vs Partition vs Spread. gp3 vs io2. Target tracking vs step scaling.</div></div><span class="ichk" id="k-a-saa2">○</span></div>
+<div class="item" data-k="a-saa3" onclick="tog('a-saa3')"><div class="item-body"><div class="item-name">HA patterns — ALB, NLB, Route 53 routing policies, multi-AZ RDS</div><div class="item-sub">Weighted · latency · failover · geolocation routing. ALB vs NLB. RDS Multi-AZ vs Read Replica.</div></div><span class="ichk" id="k-a-saa3">○</span></div>
+<div class="item" data-k="a-saa4" onclick="tog('a-saa4')"><div class="item-body"><div class="item-name">Storage — S3 tiers, lifecycle, replication, encryption, pre-signed URLs</div><div class="item-sub">Standard vs IA vs Glacier. CRR vs SRR. SSE-S3 vs SSE-KMS vs SSE-C.</div></div><span class="ichk" id="k-a-saa4">○</span></div>
+<div class="item" data-k="a-saa5" onclick="tog('a-saa5')"><div class="item-body"><div class="item-name">Databases — RDS, Aurora, DynamoDB, ElastiCache selection patterns</div><div class="item-sub">Aurora Serverless v2. DynamoDB on-demand vs provisioned. ElastiCache Redis vs Memcached.</div></div><span class="ichk" id="k-a-saa5">○</span></div>
+<div class="item" data-k="a-saa6" onclick="tog('a-saa6')"><div class="item-body"><div class="item-name">Serverless — Lambda, API Gateway, SQS, SNS, EventBridge patterns</div><div class="item-sub">Fan-out pattern. Lambda concurrency and cold starts. SQS FIFO vs Standard.</div></div><span class="ichk" id="k-a-saa6">○</span></div>
+<div class="item" data-k="a-saa7" onclick="tog('a-saa7')"><div class="item-body"><div class="item-name">Security — KMS, Secrets Manager, WAF, Shield, GuardDuty, Inspector</div><div class="item-sub">CMK vs AWS managed. Shield Standard vs Advanced. GuardDuty threat detection.</div></div><span class="ichk" id="k-a-saa7">○</span></div>
+<div class="item" data-k="a-saa8" onclick="tog('a-saa8')"><div class="item-body"><div class="item-name">Practice exam — 80%+ TutorialsDojo before booking</div><div class="item-sub">TutorialsDojo SAA is the hardest available. 80% here = confident pass on exam day.</div></div><span class="ichk" id="k-a-saa8">○</span></div>
+
+<div class="sec-hdr">ANS-C01 — Advanced Networking <span class="adv-badge">Your Power Cert</span> <span class="sec-count" id="cnt-ans">0/9</span></div>
+<div class="item" data-k="a-ans1" onclick="tog('a-ans1')"><div class="item-body"><div class="item-name">VPC deep — CIDR design, peering, DNS, flow logs, Traffic Mirroring</div><div class="item-sub">Overlapping CIDRs. Non-transitive peering. DNS hostnames in VPCs. Packet capture with Traffic Mirroring.</div></div><span class="ichk" id="k-a-ans1">○</span></div>
+<div class="item" data-k="a-ans2" onclick="tog('a-ans2')"><div class="item-body"><div class="item-name">Transit Gateway — route tables, attachments, inter-region peering, multicast</div><div class="item-sub">You've designed hub-and-spoke for 20 years. TGW is AWS's version. Route table isolation for shared services.</div></div><span class="ichk" id="k-a-ans2">○</span></div>
+<div class="item" data-k="a-ans3" onclick="tog('a-ans3')"><div class="item-body"><div class="item-name">Direct Connect — VIFs, LAGs, hosted connections, BGP communities, failover</div><div class="item-sub">Private VIF vs Public VIF vs Transit VIF. DX + VPN failover. BGP communities for routing control.</div></div><span class="ichk" id="k-a-ans3">○</span></div>
+<div class="item" data-k="a-ans4" onclick="tog('a-ans4')"><div class="item-body"><div class="item-name">VPN — Site-to-Site, Client VPN, BGP routing, active-active, Accelerated VPN</div><div class="item-sub">ECMP on TGW. Active/active tunnels. Accelerated VPN with Global Accelerator.</div></div><span class="ichk" id="k-a-ans4">○</span></div>
+<div class="item" data-k="a-ans5" onclick="tog('a-ans5')"><div class="item-body"><div class="item-name">Route 53 advanced — private hosted zones, Resolver, hybrid DNS, forwarding rules</div><div class="item-sub">Inbound vs outbound resolver endpoints. Conditional forwarding to on-premises DNS.</div></div><span class="ichk" id="k-a-ans5">○</span></div>
+<div class="item" data-k="a-ans6" onclick="tog('a-ans6')"><div class="item-body"><div class="item-name">CloudFront + Global Accelerator — OAC, distributions, custom origins</div><div class="item-sub">When GA beats CloudFront. Origin Access Control. Field-level encryption. Cache behaviours.</div></div><span class="ichk" id="k-a-ans6">○</span></div>
+<div class="item" data-k="a-ans7" onclick="tog('a-ans7')"><div class="item-body"><div class="item-name">Load balancers — ALB path routing, NLB static IP, GWLB for inline inspection</div><div class="item-sub">GWLB + Fortinet/Palo Alto firewalls. You know this pattern — learn the AWS implementation.</div></div><span class="ichk" id="k-a-ans7">○</span></div>
+<div class="item" data-k="a-ans8" onclick="tog('a-ans8')"><div class="item-body"><div class="item-name">Network security — SGs, NACLs, Network Firewall, WAF, Shield Advanced</div><div class="item-sub">Stateful vs stateless. Network Firewall deep packet inspection. WAF managed rule groups.</div></div><span class="ichk" id="k-a-ans8">○</span></div>
+<div class="item" data-k="a-ans9" onclick="tog('a-ans9')"><div class="item-body"><div class="item-name">Monitoring — VPC Flow Logs, Traffic Mirroring, CloudWatch, Network Manager</div><div class="item-sub">Flow log filtering for specific traffic. Network Manager global topology view. CloudWatch metrics for TGW.</div></div><span class="ichk" id="k-a-ans9">○</span></div>
+
+<div class="sec-hdr">SAP-C02 — Architect Professional <span class="sec-count" id="cnt-sap">0/6</span></div>
+<div class="item" data-k="a-sap1" onclick="tog('a-sap1')"><div class="item-body"><div class="item-name">Multi-account strategy — AWS Organizations, SCPs, Control Tower, Landing Zone</div><div class="item-sub">OU design. SCP inheritance. 30% of SAP is multi-account architecture.</div></div><span class="ichk" id="k-a-sap1">○</span></div>
+<div class="item" data-k="a-sap2" onclick="tog('a-sap2')"><div class="item-body"><div class="item-name">Complex migrations — 7Rs, Migration Hub, Database Migration Service</div><div class="item-sub">Rehost/Replatform/Repurchase/Refactor/Relocate/Retain/Retire. When each applies.</div></div><span class="ichk" id="k-a-sap2">○</span></div>
+<div class="item" data-k="a-sap3" onclick="tog('a-sap3')"><div class="item-body"><div class="item-name">Cost optimisation — Reserved Instances, Savings Plans, Spot, Compute Optimizer</div><div class="item-sub">When each pricing model wins. Spot interruption handling. Rightsizing recommendations.</div></div><span class="ichk" id="k-a-sap3">○</span></div>
+<div class="item" data-k="a-sap4" onclick="tog('a-sap4')"><div class="item-body"><div class="item-name">Disaster recovery — RPO/RTO, Backup/Restore, Pilot Light, Warm Standby, Multi-Site</div><div class="item-sub">Match DR strategy to RPO/RTO. Cost vs recovery time. AWS Backup vaults + cross-region.</div></div><span class="ichk" id="k-a-sap4">○</span></div>
+<div class="item" data-k="a-sap5" onclick="tog('a-sap5')"><div class="item-body"><div class="item-name">Well-Architected deep — all 6 pillars at design-decision level</div><div class="item-sub">SAP asks you to choose the BEST architecture, not just a working one. PLS WAF Deep Dive is your resource.</div></div><span class="ichk" id="k-a-sap5">○</span></div>
+<div class="item" data-k="a-sap6" onclick="tog('a-sap6')"><div class="item-body"><div class="item-name">Practice exam — 75%+ WhizLabs or TutorialsDojo Pro before booking</div><div class="item-sub">SAP practice exams are significantly harder than CLF/SAA. 75% here = confident pass.</div></div><span class="ichk" id="k-a-sap6">○</span></div>
+
+<div class="milestone">
+  <div class="ms-hdr">AWS Track Milestones</div>
+  <div class="ms-row"><span class="ms-arr">→</span>CLF-C02 passed — cloud vocabulary locked in (Phase 1)</div>
+  <div class="ms-row"><span class="ms-arr">→</span>SAA-C03 passed — recognised on every cloud job application</div>
+  <div class="ms-row"><span class="ms-arr">→</span>ANS-C01 passed — 20yr networking advantage fully converted to cloud</div>
+  <div class="ms-row"><span class="ms-arr">→</span>SAP-C02 passed — top 3% of AWS certified professionals worldwide</div>
+</div>
+
+<div class="skip-list">
+  <div class="skip-hdr">📅 Save for later — AWS</div>
+  <div class="skip-row"><div><div class="skip-name">CBTNuggets — AWS AI Practitioner AIF-C01 · 6.12 GB</div><div class="skip-when">Month 6 — pairs with your AI track</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">ACG — AWS Certified Security Specialty SCS-C01 · 10 GB</div><div class="skip-when">After SAP-C02 — security specialisation</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">A Cloud Guru — Automating AWS with Python · 1.93 GB</div><div class="skip-when">Month 5 — connects your Python + AWS skills</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">PLS — ANS-C01 Network-specific · 563 MB</div><div class="skip-when">Quick supplement the week before ANS exam</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">AdrianCantrill — AWS Developer Associate DVA-C01 · 6.87 GB</div><div class="skip-when">Optional — SAP-C02 covers most of this content</div></div></div>
+</div>
+</div><!-- /aws panel -->
+
+
+<!-- ═══ AZURE ═══ -->
+<div class="panel" id="panel-az">
+<div class="prog-card az-grad">
+  <div class="pc-label">Azure Certification Path</div>
+  <div class="pc-title">AZ-104 → AZ-700 → AZ-305</div>
+  <div class="pc-sub">AZ-700 is the most directly mapped cert to your Cisco/Fortinet enterprise networking expertise. ExpressRoute = Direct Connect. Virtual WAN = Transit Gateway. Azure Firewall = you've deployed Cisco NGFW. This is revision, not learning.</div>
+  <div class="pc-prog-row"><span class="pc-plbl">Overall Azure progress</span><span class="pc-ppct" id="az-pct">0%</span></div>
+  <div class="pc-bar"><div class="pc-fill" id="az-bar" style="width:0%"></div></div>
+</div>
+
+<div class="sec-hdr" style="margin-top:0">Cert Sequence — Do in Order</div>
+<div class="seq">
+  <div class="seq-row"><div class="seq-num az-num">1</div><div class="seq-body"><div class="seq-cert">AZ-900 — Azure Fundamentals <span class="seq-tag tag-now">Optional · fast-track</span></div><div class="seq-why">Only 4 hrs prep if you've done CLF-C02. Skip if confident. ~$165.</div></div></div>
+  <div class="seq-row"><div class="seq-num az-num">2</div><div class="seq-body"><div class="seq-cert">AZ-104 — Azure Administrator <span class="seq-tag tag-next">Month 5</span></div><div class="seq-why">Prerequisite mindset for AZ-700 and AZ-305. Admin-level Azure fundamentals. Fast-track with your background.</div></div></div>
+  <div class="seq-row"><div class="seq-num az-num">3</div><div class="seq-body"><div class="seq-cert">AZ-700 — Network Engineer Associate <span class="seq-tag tag-next">Month 6</span></div><div class="seq-why">Your Azure power cert. VNet, ExpressRoute, VPN Gateway, Azure Firewall — directly maps to your daily work.</div></div></div>
+  <div class="seq-row"><div class="seq-num az-num">4</div><div class="seq-body"><div class="seq-cert">AZ-305 — Solutions Architect Expert <span class="seq-tag tag-next">Month 7</span></div><div class="seq-why">The Azure pinnacle. Requires AZ-104 as prerequisite. Multi-region, governance, identity at enterprise scale.</div></div></div>
+</div>
+
+<div class="tip tip-az">💡 AZ-700 parallel: ExpressRoute = Direct Connect · Virtual WAN = Transit Gateway · Azure Firewall = Cisco NGFW · NSGs = Security Groups. Your knowledge translates directly — this exam rewards 20 years of enterprise network engineering.</div>
+
+<div class="sec-hdr">Course Picks — From Your Library</div>
+
+<div class="course-card top-az">
+  <span class="pick-badge pick-1-az">★ AZ-104 · Foundation</span>
+  <div class="course-name">ACG — AZ-104 Microsoft Azure Administrator Certification Prep</div>
+  <div class="course-meta">8.98 GB · A Cloud Guru · most complete AZ-104 in your library</div>
+  <div class="course-why">Your foundation for everything Azure. Covers identity, storage, compute, networking, and monitoring with hands-on labs. AZ-104 concepts are the prerequisite mindset for both AZ-700 and AZ-305 — this course delivers them without gaps. The 8.98 GB depth means nothing is skipped.</div>
+  <div class="course-tags"><span class="ctag">Month 5</span><span class="ctag">AZ-700/305 prerequisites</span></div>
+</div>
+
+<div class="course-card top-az">
+  <span class="pick-badge pick-1-az">★ AZ-700 · Your Power Cert</span>
+  <div class="course-name">ACG — AZ-700 Microsoft Azure Network Engineer Associate</div>
+  <div class="course-meta">10.1 GB · A Cloud Guru · most thorough AZ-700 in your library</div>
+  <div class="course-why">The largest and most comprehensive AZ-700 course you own. Covers every exam domain with hands-on labs: VNet design and peering, hub-and-spoke, ExpressRoute, VPN Gateway, Azure Firewall + Firewall Manager, Private DNS, Load Balancers, App Gateway, and Front Door. This is where your 20 years pays off — expect to move through sections much faster than average students.</div>
+  <div class="course-tags"><span class="ctag">Month 6</span><span class="ctag">Your strongest exam</span><span class="ctag">~$165 exam</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2-az">AZ-700 · Supplement</span>
+  <div class="course-name">CBTNuggets — Azure Network Engineer Associate (AZ-700)</div>
+  <div class="course-meta">8.42 GB · CBTNuggets · enterprise-focused, instructor-led</div>
+  <div class="course-why">CBTNuggets teaches at enterprise engineering level — no fluff. Use this alongside ACG for topics needing a second explanation or deeper dive. CBTNuggets' networking instructors have enterprise backgrounds close to yours. Complement, don't replace, the ACG course.</div>
+  <div class="course-tags"><span class="ctag">Month 6</span><span class="ctag">Second opinion</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2-az">AZ-700 · Exam Review</span>
+  <div class="course-name">PEARSONS — Exam AZ-700 Designing Microsoft Azure Networks</div>
+  <div class="course-meta">1.39 GB · Pearson · objective-mapped exam prep</div>
+  <div class="course-why">Pearson exam prep maps directly to exam objectives — every section is a measured skill. Completeable in a weekend. Use this in the final 2 weeks before your AZ-700 exam as your focused revision run.</div>
+  <div class="course-tags"><span class="ctag">AZ-700 exam week</span><span class="ctag">Final review</span></div>
+</div>
+
+<div class="course-card">
+  <span class="pick-badge pick-2-az">AZ-700 · Troubleshooting Labs</span>
+  <div class="course-name">ACG — Hands-On Network Troubleshooting with Azure IaC</div>
+  <div class="course-meta">588 MB · A Cloud Guru · pure lab format, troubleshooting-focused</div>
+  <div class="course-why">Compact but dense — pure Azure network troubleshooting with Infrastructure as Code. AZ-700 asks you to diagnose connectivity issues heavily. This builds the muscle memory. Complete in a single Saturday before your exam.</div>
+  <div class="course-tags"><span class="ctag">Pre-AZ-700 Saturday</span><span class="ctag">Labs only</span></div>
+</div>
+
+<div class="course-card top-az">
+  <span class="pick-badge pick-1-az">★ AZ-305 · Architect Expert</span>
+  <div class="course-name">ACG — AZ-305: Designing Microsoft Azure Infrastructure Solutions</div>
+  <div class="course-meta">10.3 GB · A Cloud Guru · the definitive AZ-305 preparation</div>
+  <div class="course-why">The largest AZ-305 course you own. Covers the full architect expert scope: identity and access design, data storage architecture, business continuity, infrastructure design, and monitoring. Leaves nothing out at 10.3 GB. This is the credential that unlocks senior and principal architect roles.</div>
+  <div class="course-tags"><span class="ctag">Month 7</span><span class="ctag">Senior role unlock</span><span class="ctag">~$165 exam</span></div>
+</div>
+
+<!-- Azure Topics -->
+<div class="sec-hdr">AZ-104 — Admin Foundation <span class="sec-count" id="cnt-az104">0/5</span></div>
+<div class="item" data-k="z-104-1" onclick="tog('z-104-1')"><div class="item-body"><div class="item-name">Azure Active Directory / Entra ID — users, groups, RBAC, MFA, PIM</div><div class="item-sub">Tenant vs subscription vs management group. Privileged Identity Management. Conditional Access policies.</div></div><span class="ichk" id="k-z-104-1">○</span></div>
+<div class="item" data-k="z-104-2" onclick="tog('z-104-2')"><div class="item-body"><div class="item-name">Compute — VMs, availability sets, scale sets, ARM templates</div><div class="item-sub">VM sizes and families. Managed disks. VMSS autoscaling. Proximity placement groups.</div></div><span class="ichk" id="k-z-104-2">○</span></div>
+<div class="item" data-k="z-104-3" onclick="tog('z-104-3')"><div class="item-body"><div class="item-name">Storage — Blob, File, Queue, Table, tiers, replication (LRS/ZRS/GRS/RA-GRS)</div><div class="item-sub">Storage endpoints and private access. Lifecycle management. Immutable storage.</div></div><span class="ichk" id="k-z-104-3">○</span></div>
+<div class="item" data-k="z-104-4" onclick="tog('z-104-4')"><div class="item-body"><div class="item-name">Monitoring — Azure Monitor, Log Analytics (KQL basics), alerts, diagnostics</div><div class="item-sub">KQL basic queries for log analysis. Action groups. Metrics vs diagnostic logs.</div></div><span class="ichk" id="k-z-104-4">○</span></div>
+<div class="item" data-k="z-104-5" onclick="tog('z-104-5')"><div class="item-body"><div class="item-name">Practice exam — 80%+ MeasureUp or Whizlabs before booking</div><div class="item-sub">MeasureUp is Microsoft's official practice partner — closest to the real thing.</div></div><span class="ichk" id="k-z-104-5">○</span></div>
+
+<div class="sec-hdr">AZ-700 — Network Engineer <span class="adv-badge" style="background:var(--az-bg);color:var(--az-dark)">Your Zone</span> <span class="sec-count" id="cnt-az700">0/10</span></div>
+<div class="item" data-k="z-700-1" onclick="tog('z-700-1')"><div class="item-body"><div class="item-name">VNet design — address spaces, subnets, peering, service/private endpoints</div><div class="item-sub">Hub-and-spoke topology. Non-transitive peering. Private endpoints vs service endpoints. VNet injection.</div></div><span class="ichk" id="k-z-700-1">○</span></div>
+<div class="item" data-k="z-700-2" onclick="tog('z-700-2')"><div class="item-body"><div class="item-name">ExpressRoute — circuits, peering types, Global Reach, FastPath, redundancy</div><div class="item-sub">Microsoft vs Private peering. BGP communities. Global Reach for site-to-site via Azure. This is your Direct Connect.</div></div><span class="ichk" id="k-z-700-2">○</span></div>
+<div class="item" data-k="z-700-3" onclick="tog('z-700-3')"><div class="item-body"><div class="item-name">VPN Gateway — S2S, P2S (IKEv2/OpenVPN), BGP, active-active, zone-redundant</div><div class="item-sub">Gateway SKUs and throughput. BGP route propagation. Active-active vs active-passive.</div></div><span class="ichk" id="k-z-700-3">○</span></div>
+<div class="item" data-k="z-700-4" onclick="tog('z-700-4')"><div class="item-body"><div class="item-name">Virtual WAN — hubs, branches, routing intents, secured hubs with Azure Firewall</div><div class="item-sub">Azure vWAN = your enterprise SDWAN. Routing intent for internet + private traffic.</div></div><span class="ichk" id="k-z-700-4">○</span></div>
+<div class="item" data-k="z-700-5" onclick="tog('z-700-5')"><div class="item-body"><div class="item-name">Azure Firewall — Standard vs Premium, DNAT, Firewall Manager, IDPS</div><div class="item-sub">Firewall Manager for multi-hub policy. IDPS (Premium). You've deployed Fortinet — this is familiar.</div></div><span class="ichk" id="k-z-700-5">○</span></div>
+<div class="item" data-k="z-700-6" onclick="tog('z-700-6')"><div class="item-body"><div class="item-name">NSGs and UDRs — rules, ASGs, flow logs, effective routes, forced tunnelling</div><div class="item-sub">UDRs for forced tunnelling to NVA. Priority order for NSG rules. ASG for app-tier grouping.</div></div><span class="ichk" id="k-z-700-6">○</span></div>
+<div class="item" data-k="z-700-7" onclick="tog('z-700-7')"><div class="item-body"><div class="item-name">Load Balancing — Azure LB (L4), App Gateway (L7 + WAF), Front Door, Traffic Manager</div><div class="item-sub">WAF on App Gateway vs Front Door. Traffic Manager routing (priority/weighted/geographic/performance).</div></div><span class="ichk" id="k-z-700-7">○</span></div>
+<div class="item" data-k="z-700-8" onclick="tog('z-700-8')"><div class="item-body"><div class="item-name">Private DNS — zones, auto-registration, conditional forwarders, DNS Resolver</div><div class="item-sub">DNS Resolver inbound/outbound endpoints. Hybrid DNS with on-premises AD DNS servers.</div></div><span class="ichk" id="k-z-700-8">○</span></div>
+<div class="item" data-k="z-700-9" onclick="tog('z-700-9')"><div class="item-body"><div class="item-name">Network Watcher — Connection Monitor, IP flow verify, next hop, packet capture</div><div class="item-sub">IP flow verify for NSG troubleshooting. Next hop for routing diagnosis. NSG diagnostics.</div></div><span class="ichk" id="k-z-700-9">○</span></div>
+<div class="item" data-k="z-700-10" onclick="tog('z-700-10')"><div class="item-body"><div class="item-name">Practice exam — 80%+ MeasureUp AZ-700 before booking</div><div class="item-sub">MeasureUp is Microsoft's official partner. The closest to real exam questions available.</div></div><span class="ichk" id="k-z-700-10">○</span></div>
+
+<div class="sec-hdr">AZ-305 — Solutions Architect Expert <span class="sec-count" id="cnt-az305">0/6</span></div>
+<div class="item" data-k="z-305-1" onclick="tog('z-305-1')"><div class="item-body"><div class="item-name">Identity and access design — Entra ID, B2B/B2C, PIM, Conditional Access, hybrid identity</div><div class="item-sub">Zero-trust design. AD Connect sync modes. External identity patterns. SSPR.</div></div><span class="ichk" id="k-z-305-1">○</span></div>
+<div class="item" data-k="z-305-2" onclick="tog('z-305-2')"><div class="item-body"><div class="item-name">Data storage architecture — SQL, Cosmos DB, Blob, Data Lake selection criteria</div><div class="item-sub">Consistency models in Cosmos. Data residency and sovereignty requirements. Hot vs cool vs archive.</div></div><span class="ichk" id="k-z-305-2">○</span></div>
+<div class="item" data-k="z-305-3" onclick="tog('z-305-3')"><div class="item-body"><div class="item-name">Business continuity — Azure Backup, Site Recovery, geo-redundancy, RTO/RPO design</div><div class="item-sub">ASR replication policies. Backup vaults. Multi-region active-active vs active-passive.</div></div><span class="ichk" id="k-z-305-3">○</span></div>
+<div class="item" data-k="z-305-4" onclick="tog('z-305-4')"><div class="item-body"><div class="item-name">Landing zones — management groups, Azure Policy, CAF, enterprise-scale design</div><div class="item-sub">Azure Cloud Adoption Framework. Policy-as-code with Azure Policy. Enterprise-scale landing zones.</div></div><span class="ichk" id="k-z-305-4">○</span></div>
+<div class="item" data-k="z-305-5" onclick="tog('z-305-5')"><div class="item-body"><div class="item-name">Cost and governance — Cost Management, Advisor, reservations, tagging strategy</div><div class="item-sub">Budget alerts and action groups. Reserved instances vs savings plans. Tag-based cost allocation.</div></div><span class="ichk" id="k-z-305-5">○</span></div>
+<div class="item" data-k="z-305-6" onclick="tog('z-305-6')"><div class="item-body"><div class="item-name">Practice exam — 75%+ MeasureUp AZ-305 before booking</div><div class="item-sub">AZ-305 is scenario-heavy — business requirements → best architecture. Clear best choice in every question.</div></div><span class="ichk" id="k-z-305-6">○</span></div>
+
+<div class="milestone">
+  <div class="ms-hdr">Azure Track Milestones</div>
+  <div class="ms-row"><span class="ms-arr">→</span>AZ-104 passed — Azure admin fundamentals solid</div>
+  <div class="ms-row"><span class="ms-arr">→</span>AZ-700 passed — recognised Azure Network Engineer — your comfort zone cert</div>
+  <div class="ms-row"><span class="ms-arr">→</span>AZ-305 passed — Azure Solutions Architect Expert — top-tier credential</div>
+  <div class="ms-row"><span class="ms-arr">→</span>ANS-C01 + AZ-700 together = one of the rarest cloud networking combos in enterprise</div>
+</div>
+
+<div class="skip-list">
+  <div class="skip-hdr">📅 Save for later — Azure</div>
+  <div class="skip-row"><div><div class="skip-name">ACloud Guru — AZ-500 Azure Security Technologies · 8.87 GB</div><div class="skip-when">After AZ-305 — security specialisation</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">CBTNuggets — Azure AI Fundamentals AI-900 · 14 GB</div><div class="skip-when">Month 6 — pairs with your AI engineering track</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">LINKd — Microsoft Azure AI Engineer Associate AI-102 · 940 MB</div><div class="skip-when">Month 6 — connects Azure to your AI track</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">ACG — AZ-305 Supplements (1.15 GB + 1.30 GB)</div><div class="skip-when">Supplementary reading during AZ-305 prep</div></div></div>
+  <div class="skip-row"><div><div class="skip-name">ACG — Introduction to Azure DevOps · 611 MB</div><div class="skip-when">Month 7 — DevOps pathway if desired</div></div></div>
+</div>
+</div><!-- /az panel -->
+
+</div><!-- /wrap -->
 
 <nav class="bnav">
   <div class="bnav-inner">
-    <a href="index.html"      class="ni" id="bn-home">   <span>🏠</span><span>Home</span></a>
-    <a href="claude.html"     class="ni" id="bn-claude"> <span>🟠</span><span>Claude</span></a>
-    <a href="lp.html" class="ni" id="bn-lp">     <span>📋</span><span>Courses</span></a>
-    <a href="cloud.html"      class="ni" id="bn-cloud">  <span>☁️</span><span>Cloud</span></a>
-    <a href="linux.html"      class="ni" id="bn-linux">  <span>🐧</span><span>Linux</span></a>
-    <a href="python.html"     class="ni" id="bn-python"> <span>🐍</span><span>Python</span></a>
+    <a href="index.html"   class="ni" id="bn-home">  <span class="ni-icon">🏠</span><span class="ni-lbl">Home</span></a>
+    <a href="lp.html"      class="ni" id="bn-lp">    <span class="ni-icon">🤖</span><span class="ni-lbl">AI Path</span></a>
+    <a href="courses.html" class="ni" id="bn-courses"><span class="ni-icon">📚</span><span class="ni-lbl">Courses</span></a>
+    <a href="linux.html"   class="ni" id="bn-linux">  <span class="ni-icon">🐧</span><span class="ni-lbl">Linux</span></a>
+    <a href="cloud.html"   class="ni active" id="bn-cloud"><span class="ni-icon">☁️</span><span class="ni-lbl">Cloud</span></a>
+    <a href="claude.html"  class="ni" id="bn-claude"> <span class="ni-icon">🟠</span><span class="ni-lbl">Claude</span></a>
   </div>
 </nav>
-<script>
 
-function initTheme(){var t=localStorage.getItem('theme')||'light';if(t==='dark')document.body.classList.add('dark');updateBtn(t);}
-function toggleTheme(){var d=document.body.classList.toggle('dark');var t=d?'dark':'light';localStorage.setItem('theme',t);updateBtn(t);}
-function updateBtn(t){var b=document.getElementById('themeBtn');if(b)b.textContent=t==='dark'?'☀️':'🌙';}
+<script>
+function initTheme(){var t=localStorage.getItem('theme')||'light';if(t==='dark')document.body.classList.add('dark');document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';}
+function toggleTheme(){var d=document.body.classList.toggle('dark');localStorage.setItem('theme',d?'dark':'light');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';}
 initTheme();
 
-var el=document.getElementById('bn-cloud');if(el)el.classList.add('active');
-var K='cloudProgress';function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{}}catch(e){return{}}}function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}function tog(id){var s=load();s[id]=!s[id];save(s);render();}function render(){var s=load();document.querySelectorAll('.item').forEach(function(el){var k=el.dataset.k,c=document.getElementById('k-'+k);if(s[k]){el.className='item done';if(c)c.textContent='✓';}else{el.className='item';if(c)c.textContent='○';}});}render();
+function sw(track,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('panel-'+track).classList.add('active');
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('aws-active','az-active');});
+  btn.classList.add(track+'-active');
+}
 
-var _rd={id:'cloud',icon:'☁️',title:'Cloud Certifications',sub:'AWS SAP + ANS · Azure AZ-700/305',color:'#38bdf8',bg:'#EDF7FF',border:'#8CCCEE',tc:'#0a3a6a'};
-try{sessionStorage.setItem('aiResume',JSON.stringify(_rd));}catch(e){}
+var K='cloudProgress';
+function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')||{};}catch(e){return{};}}
+function save(s){try{localStorage.setItem(K,JSON.stringify(s));}catch(e){}}
+function tog(id){var s=load();s[id]=!s[id];save(s);render();}
+
+var GROUPS={
+  clf:['a-clf1','a-clf2','a-clf3','a-clf4','a-clf5','a-clf6'],
+  saa:['a-saa1','a-saa2','a-saa3','a-saa4','a-saa5','a-saa6','a-saa7','a-saa8'],
+  ans:['a-ans1','a-ans2','a-ans3','a-ans4','a-ans5','a-ans6','a-ans7','a-ans8','a-ans9'],
+  sap:['a-sap1','a-sap2','a-sap3','a-sap4','a-sap5','a-sap6'],
+  az104:['z-104-1','z-104-2','z-104-3','z-104-4','z-104-5'],
+  az700:['z-700-1','z-700-2','z-700-3','z-700-4','z-700-5','z-700-6','z-700-7','z-700-8','z-700-9','z-700-10'],
+  az305:['z-305-1','z-305-2','z-305-3','z-305-4','z-305-5','z-305-6']
+};
+
+function pct(keys,s){var done=keys.filter(function(k){return s[k];}).length;return keys.length?Math.round(done/keys.length*100):0;}
+
+function render(){
+  var s=load();
+  document.querySelectorAll('.item').forEach(function(el){
+    var k=el.dataset.k,chk=document.getElementById('k-'+k);if(!k)return;
+    if(s[k]){el.className='item done';if(chk)chk.textContent='✓';}
+    else{el.className='item';if(chk)chk.textContent='○';}
+  });
+  Object.keys(GROUPS).forEach(function(g){
+    var keys=GROUPS[g],done=keys.filter(function(k){return s[k];}).length;
+    var el=document.getElementById('cnt-'+g);if(el)el.textContent=done+'/'+keys.length;
+  });
+  var awsKeys=GROUPS.clf.concat(GROUPS.saa,GROUPS.ans,GROUPS.sap);
+  var azKeys=GROUPS.az104.concat(GROUPS.az700,GROUPS.az305);
+  var ap=pct(awsKeys,s),zp=pct(azKeys,s);
+  var ab=document.getElementById('aws-bar'),aPct=document.getElementById('aws-pct');
+  var zb=document.getElementById('az-bar'),zPct=document.getElementById('az-pct');
+  if(ab)ab.style.width=ap+'%';if(aPct)aPct.textContent=ap+'%';
+  if(zb)zb.style.width=zp+'%';if(zPct)zPct.textContent=zp+'%';
+}
+render();
+try{sessionStorage.setItem('aiResume',JSON.stringify({href:'cloud.html',icon:'☁️',title:'Cloud Certifications',sub:'AWS SAP + ANS · Azure AZ-700 + AZ-305'}));}catch(e){}
 </script>
 </body>
 </html>
